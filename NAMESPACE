@@ -1,0 +1,184 @@
+# import
+importFrom ('stats', start, end)
+importFrom (methods, show)
+importFrom (utils, head, tail)
+
+export (origin, POSIXt.units)
+
+exportClasses (TimeIntervalDataFrame, TimeInstantDataFrame, SubtimeDataFrame)
+export (as.TimeInstantDataFrame, as.TimeIntervalDataFrame,
+	compute.lim, as.SubtimeDataFrame)
+
+# subtime extracting
+#-------------------
+export (subtime, subtime.POSIXct, subtime.POSIXlt, timezone.subtime, timezone,
+		subtime.TimeIntervalDataFrame, subtime.TimeInstantDataFrame,
+		subtime.default, subtime.numeric)
+S3method(subtime, POSIXlt)
+S3method(subtime, POSIXct)
+S3method(subtime, default)
+S3method(subtime, numeric)
+S3method(subtime, TimeIntervalDataFrame)
+S3method(subtime, TimeInstantDataFrame)
+S3method(timezone, subtime)
+	
+# generic methods (S3)
+#---------------------
+#POSIXcti
+export ('%intersect%', '%intersect%.POSIXcti',
+	'%included%', '%included%.POSIXcti',
+	POSIXcti, start.POSIXcti, end.POSIXcti, format.POSIXcti, print.POSIXcti,
+	'[.POSIXcti', '[<-.POSIXcti',
+	Ops.POSIXcti, c.POSIXcti,
+	as.POSIXcti, as.POSIXcti.logical)
+S3method (start, POSIXcti)
+S3method (end, POSIXcti)
+S3method (format, POSIXcti)
+S3method (print, POSIXcti)
+S3method (Ops, POSIXcti)
+S3method (c, POSIXcti)
+S3method ('[', POSIXcti)
+S3method ('[<-', POSIXcti)
+S3method('%intersect%', 'POSIXcti')
+S3method('%included%', 'POSIXcti')
+
+# POSIXctp
+export (POSIXctp, format.POSIXctp, print.POSIXctp,
+	'[.POSIXctp', '[<-.POSIXctp',
+	Ops.POSIXctp, c.POSIXctp,
+	as.POSIXctp, as.POSIXctp.logical) #, as.POSIXctp.POSIXt)
+S3method (format, POSIXctp)
+S3method (print, POSIXctp)
+S3method (c, POSIXctp)
+S3method ('[', POSIXctp)
+S3method ('[<-', POSIXctp)
+S3method ('Ops', 'POSIXctp')
+S3method (c, POSIXctp)
+
+S3method ('as.POSIXctp', logical)
+#S3method ('as.POSIXctp', 'POSIXt')
+
+# TimeIntervalDataFrame
+export (rbind.TimeIntervalDataFrame, print.TimeIntervalDataFrame,
+	'[.TimeIntervalDataFrame', '[<-.TimeIntervalDataFrame',
+	'[[<-.TimeIntervalDataFrame',
+	row.names.TimeIntervalDataFrame, 'row.names<-.TimeIntervalDataFrame',
+	as.data.frame.TimeIntervalDataFrame,
+	as.TimeInstantDataFrame.TimeIntervalDataFrame,
+	as.SubtimeDataFrame.TimeIntervalDataFrame,
+	merge.TimeIntervalDataFrame, split.TimeIntervalDataFrame,
+	head.TimeIntervalDataFrame, tail.TimeIntervalDataFrame, summary.TimeIntervalDataFrame,
+	start.TimeIntervalDataFrame, end.TimeIntervalDataFrame,
+	plot.TimeIntervalDataFrame,
+	lines.TimeIntervalDataFrame,
+	points.TimeIntervalDataFrame,
+	TimeIntervalDataFrame, RegularTimeIntervalDataFrame)
+
+S3method(rbind, TimeIntervalDataFrame)
+S3method(print, TimeIntervalDataFrame)
+S3method('[', TimeIntervalDataFrame)
+S3method('[<-', TimeIntervalDataFrame)
+S3method('[[<-', TimeIntervalDataFrame)
+S3method(start, TimeIntervalDataFrame)
+S3method(end, TimeIntervalDataFrame)
+
+S3method(plot, TimeIntervalDataFrame)
+S3method(points, TimeIntervalDataFrame)
+S3method(lines, TimeIntervalDataFrame)
+
+S3method(as.TimeInstantDataFrame, TimeIntervalDataFrame)
+S3method(as.SubtimeDataFrame, TimeIntervalDataFrame)
+S3method(as.data.frame, TimeIntervalDataFrame)
+
+S3method(merge, TimeIntervalDataFrame)
+S3method(split, TimeIntervalDataFrame)
+S3method(head, TimeIntervalDataFrame)
+S3method(tail, TimeIntervalDataFrame)
+S3method(summary, TimeIntervalDataFrame)
+S3method(row.names, TimeIntervalDataFrame)
+S3method('row.names<-', TimeIntervalDataFrame)
+
+# TimeInstantDataFrame
+export (rbind.TimeInstantDataFrame, print.TimeInstantDataFrame,
+	'[.TimeInstantDataFrame', '[<-.TimeInstantDataFrame',
+	'[[<-.TimeInstantDataFrame',
+	row.names.TimeInstantDataFrame, 'row.names<-.TimeInstantDataFrame',
+	as.data.frame.TimeInstantDataFrame,
+	as.TimeIntervalDataFrame.TimeInstantDataFrame,
+	as.SubtimeDataFrame.TimeInstantDataFrame,
+	merge.TimeInstantDataFrame, split.TimeInstantDataFrame,
+	head.TimeInstantDataFrame, tail.TimeInstantDataFrame, summary.TimeInstantDataFrame,
+	plot.TimeInstantDataFrame,
+	points.TimeInstantDataFrame,
+	lines.TimeInstantDataFrame,
+	TimeInstantDataFrame, RegularTimeInstantDataFrame)
+
+S3method(plot, TimeInstantDataFrame)
+S3method(points, TimeInstantDataFrame)
+S3method(lines, TimeInstantDataFrame)
+
+S3method(rbind, TimeInstantDataFrame)
+S3method(print, TimeInstantDataFrame)
+S3method('[', TimeInstantDataFrame)
+S3method('[<-', TimeInstantDataFrame)
+S3method('[[<-', TimeInstantDataFrame)
+
+S3method(as.TimeIntervalDataFrame, TimeInstantDataFrame)
+S3method(as.SubtimeDataFrame, TimeInstantDataFrame)
+S3method(as.data.frame, TimeInstantDataFrame)
+
+S3method(merge, TimeInstantDataFrame)
+S3method(split, TimeInstantDataFrame)
+S3method(head, TimeInstantDataFrame)
+S3method(tail, TimeInstantDataFrame)
+S3method(summary, TimeInstantDataFrame)
+S3method(row.names, TimeInstantDataFrame)
+S3method('row.names<-', TimeInstantDataFrame)
+
+# SubtimeDataFrame
+export (print.SubtimeDataFrame,
+	#rbind.SubtimeDataFrame, 
+	'[.SubtimeDataFrame', '[<-.SubtimeDataFrame',
+	'[[<-.SubtimeDataFrame',
+	as.data.frame.SubtimeDataFrame,
+	merge.SubtimeDataFrame, split.SubtimeDataFrame,
+	head.SubtimeDataFrame, tail.SubtimeDataFrame, summary.SubtimeDataFrame,
+	plot.SubtimeDataFrame, lines.SubtimeDataFrame, points.SubtimeDataFrame,
+	SubtimeDataFrame)
+
+S3method(plot, SubtimeDataFrame)
+S3method(points, SubtimeDataFrame)
+S3method(lines, SubtimeDataFrame)
+
+#S3method(rbind, SubtimeDataFrame)
+S3method(print, SubtimeDataFrame)
+S3method('[', SubtimeDataFrame)
+S3method('[<-', SubtimeDataFrame)
+S3method('[[<-', SubtimeDataFrame)
+
+S3method(as.data.frame, SubtimeDataFrame)
+
+S3method(merge, SubtimeDataFrame)
+S3method(split, SubtimeDataFrame)
+S3method(head, SubtimeDataFrame)
+S3method(tail, SubtimeDataFrame)
+S3method(summary, SubtimeDataFrame)
+S3method(row.names, SubtimeDataFrame)
+S3method('row.names<-', SubtimeDataFrame)
+
+# generic methods (S4)
+#---------------------
+exportMethods (	interval, when, period,
+		regular, continuous, homogeneous, overlapping,
+		'continuous<-',
+		dim, length, nrow, ncol,
+		names, 'names<-',
+		timezone, 'timezone<-',
+		changeSupport,
+		show,
+		'[[', '$', '$<-',
+		year, month, day, hour, minute, second,
+		unit, 'unit<-', duration, '+', '-', '*')
+
+
+
