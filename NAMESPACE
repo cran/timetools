@@ -178,7 +178,8 @@ exportMethods (	interval, when, period,
 		show,
 		'[[', '$', '$<-',
 		year, month, day, hour, minute, second,
-		unit, 'unit<-', duration, '+', '-', '*')
+		unit, 'unit<-', duration, '+', '-', '*',
+		lapply)
 
 
 

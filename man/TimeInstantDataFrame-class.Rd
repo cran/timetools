@@ -15,6 +15,7 @@
 \alias{nrow,TimeInstantDataFrame-method}
 %\alias{regular,TimeInstantDataFrame-method}
 \alias{show,TimeInstantDataFrame-method}
+\alias{lapply,TimeInstantDataFrame-method}
 %\alias{timezone,TimeInstantDataFrame-method}
 %\alias{timezone<-,TimeInstantDataFrame-method}
 %\alias{when,TimeInstantDataFrame-method}
@@ -109,6 +110,7 @@
     \item{[[}{\code{signature(x = "TimeInstantDataFrame")}: ... }
     \item{[[<-}{\code{x, i, j, value}: ... }
     \item{merge}{\code{x, y, by, all=TRUE, tz=UTC, ...}: ... }
+    \item{lapply}{\code{signature(X = "TimeInstantDataFrame", FUN = 'ANY')}: ... }
     \item{rbind}{\code{...}: ... }
     \item{split}{\code{x, f, drop=FALSE, ...}: ... }
   }
@@ -135,9 +137,9 @@
 }
 \section{Graphic representation}{
   \describe{
-    \item{plot}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, xlim=NULL, ylim=NULL, log, main, sub, xlab, ylab, ann=par("ann"), axes=TRUE, asp=NA, ...}: ... }
-    \item{points}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, ...}: ... }
-    \item{lines}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, ...}: ... }
+    \item{plot}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, xlim=NULL, ylim=NULL, log, main, sub, xlab, ylab, ann=par("ann"), axes=TRUE, asp=NA, ...}: plot what it is asked for (see \code{\link[graphics]{plot}}). Returns invisibly params used for the plot. }
+    \item{points}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, ...}:plot what it is asked for (see \code{\link[graphics]{points}}). Returns invisibly params used for the plot. }
+    \item{lines}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, ...}: plot what it is asked for (see \code{\link[graphics]{lines}}). Returns invisibly params used for the plot. }
   }
 }
 \section{Text representation}{

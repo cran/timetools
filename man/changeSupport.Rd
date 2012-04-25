@@ -45,13 +45,13 @@
 }
 \description{
   Methods that allows to agregate AND disagregate
-  homogeneous AND unhomogeneous time data.
+  homogeneous AND heterogeneous time data.
 }
 \details{
   Agregating homogeneous data is for example to calculate
   daily means of time series from hourly time series.
 
-  Agregating unhomogeneous data is for example to calculate
+  Agregating heterogeneous data is for example to calculate
   annual means of time series from monthly time series
   (because each month doesn(t have identical weight).
 

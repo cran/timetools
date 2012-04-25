@@ -66,6 +66,8 @@ TimeInstantDataFrame <- function (when, timezone='UTC', data=NULL, ...) {
 #' @param to POSIXct or character representing a time with a valid
 #' format (see \code{\link[base:as.POSIXct]{POSIXct}}). It represents
 #' the end of the object.
+#' If missing, its value is deduced from \sQuote{from}, \sQuote{by} 
+#' and \sQuote{data}.
 #' @param by a \code{\link{POSIXctp}} object indicating the
 #' increment to use between instants of the object.
 #' @param data a data.frame with a number of rows the fit with the 
@@ -78,8 +80,10 @@ TimeInstantDataFrame <- function (when, timezone='UTC', data=NULL, ...) {
 #' \code{\link{TimeInstantDataFrame}}, \code{\link{timetools}}
 RegularTimeInstantDataFrame <- function (from, to, by, timezone='UTC', data=NULL) {
 	if (is.character (from) ) from <- as.POSIXct (from, timezone)
-	if (is.character (to) ) to <- as.POSIXct (to, timezone)
 	if (is.character (by) ) by <- POSIXctp(unit=by)
+	if (missing (to))
+		to <- from + (nrow(data) - 1) * by
+	if (is.character (to) ) to <- as.POSIXct (to, timezone)
 	if (!inherits (by, 'POSIXctp') )
 		stop ("'by' should be coercible to a 'POSIXctp'.")
 
@@ -277,6 +281,22 @@ merge.TimeInstantDataFrame <- function(x, y, by, all=TRUE, tz='UTC', ...) {
 		return (z)
 	   }
 
+setMethod ('lapply', signature('TimeInstantDataFrame', 'ANY'),
+	   function (X, FUN, ...)
+	   {
+		   res <- lapply (data.frame(X), FUN, ...)
+		   if (all (sapply (res, length) == nrow(X))) {
+			   X@data <- data.frame (res[names(X)])
+		   } else if (all (sapply (res, length) == 1)) {
+			   X <- new ('TimeIntervalDataFrame',
+				     start=min(when(X)), end=max(when(X)), timezone=timezone(X),
+				     data=data.frame (res))
+		   } else {
+			   stop ("try to apply inadequate function over SubtimeDataFrame.")
+		   }
+		   return (X)
+	   } )
+
 # acces/modification de certaines propriétés
 #-------------------------------------------
 #' @rdname time.properties
@@ -323,7 +343,7 @@ as.TimeIntervalDataFrame.TimeInstantDataFrame <- function(from, period, ...) {
 
 #' @rdname as.SubtimeDataFrame
 #' @usage 
-#' \method{as.SubtimeDataFrame}{TimeInstantDataFrame}(from, representation, FUN=mean, ...)
+#' \method{as.SubtimeDataFrame}{TimeInstantDataFrame}(from, representation, FUN=mean, ..., first.day=0)
 #'
 #' @section TimeIntervalDataFrame:
 #' If \sQuote{from} is a \code{\link{TimeInstantDataFrame}},
@@ -332,9 +352,9 @@ as.TimeIntervalDataFrame.TimeInstantDataFrame <- function(from, period, ...) {
 #' 
 #' @inheritParams subtime
 #' @param FUN function to use for the agregation (see \sQuote{details})
-as.SubtimeDataFrame.TimeInstantDataFrame <- function(from, representation, FUN=mean, ...)
+as.SubtimeDataFrame.TimeInstantDataFrame <- function(from, representation, FUN=mean, ..., first.day=0)
 {
-	st <- subtime(from, representation)
+	st <- subtime(from, representation, first.day=first.day)
 	to <- split (data.frame (from), st)
 	st <- factor (names(to), levels=levels (st), ordered=TRUE)
 	attributes(st)$timezone <- timezone (from)

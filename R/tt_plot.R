@@ -24,16 +24,18 @@ points.TimeIntervalDataFrame <- function (x, y=NULL, cursor=NULL,
 			trash <- mapply (points, y=y, pch=pch, col=col, ..., MoreArgs=list(x=start(x), type=type))
 			trash <- mapply (points, y=y, pch=pch, col=col, ..., MoreArgs=list(x=end(x), type=type))
 		}
+		if (length (y) > 0)
+			invisible(data.frame (names=names(y), type, lty, lwd, pch, col, stringsAsFactors=FALSE))
 	} else {
 		x <- as.TimeInstantDataFrame (x, cursor=cursor)
-		points (x=x, y=y, type=type, lty=lty, lwd=lwd, pch=pch, col=col, ...)
+		invisible(points (x=x, y=y, type=type, lty=lty, lwd=lwd, pch=pch, col=col, ...))
 	}
 }
 
 lines.TimeIntervalDataFrame <- function (x, y=NULL, cursor=NULL,
 					type='l', lty=1:6, lwd=1, pch=1:25, col=NULL, ...)
 {
-	points (x=x, y=y, cursor=cursor, type=type, lty=lty, lwd=lwd, pch=pch, col=col, ...)
+	invisible (points (x=x, y=y, cursor=cursor, type=type, lty=lty, lwd=lwd, pch=pch, col=col, ...))
 }
 
 plot.TimeIntervalDataFrame <- function (x, y=NULL, cursor=NULL,
@@ -58,12 +60,12 @@ plot.TimeIntervalDataFrame <- function (x, y=NULL, cursor=NULL,
 			axis.POSIXct (1, c(start(x), end(x)) ) 
 			box()
 		}
-		points (x=x, y=names(y), cursor=cursor, type=type, lty=lty, lwd=lwd, pch=pch, col=col, ...)
+		invisible (points (x=x, y=names(y), cursor=cursor, type=type, lty=lty, lwd=lwd, pch=pch, col=col, ...))
 	} else {
 		x <- as.TimeInstantDataFrame (x, cursor=cursor)
-		plot (x=x, y=y, type=type, lty=lty, lwd=lwd, pch=pch, col=col,
+		invisible(plot (x=x, y=y, type=type, lty=lty, lwd=lwd, pch=pch, col=col,
 		      xlim=xlim, ylim=ylim, log=log,
-		      main=main, sub=sub, xlab=xlab, ylab=ylab, ann=ann, axes=axes, asp=asp, ...)
+		      main=main, sub=sub, xlab=xlab, ylab=ylab, ann=ann, axes=axes, asp=asp, ...))
 	}
 }
 
@@ -83,11 +85,13 @@ points.TimeInstantDataFrame <- function (x, y=NULL,
 	
 	# plotting
 	trash <- mapply (points, y=y, pch=pch, col=col, type=type, lty=lty, lwd=lwd, ..., MoreArgs=list(x=when(x)))
+	if (length(y) > 0)
+		invisible(data.frame (names=names(y), type, lty, lwd, pch, col, stringsAsFactors=FALSE))
 }
 
 lines.TimeInstantDataFrame <- function (x, y=NULL,
 					type='l', lty=1:6, lwd=1, pch=1:25, col=NULL, ...) {
-	points (x=x, y=y, type=type, lty=lty, lwd=lwd, pch=pch, col=col, ...)
+	invisible (points (x=x, y=y, type=type, lty=lty, lwd=lwd, pch=pch, col=col, ...))
 }
 
 plot.TimeInstantDataFrame <- function (x, y=NULL,
@@ -111,7 +115,7 @@ plot.TimeInstantDataFrame <- function (x, y=NULL,
 		axis.POSIXct (1, when(x)) 
 		box()
 	}
-	points (x=x, y=names(y), type=type, lty=lty, lwd=lwd, pch=pch, col=col, ...)
+	invisible (points (x=x, y=names(y), type=type, lty=lty, lwd=lwd, pch=pch, col=col, ...))
 }
 
 
@@ -130,12 +134,14 @@ points.SubtimeDataFrame <- function (x, y=NULL,
 		col <- rep (col, length.out=length(y))
 	
 	# plotting
-	trash <- mapply (points, y=y, pch=pch, col=col, type=type, ..., MoreArgs=list(x=when(x)))
+	trash <- mapply (points, y=y, pch=pch, col=col, type=type, lwd=lwd, lty=lty, ..., MoreArgs=list(x=when(x)))
+	if (length(y) > 0)
+		invisible(data.frame (names=names(y), type, lty, lwd, pch, col, stringsAsFactors=FALSE))
 }
 
 lines.SubtimeDataFrame <- function (x, y=NULL,
 					type='l', lty=1:6, lwd=1, pch=1:25, col=NULL, ...) {
-	points (x=x, y=y, type=type, lty=lty, lwd=lwd, pch=pch, col=col, ...)
+	invisible (points (x=x, y=y, type=type, lty=lty, lwd=lwd, pch=pch, col=col, ...))
 }
 
 plot.SubtimeDataFrame <- function (x, y=NULL,
@@ -159,5 +165,5 @@ plot.SubtimeDataFrame <- function (x, y=NULL,
 		axis(1, when(x), labels=as.character(when(x)))
 		box()
 	}
-	points (x=x, y=names(y), type=type, lty=lty, lwd=lwd, pch=pch, col=col, ...)
+	invisible (points (x=x, y=names(y), type=type, lty=lty, lwd=lwd, pch=pch, col=col, ...))
 }

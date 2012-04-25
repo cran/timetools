@@ -24,7 +24,8 @@ year <- function(x, ...) UseMethod('year')
 #' from wich the time propertie is to extract.
 #' For instance : \code{day(x, 'week')} will differ
 #' from \code{day(x, 'year')}.
- #' @param \dots arguments to or from other methods
+#' @param \dots arguments to or from other methods
+#' @inheritParams subtime
 #'
 #' @aliases year-methods
 setGeneric ('year', function (x, ...) standardGeneric ('year') )
@@ -37,9 +38,9 @@ setGeneric ('month', function (x, ...) standardGeneric ('month') )
 day <- function(x, of, ...) UseMethod('day')
 #' @rdname posix.properties
 #' @aliases day-methods
-setGeneric ('day', function (x, of, ...) standardGeneric ('day') )
+setGeneric ('day', function (x, of, ..., first.day=0) standardGeneric ('day') )
 #' @rdname posix.properties
-hour <- function(x, of, ...) UseMethod('hour')
+hour <- function(x, of, ..., first.day=0) UseMethod('hour')
 #' @rdname posix.properties
 #' @aliases hour-methods
 setGeneric ('hour', function (x, of, ...) standardGeneric ('hour') )
@@ -279,12 +280,12 @@ UseMethod ('changeSupport')
 #' Function to change time support of TimeIntervalDataFrame
 #'
 #' Methods that allows to agregate AND disagregate
-#' homogeneous AND unhomogeneous time data.
+#' homogeneous AND heterogeneous time data.
 #' 
 #' Agregating homogeneous data is for example to calculate
 #' daily means of time series from hourly time series.
 #'
-#' Agregating unhomogeneous data is for example to calculate
+#' Agregating heterogeneous data is for example to calculate
 #' annual means of time series from monthly time series (because each
 #' month doesn(t have identical weight).
 #'

@@ -7,6 +7,7 @@
 \alias{$<-,SubtimeDataFrame-method}
 \alias{[[,SubtimeDataFrame-method}
 \alias{dim,SubtimeDataFrame-method}
+\alias{lapply,SubtimeDataFrame-method}
 \alias{length,SubtimeDataFrame-method}
 \alias{names,SubtimeDataFrame-method}
 \alias{names<-,SubtimeDataFrame-method}
@@ -98,6 +99,7 @@
     \item{[[}{\code{signature(x = "SubtimeDataFrame")}: ... }
     \item{[[<-}{\code{x, i, j, value}: ... }
     \item{merge}{\code{x, y, by, all=TRUE, tz=UTC, ...}: ... }
+    \item{lapply}{\code{signature(X = "SubtimeDataFrame", FUN = 'ANY')}: ... }
     % \item{rbind}{\code{...}: ... }
     \item{split}{\code{x, f, drop=FALSE, ...}: ... }
   }
@@ -122,9 +124,9 @@
 }
 \section{Graphic representation}{
   \describe{
-    \item{plot}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, xlim=NULL, ylim=NULL, log, main, sub, xlab, ylab, ann=par("ann"), axes=TRUE, asp=NA, ...}: ... }
-    \item{points}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, ...}: ... }
-    \item{lines}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, ...}: ... }
+    \item{plot}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, xlim=NULL, ylim=NULL, log, main, sub, xlab, ylab, ann=par("ann"), axes=TRUE, asp=NA, ...}: plot what it is asked for (see \code{\link[graphics]{plot}}). Returns invisibly params used for the plot. }
+    \item{points}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, ...}: plot what it is asked for (see \code{\link[graphics]{points}}). Returns invisibly params used for the plot. }
+    \item{lines}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, ...}: plot what it is asked for (see \code{\link[graphics]{lines}}). Returns invisibly params used for the plot. }
   }
 }
 \section{Text representation}{

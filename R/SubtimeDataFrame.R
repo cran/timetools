@@ -223,6 +223,19 @@ merge.SubtimeDataFrame <- function(x, y, by, all=TRUE, ...) {
 		return (z)
 	   }
 
+setMethod ('lapply', signature('SubtimeDataFrame', 'ANY'),
+	   function (X, FUN, ...)
+	   {
+		   res <- lapply (data.frame(X), FUN, ...)
+		   if (all (sapply (res, length) == nrow(X))) {
+			   X@data <- data.frame (res[names(X)])
+		   } else {
+			   warning ("Result has a number of rows differents from object. A data.frame is returned.")
+			   X <- data.frame (res)
+		   }
+		   return (X)
+	   } )
+
 
 # acces/modification de certaines propriétés
 #-------------------------------------------

@@ -8,35 +8,41 @@
 \alias{subtime.TimeIntervalDataFrame}
 \title{Extract a specific subtime of of POSIXt object or define a subtime object}
 \usage{
-  subtime(x, representation, ...)
+  subtime(x, representation, ..., first.day = 0)
 
-  \method{subtime}{default} (x, representation,
-    timezone = "UTC", ...)
+  \method{subtime}{default} (x, representation, ...,
+    timezone = "UTC", first.day = 0)
 
-  \method{subtime}{numeric} (x, representation,
-    timezone = "UTC", ...)
+  \method{subtime}{numeric} (x, representation, ...,
+    timezone = "UTC", first.day = 0)
 
-  \method{subtime}{POSIXct} (x, representation, ...)
+  \method{subtime}{POSIXct} (x, representation, ...,
+    first.day = 0)
 
-  \method{subtime}{POSIXlt} (x, representation, ...)
+  \method{subtime}{POSIXlt} (x, representation, ...,
+    first.day = 0)
 
   \method{subtime}{TimeInstantDataFrame} (x,
-    representation, ...)
+    representation, ..., first.day = 0)
 
   \method{subtime}{TimeIntervalDataFrame} (x,
-    representation, cursor = NULL, ...)
+    representation, cursor = NULL, ..., first.day = 0)
 }
 \arguments{
   \item{x}{object to which extract subtime}
 
   \item{representation}{character string indicating which
   subtime is to extract ('mday', 'mon', 'wday', 'yday',
-  'sec', 'min', dhour').}
+  'sec', 'min', 'hour').}
 
   \item{\dots}{more arguments to or from other methods}
 
   \item{timezone}{a character string to specify the
   timezone of subtime}
+
+  \item{first.day}{used only if \code{representation ==
+  'wday'}. Interger indicating the first day of the week. 0
+  -> sunday (the default), 1 -> monday, 2 -> tuesday, etc.}
 
   \item{cursor}{indicates where the TimeInstant must be
   taken. If \code{0}, start of each intervals is taken as

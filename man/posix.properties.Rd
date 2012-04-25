@@ -33,7 +33,7 @@
 
   month(x, ...)
 
-  day(x, of, ...)
+  day(x, of, ..., first.day = 0)
 
   hour(x, of, ...)
 
@@ -65,6 +65,10 @@
   be effective only if it makes sense (\sQuote{hour} to
   \sQuote{second}, ok ; \sQuote{year} to \sQuote{month}, ok
   ; \sQuote{month} to \sQuote{minute} , NOT ok ; etc.}
+
+  \item{first.day}{used only if \code{representation ==
+  'wday'}. Interger indicating the first day of the week. 0
+  -> sunday (the default), 1 -> monday, 2 -> tuesday, etc.}
 }
 \description{
   Objects can be POSIXct, POSIXcti, POSIXctp, etc.

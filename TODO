@@ -1,0 +1,8 @@
+Pour la version 1.2-0
+---------------------
+* Faire en sorte que les fonctions 'day', 'hour', etc. soit cohérentes avec les catégories de subtime.
+* Ajouter ces 'unités' dans POSIXt.units, ou équivalent ?
+* Faire une changeSupport (Time*DataFrame, 'subtime'), simple raccourci vers as.SubtimeDataFrame.
+* Ajouter un argument min.coverage pour as.Subtime
+
+* Ajouter les fonctions split, tapply, mapply pour redéfinir plus 'catholiquement' la fonction changeSupport

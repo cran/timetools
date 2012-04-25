@@ -14,7 +14,8 @@
   \item{to}{POSIXct or character representing a time with a
   valid format (see
   \code{\link[base:as.POSIXct]{POSIXct}}). It represents
-  the end of the object.}
+  the end of the object. If missing, its value is deduced
+  from \sQuote{from}, \sQuote{by} and \sQuote{data}.}
 
   \item{by}{a \code{\link{POSIXctp}} object indicating the
   increment to use between instants of the object.}

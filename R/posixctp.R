@@ -100,9 +100,9 @@ Ops.POSIXctp <- function (e1, e2) {
 		return (NextMethod(.Generic) )
 	if (.Generic == '==') {
 		if (any (unit(e1) > unit(e2)))
-			unit(e1[unit(e1) > unit(e2)]) <- unit(e2)[unit(e1) > unit(e2)]
+			suppressWarnings (unit(e1[unit(e1) > unit(e2)]) <- unit(e2)[unit(e1) > unit(e2)])
 		if (any (unit(e2) > unit(e1)))
-			unit(e2[unit(e2) > unit(e1)]) <- unit(e1)[unit(e2) > unit(e1)]
+			suppressWarnings (unit(e2[unit(e2) > unit(e1)]) <- unit(e1)[unit(e2) > unit(e1)])
 		return (duration(e1) == duration(e2) & unit(e1) == unit(e2))
 	}
 	if (.Generic == '!=')

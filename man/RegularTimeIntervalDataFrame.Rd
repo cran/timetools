@@ -15,7 +15,9 @@
   valid format (see
   \code{\link[base:as.POSIXct]{POSIXct}}). It represents
   the end of the object : the end of the last interval is
-  as near as possible from this date, but before it.}
+  as near as possible from this date, but before it. If
+  missing, its value is deduced from \sQuote{from},
+  \sQuote{by} and \sQuote{data}.}
 
   \item{by}{a \code{\link{POSIXctp}} object indicating the
   increment to use between the start of each interval}

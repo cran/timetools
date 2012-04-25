@@ -5,6 +5,45 @@ library('timetools')
 
 assign(".oldSearch", search(), pos = 'CheckExEnv')
 cleanEx()
+nameEx("POSIXcti-class")
+### * POSIXcti-class
+
+flush(stderr()); flush(stdout())
+
+### Name: POSIXcti-class
+### Title: Class '"POSIXcti"'
+### Aliases: POSIXcti-class POSIXcti length,POSIXcti-method
+###   show,POSIXcti-method duration,POSIXcti-method start.POSIXcti
+###   end.POSIXcti [.POSIXcti [<-.POSIXcti format.POSIXcti print.POSIXcti
+###   c.POSIXcti
+### Keywords: classes
+
+### ** Examples
+
+showClass("POSIXcti")
+
+
+
+cleanEx()
+nameEx("POSIXctp-class")
+### * POSIXctp-class
+
+flush(stderr()); flush(stdout())
+
+### Name: POSIXctp-class
+### Title: Class '"POSIXctp"'
+### Aliases: POSIXctp-class POSIXctp length,POSIXctp-method
+###   show,POSIXctp-method [.POSIXctp [<-.POSIXctp format.POSIXctp
+###   print.POSIXctp c.POSIXctp
+### Keywords: classes
+
+### ** Examples
+
+showClass("POSIXctp")
+
+
+
+cleanEx()
 nameEx("SubtimeDataFrame-class")
 ### * SubtimeDataFrame-class
 
@@ -14,13 +53,14 @@ flush(stderr()); flush(stdout())
 ### Title: Class '"SubtimeDataFrame"'
 ### Aliases: SubtimeDataFrame-class $,SubtimeDataFrame-method
 ###   $<-,SubtimeDataFrame-method [[,SubtimeDataFrame-method
-###   dim,SubtimeDataFrame-method length,SubtimeDataFrame-method
-###   names,SubtimeDataFrame-method names<-,SubtimeDataFrame-method
-###   ncol,SubtimeDataFrame-method nrow,SubtimeDataFrame-method
-###   show,SubtimeDataFrame-method [.SubtimeDataFrame [<-.SubtimeDataFrame
-###   [[<-.SubtimeDataFrame as.data.frame.SubtimeDataFrame
-###   head.SubtimeDataFrame merge.SubtimeDataFrame plot.SubtimeDataFrame
-###   points.SubtimeDataFrame lines.SubtimeDataFrame print.SubtimeDataFrame
+###   dim,SubtimeDataFrame-method lapply,SubtimeDataFrame-method
+###   length,SubtimeDataFrame-method names,SubtimeDataFrame-method
+###   names<-,SubtimeDataFrame-method ncol,SubtimeDataFrame-method
+###   nrow,SubtimeDataFrame-method show,SubtimeDataFrame-method
+###   [.SubtimeDataFrame [<-.SubtimeDataFrame [[<-.SubtimeDataFrame
+###   as.data.frame.SubtimeDataFrame head.SubtimeDataFrame
+###   merge.SubtimeDataFrame plot.SubtimeDataFrame points.SubtimeDataFrame
+###   lines.SubtimeDataFrame print.SubtimeDataFrame
 ###   row.names.SubtimeDataFrame row.names<-.SubtimeDataFrame
 ###   split.SubtimeDataFrame summary.SubtimeDataFrame tail.SubtimeDataFrame
 ### Keywords: classes
@@ -61,15 +101,15 @@ flush(stderr()); flush(stdout())
 ###   dim,TimeInstantDataFrame-method length,TimeInstantDataFrame-method
 ###   names,TimeInstantDataFrame-method names<-,TimeInstantDataFrame-method
 ###   ncol,TimeInstantDataFrame-method nrow,TimeInstantDataFrame-method
-###   show,TimeInstantDataFrame-method [.TimeInstantDataFrame
-###   [<-.TimeInstantDataFrame [[<-.TimeInstantDataFrame
-###   as.data.frame.TimeInstantDataFrame head.TimeInstantDataFrame
-###   merge.TimeInstantDataFrame plot.TimeInstantDataFrame
-###   points.TimeInstantDataFrame lines.TimeInstantDataFrame
-###   print.TimeInstantDataFrame rbind.TimeInstantDataFrame
-###   row.names.TimeInstantDataFrame row.names<-.TimeInstantDataFrame
-###   split.TimeInstantDataFrame summary.TimeInstantDataFrame
-###   tail.TimeInstantDataFrame
+###   show,TimeInstantDataFrame-method lapply,TimeInstantDataFrame-method
+###   [.TimeInstantDataFrame [<-.TimeInstantDataFrame
+###   [[<-.TimeInstantDataFrame as.data.frame.TimeInstantDataFrame
+###   head.TimeInstantDataFrame merge.TimeInstantDataFrame
+###   plot.TimeInstantDataFrame points.TimeInstantDataFrame
+###   lines.TimeInstantDataFrame print.TimeInstantDataFrame
+###   rbind.TimeInstantDataFrame row.names.TimeInstantDataFrame
+###   row.names<-.TimeInstantDataFrame split.TimeInstantDataFrame
+###   summary.TimeInstantDataFrame tail.TimeInstantDataFrame
 ### Keywords: classes
 
 ### ** Examples
@@ -108,13 +148,11 @@ flush(stderr()); flush(stdout())
 ### Title: Class '"TimeIntervalDataFrame"'
 ### Aliases: TimeIntervalDataFrame-class $,TimeIntervalDataFrame-method
 ###   $<-,TimeIntervalDataFrame-method [[,TimeIntervalDataFrame-method
-###   changeSupport,TimeIntervalDataFrame,TimeIntervalDataFrame,numeric,ANY,ANY,ANY,ANY-method
-###   changeSupport,TimeIntervalDataFrame,character,numeric,ANY,ANY,missing,missing-method
-###   changeSupport,TimeIntervalDataFrame,period,numeric,ANY,ANY,missing,missing-method
 ###   dim,TimeIntervalDataFrame-method names,TimeIntervalDataFrame-method
 ###   names<-,TimeIntervalDataFrame-method
 ###   ncol,TimeIntervalDataFrame-method nrow,TimeIntervalDataFrame-method
-###   length,TimeIntervalDataFrame-method show,TimeIntervalDataFrame-method
+###   length,TimeIntervalDataFrame-method
+###   lapply,TimeIntervalDataFrame-method show,TimeIntervalDataFrame-method
 ###   [.TimeIntervalDataFrame [<-.TimeIntervalDataFrame
 ###   [[<-.TimeIntervalDataFrame as.data.frame.TimeIntervalDataFrame
 ###   end.TimeIntervalDataFrame head.TimeIntervalDataFrame
@@ -163,6 +201,9 @@ flush(stderr()); flush(stdout())
 ### Name: changeSupport
 ### Title: Function to change time support of TimeIntervalDataFrame
 ### Aliases: changeSupport
+###   changeSupport,TimeIntervalDataFrame,character,numeric,ANY,ANY,missing,missing-method
+###   changeSupport,TimeIntervalDataFrame,POSIXctp,numeric,ANY,ANY,missing,missing-method
+###   changeSupport,TimeIntervalDataFrame,TimeIntervalDataFrame,numeric,ANY,ANY,ANY,ANY-method
 
 ### ** Examples
 
@@ -173,7 +214,8 @@ ti3 <- TimeIntervalDataFrame (
 # weighted mean over a period of 3 days with at least 75% of
 # coverage (NA is retunr if not)
 ti3
-changeSupport (ti3, 3*d, 0.75)
+d <- POSIXctp(unit='day')
+changeSupport (ti3, 3L*d, 0.75)
 
 ti4 <- TimeIntervalDataFrame (
 	c('2010-01-01', '2010-01-02', '2010-01-04',
@@ -183,8 +225,19 @@ ti4 <- TimeIntervalDataFrame (
 # weighted mean over a period of 3 days with at least 75% of
 # coverage (NA is retunr if not) or 50%
 ti4
-changeSupport (ti4, 3*d, 0.75)
-changeSupport (ti4, 3*d, 0.5)
+changeSupport (ti4, 3L*d, 0.75)
+changeSupport (ti4, 3L*d, 0.5)
+
+# use of split.from
+ti1 <- RegularTimeIntervalDataFrame('2011-01-01', '2011-02-01', 'hour')
+ti1$value <- 1:nrow(ti1)
+# we can calculate sliding mean over periods of 24 hours.
+# first lets build the corresponding TimeIntervalDataFrame
+ti2 <- RegularTimeIntervalDataFrame('2011-01-01', '2011-02-01', 'hour', 'day')
+# if we try to 'project' ti1 over ti2 it won't work :
+summary (changeSupport (ti1, ti2, 0))
+# all data are NA because 'spliting' is not enabled. Let's enable it :
+summary (changeSupport (ti1, ti2, 0, split.from=TRUE))
 
 
 
@@ -195,8 +248,8 @@ nameEx("included")
 flush(stderr()); flush(stdout())
 
 ### Name: %included%
-### Title: test inclusion of 2 'interval' objects
-### Aliases: %included% %included%.interval
+### Title: test inclusion of 2 'POSIXcti' objects
+### Aliases: %included% %included%.POSIXcti
 
 ### ** Examples
 
@@ -212,13 +265,31 @@ nameEx("intersect")
 flush(stderr()); flush(stdout())
 
 ### Name: %intersect%
-### Title: intersects 2 'interval' objects
-### Aliases: %intersect% %intersect%.interval
+### Title: intersects 2 'POSIXcti' objects
+### Aliases: %intersect% %intersect%.POSIXcti
 
 ### ** Examples
 
 # to see all existing methods :
 methods ('%intersect%')
+
+
+
+cleanEx()
+nameEx("origin")
+### * origin
+
+flush(stderr()); flush(stdout())
+
+### Name: origin
+### Title: 1970-01-01 GMT
+### Aliases: origin
+### Keywords: chron data datasets
+
+### ** Examples
+
+origin
+# "1970-01-01 GMT"
 
 
 
@@ -229,7 +300,7 @@ nameEx("timetools-package")
 flush(stderr()); flush(stdout())
 
 ### Name: timetools-package
-### Title: provides objects and tools to manipulate irregular unhomogeneous
+### Title: provides objects and tools to manipulate irregular heterogeneous
 ###   time data and subtime data.
 ### Aliases: timetools-package timetools
 ### Keywords: package
@@ -242,7 +313,7 @@ ti1 <- TimeIntervalDataFrame (
 
 ti2 <- TimeIntervalDataFrame (
 	c('2010-01-01', '2010-02-01', '2010-02-02'), NULL,
-	'UTC', data.frame(ex2=1:2) )
+	'UTC', data.frame(ex1=1:2) )
 
 all.equal (ti1, ti2)
 
@@ -253,7 +324,8 @@ ti3 <- TimeIntervalDataFrame (
 # weighted mean over a period of 3 days with at least 75% of
 # coverage (NA is retunr if not)
 ti3
-changeSupport (ti3, 3*d, 0.75)
+d <- POSIXctp(unit='day')
+changeSupport (ti3, 3L*d, 0.75)
 
 
 ti4 <- TimeIntervalDataFrame (
@@ -264,8 +336,8 @@ ti4 <- TimeIntervalDataFrame (
 # weighted mean over a period of 3 days with at least 75% of
 # coverage (NA is retunr if not) or 50%
 ti4
-changeSupport (ti4, 3*d, 0.75)
-changeSupport (ti4, 3*d, 0.5)
+changeSupport (ti4, 3L*d, 0.75)
+changeSupport (ti4, 3L*d, 0.5)
 
 
 

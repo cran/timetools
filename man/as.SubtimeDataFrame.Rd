@@ -7,10 +7,11 @@
   as.SubtimeDataFrame(from, ...)
 
   \method{as.SubtimeDataFrame}{TimeInstantDataFrame}(from,
-    representation, FUN=mean, ...)
+    representation, FUN=mean, ..., first.day=0)
 
   \method{as.SubtimeDataFrame}{TimeIntervalDataFrame}(from,
-    representation, cursor=NULL, FUN=mean, ...)
+    representation, cursor=NULL, FUN=mean, ...,
+    first.day=0)
 }
 \arguments{
   \item{from}{object to convert to a TimeInstantDataFrame}
@@ -22,7 +23,11 @@
 
   \item{representation}{character string indicating which
   subtime is to extract ('mday', 'mon', 'wday', 'yday',
-  'sec', 'min', dhour').}
+  'sec', 'min', 'hour').}
+
+  \item{first.day}{used only if \code{representation ==
+  'wday'}. Interger indicating the first day of the week. 0
+  -> sunday (the default), 1 -> monday, 2 -> tuesday, etc.}
 
   \item{cursor}{indicates where the TimeInstant must be
   taken. If \code{0}, start of each intervals is taken as

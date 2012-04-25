@@ -6,7 +6,7 @@ setMethod ('year', 'POSIXct', function(x, ...) as.POSIXlt (x)$year+1900)
 setMethod ('month', 'POSIXct', function(x, ...) as.POSIXlt (x)$mon)
 #' @rdname posix.properties
 #' @aliases day,POSIXct-method
-setMethod ('day', 'POSIXct', function(x, of, ...) {
+setMethod ('day', 'POSIXct', function(x, of, ..., first.day=0) {
 		switch (of,
 		year = as.POSIXlt (x)$yday,
 		month = as.POSIXlt (x)$mday,

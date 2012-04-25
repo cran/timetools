@@ -17,33 +17,34 @@
 #' @param x object to which extract subtime
 #' @param representation character string indicating 
 #' 	which subtime is to extract ('mday',
-#'	'mon', 'wday', 'yday', 'sec', 'min', dhour').
+#'	'mon', 'wday', 'yday', 'sec', 'min', 'hour').
 #' @param \dots more arguments to or from other methods
 #'
 #' @return  a factor which depends on the subtime asked for. See \sQuote{Details}.
 #'
 #' @seealso \code{\link[base]{DateTimeClasses}}, \code{\link[base]{timezone}}
-subtime <- function (x, representation, ...) UseMethod('subtime')
+subtime <- function (x, representation, ..., first.day=0) UseMethod('subtime')
 #' @rdname subtime
 #' @section default:
 #' If \sQuote{x} is missing, an empty factor with the appropriated
 #' levels (according to \sQuote{representation}) is returned.
 #' @method subtime default
 #' @param timezone a character string to specify the timezone of subtime
-subtime.default <- function (x, representation, timezone='UTC', ...)
+subtime.default <- function (x, representation, ..., timezone='UTC', first.day=0)
 {
 	if (missing (x))
-		return(subtime (as.POSIXlt(character(), timezone), representation, ...))
-	subtime (as.POSIXct(x, timezone), representation, ...)
+		return(subtime (as.POSIXlt(character(), timezone),
+				representation, ..., first.day=first.day))
+	subtime (as.POSIXct(x, timezone), representation, ..., first.day=first.day)
 }
 #' @rdname subtime
 #' @section numeric:
 #' If \sQuote{x} is a numeric, a appropriated subtime factor
 #' is returned (in accordance with representation).
 #' @method subtime numeric
-subtime.numeric <- function (x, representation, timezone='UTC', ...)
+subtime.numeric <- function (x, representation, ..., timezone='UTC', first.day=0)
 {
-	lvls <- levels (subtime(representation=representation))
+	lvls <- levels (subtime(representation=representation, ..., first.day=first.day))
 	res <- factor (lvls[x], levels=lvls, ordered=TRUE)
 	attributes(res)$timezone <- timezone
 	class (res) <- c('subtime', 'factor')
@@ -51,11 +52,14 @@ subtime.numeric <- function (x, representation, timezone='UTC', ...)
 }
 #' @rdname subtime
 #' @method subtime POSIXct
-subtime.POSIXct <- function (x, representation, ...)
-	subtime (as.POSIXlt(x), representation, ...)
+subtime.POSIXct <- function (x, representation, ..., first.day=0)
+	subtime (as.POSIXlt(x), representation=representation, ..., first.day=first.day)
 #' @rdname subtime
 #' @method subtime POSIXlt
-subtime.POSIXlt <- function (x, representation, ...)
+#' @param first.day used only if \code{representation == 'wday'}.
+#' Interger indicating the first day of the week. 0 -> sunday (the default), 
+#' 1 -> monday, 2 -> tuesday, etc.
+subtime.POSIXlt <- function (x, representation, ..., first.day=0)
 {
 	if (representation == 'mday') {
 		res <- factor (x$mday, 1:31, ordered=TRUE)
@@ -64,8 +68,8 @@ subtime.POSIXlt <- function (x, representation, ...)
 					   format(as.POSIXct(sprintf('2011-%02i-10', 1:12)), '%B'),
 					   ordered=TRUE)
 	} else if (representation == 'wday') {
-		res <- factor (x$wday, 0:6,
-		               format(as.POSIXct(sprintf('2011-12-%02i', 25:31)), '%A'),
+		res <- factor ((x$wday-first.day)%%7, 0:6,
+		               format(as.POSIXct(sprintf('2011-12-%02i', 25:31)), '%A')[(0:6+first.day)%%7+1],
 					   ordered=TRUE)
 	} else if (representation == 'yday') {
 		res <- factor (x$yday, 0:365, ordered=TRUE)
@@ -88,8 +92,8 @@ timezone.subtime <- function(object) attributes(object)$timezone
 
 #' @rdname subtime
 #' @method subtime TimeInstantDataFrame
-subtime.TimeInstantDataFrame <- function (x, representation, ...)
-	subtime(when(x), representation)
+subtime.TimeInstantDataFrame <- function (x, representation, ..., first.day=0)
+	subtime(when(x), representation=representation, ..., first.day=first.day)
 
 #' @rdname subtime
 #' @method subtime TimeIntervalDataFrame
@@ -100,7 +104,7 @@ subtime.TimeInstantDataFrame <- function (x, representation, ...)
 #' 	Any other value will determine a weigthed instant 
 #' 	between start and end (actually, value higher than 1 or 
 #' 	lower than 0 will give instant outside this range).
-subtime.TimeIntervalDataFrame <- function (x, representation, cursor=NULL, ...)
+subtime.TimeIntervalDataFrame <- function (x, representation, cursor=NULL, ..., first.day=0)
 {
 	if (is.null (cursor) ) cursor <- 0.5
 	if (cursor > 1 || cursor < 0) warning ("For a standard use, cursor should be between 0 and 1.")
@@ -108,5 +112,5 @@ subtime.TimeIntervalDataFrame <- function (x, representation, cursor=NULL, ...)
 				weighted.mean (c(x, y), c(wx, wy), na.rm=TRUE),
 			   start(x), end(x), 1-cursor, cursor)
 	instant <- as.POSIXct(instant, origin=origin)
-	subtime(instant, representation)
+	subtime(instant, representation, ..., first.day=first.day)
 }

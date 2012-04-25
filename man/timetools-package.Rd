@@ -3,7 +3,7 @@
 \alias{timetools}
 \docType{package}
 \title{
-provides objects and tools to manipulate irregular unhomogeneous time data and subtime data.
+provides objects and tools to manipulate irregular heterogeneous time data and subtime data.
 }
 \description{
 This package is intended to manipulate irregular time series such as subtime series,
@@ -24,14 +24,13 @@ Main things defined in this package are :
 \tabular{ll}{
 Package: \tab timetools\cr
 Type: \tab Package\cr
-Version: \tab 1.1-0\cr
-Date: \tab 2012-02-06\cr
+Version: \tab 1.1-2\cr
+Date: \tab 2012-04-25\cr
 Depends: \tab methods\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 URL: \tab http://sourceforge.net/projects/timetools/\cr
 Encoding: \tab UTF-8\cr
-Built: \tab R 2.14.1; i686-pc-linux-gnu; 2012-01-05 19:38:52 UTC; unix\cr
 }
 
 Index:
@@ -59,7 +58,7 @@ compute.lim             Calculate limits for plotting
 subtime                 Extract a specific subtime of of POSIXt object
                         or define a subtime object
 timetools-package       provides objects and tools to manipulate
-                        irregular unhomogeneous time data and subtime
+                        irregular heterogeneous time data and subtime
                         data.
 timezone                Test different properties of Time objects
 as.POSIXctp		Convert an object to a POSIXctp

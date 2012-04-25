@@ -91,6 +91,8 @@ TimeIntervalDataFrame <- function (start, end=NULL, timezone='UTC', data=NULL, .
 #' format (see \code{\link[base:as.POSIXct]{POSIXct}}). It represents
 #' the end of the object : the end of the last interval is as near
 #'  as possible from this date, but before it.
+#' If missing, its value is deduced from \sQuote{from}, \sQuote{by} 
+#' and \sQuote{data}.
 #' @param by a \code{\link{POSIXctp}} object indicating the
 #' increment to use between the start of each interval
 #' @param period a \code{\link{POSIXctp}} object indicating the
@@ -105,8 +107,10 @@ TimeIntervalDataFrame <- function (start, end=NULL, timezone='UTC', data=NULL, .
 #' \code{\link{TimeIntervalDataFrame}}, \code{\link{timetools}}
 RegularTimeIntervalDataFrame <- function (from, to, by, period, timezone='UTC', data=NULL) {
 	if (is.character (from) ) from <- as.POSIXct (from, timezone)
-	if (is.character (to) ) to <- as.POSIXct (to, timezone)
 	if (is.character (by) ) by <- POSIXctp(unit=by)
+	if (missing (to))
+		to <- from + (nrow(data) - 1) * by
+	if (is.character (to) ) to <- as.POSIXct (to, timezone)
 	if (!inherits (by, 'POSIXctp') )
 		stop ("'by' should be coercible to a 'POSIXctp'.")
 	if (missing (period) ) {
@@ -348,6 +352,21 @@ merge.TimeIntervalDataFrame <- function(x, y, by, all=TRUE, tz='UTC', ...) {
 	return (z)
 }
 
+setMethod ('lapply', signature('TimeIntervalDataFrame', 'ANY'),
+	   function (X, FUN, ...)
+	   {
+		   res <- lapply (data.frame(X), FUN, ...)
+		   if (all (sapply (res, length) == nrow(X))) {
+			   X@data <- data.frame (res[names(X)])
+		   } else if (all (sapply (res, length) == 1)) {
+			   X <- new ('TimeIntervalDataFrame',
+				     start=min(start(X)), end=max(end(X)), timezone=timezone(X),
+				     data=data.frame (res))
+		   } else {
+			   stop ("try to apply inadequate function over SubtimeDataFrame.")
+		   }
+		   return (X)
+	   } )
 # acces/modification de certaines propriétés
 #-------------------------------------------
 # tous les intervalles sont de même durée
@@ -442,7 +461,7 @@ as.TimeInstantDataFrame.TimeIntervalDataFrame <- function(from, cursor=NULL, ...
 
 #' @rdname as.SubtimeDataFrame
 #' @usage 
-#' \method{as.SubtimeDataFrame}{TimeIntervalDataFrame}(from, representation, cursor=NULL, FUN=mean, ...)
+#' \method{as.SubtimeDataFrame}{TimeIntervalDataFrame}(from, representation, cursor=NULL, FUN=mean, ..., first.day=0)
 #'
 #' @section TimeIntervalDataFrame:
 #' If \sQuote{from} is a \code{\link{TimeIntervalDataFrame}},
@@ -450,6 +469,6 @@ as.TimeInstantDataFrame.TimeIntervalDataFrame <- function(from, cursor=NULL, ...
 #' Then, this TimeInstantDataFrame is converted to a SubtimeDataFrame (see the appropriated section).
 #' 
 #' @inheritParams as.TimeInstantDataFrame
-as.SubtimeDataFrame.TimeIntervalDataFrame <- function(from, representation, cursor=NULL, FUN=mean, ...)
-	as.SubtimeDataFrame (as.TimeInstantDataFrame (from, cursor), representation, FUN, ...)
+as.SubtimeDataFrame.TimeIntervalDataFrame <- function(from, representation, cursor=NULL, FUN=mean, ..., first.day=0)
+	as.SubtimeDataFrame (as.TimeInstantDataFrame (from, cursor), representation, FUN, ..., first.day=first.day)
 
