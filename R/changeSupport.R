@@ -203,9 +203,13 @@ setMethod ('changeSupport', signature(from='TimeIntervalDataFrame', to='POSIXctp
 		   s <- as.POSIXct(s)
 
 		if (u == 'year') {
-			nb <- year(max(end(from))) - year(s) + 1
+			e <- max(end(from))
+			nb <- year(e) - year(s) +
+				ifelse(second(e, of='year') == 0, 0, 1)
 		} else if (u == 'month') {
-			nb <- (year(max(end(from))) - year(s))*12 + month(max(end(from))) - month(s) + 1
+			e <- max(end(from))
+			nb <- (year(e) - year(s))*12 + month(e) - month(s) +
+				ifelse(second(e, of='month') == 0, 0, 1)
 		} else {
 			u <- switch (u, second='secs', minute='mins',
 							     hour='hours', day='days')

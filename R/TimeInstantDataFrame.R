@@ -88,9 +88,11 @@ RegularTimeInstantDataFrame <- function (from, to, by, timezone='UTC', data=NULL
 		stop ("'by' should be coercible to a 'POSIXctp'.")
 
 	if (as.character(unit(by)) == 'year') {
-		nb <- year(to) - year(from) + 1
+		nb <- year(to) - year(from) + 
+			ifelse(second(to, of='year') == 0, 0, 1)
 	} else if (as.character(unit(by)) == 'month') {
-		nb <- (year(to) - year(from))*12 + month(to) - month(from) + 1
+		nb <- (year(to) - year(from))*12 + month(to) - month(from) + 
+			ifelse(second(to, of='month') == 0, 0, 1)
 	} else {
 		u <- switch (as.character(unit(by)), second='secs', minute='mins',
 						     hour='hours', day='days')

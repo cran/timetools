@@ -6,3 +6,7 @@ Pour la version 1.2-0
 * Ajouter un argument min.coverage pour as.Subtime
 
 * Ajouter les fonctions split, tapply, mapply pour redéfinir plus 'catholiquement' la fonction changeSupport
+
+N'importe quand
+---------------
+Corriger les fonctions split pour avoir des noms cohérents

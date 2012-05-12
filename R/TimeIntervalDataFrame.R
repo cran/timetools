@@ -122,16 +122,18 @@ RegularTimeIntervalDataFrame <- function (from, to, by, period, timezone='UTC', 
 		stop ("'period' should be coercible to a 'POSIXctp'.")
 
 	if (as.character(unit(by)) == 'year') {
-		nb <- year(to) - year(from) + 1
+		nb <- year(to) - year(from) +
+			ifelse(second(to, of='year') == 0, 0, 1)
 	} else if (as.character(unit(by)) == 'month') {
-		nb <- (year(to) - year(from))*12 + month(to) - month(from) + 1
+		nb <- (year(to) - year(from))*12 + month(to) - month(from) +
+			ifelse(second(to, of='month') == 0, 0, 1)
 	} else {
 		u <- switch (as.character(unit(by)), second='secs', minute='mins',
 						     hour='hours', day='days')
 		nb <- as.numeric (difftime(to, from, units=u))
 		nb <- ceiling (nb/duration(by))
 	}
-	start <- from + 0:nb * by
+	start <- from + 0:(nb-1) * by
 	end <- start + period
 	tk <- !is.na(start) & !is.na(end) &
 		((start >= from & start <= to) | (start >= from & end <= to))

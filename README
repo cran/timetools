@@ -8,6 +8,12 @@ Main things defined in this package are the classes POSIXcti, POSIXctp, TimeInte
 
 News
 -----------
+*V1.1-3 :
+
+When 'changeSupport' or 'RegularTime*DataFrame' were used, an unwanted line could appear at the end
+of the Time*DataFrame when the resulting unit was 'year' or 'month'.
+This behaviour is now fixed and no more unwanted line should appear.
+
 * V1.1-2 :
 RegularTimeInstantDataFrame and RegularTimeIntervalDataFrame :
 the 'to' argument is no more necessary if 'from', 'by' and 'data' are given.

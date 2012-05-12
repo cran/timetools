@@ -148,8 +148,10 @@ as.SubtimeDataFrame  <- function(from, ...) UseMethod ('as.SubtimeDataFrame')
 # generic pour toutes les classes Time*DataFrame
 #-----------------------------------------------
 # S4
-setGeneric (name='nrow', def=function(x) standardGeneric("nrow"))
-setGeneric (name='ncol', def=function(x) standardGeneric("ncol"))
+setGeneric (name='nrow')
+setGeneric (name='ncol')
+#setGeneric (name='split')
+setGeneric (name='lapply')
 
 #' @rdname time.properties
 continuous <- function(x, ...) UseMethod('continuous')
