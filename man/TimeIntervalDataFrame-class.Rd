@@ -59,7 +59,7 @@
   be summarize as time interval with the \code{\link{POSIXcti}} class.
   This allows to manipulate at once time data without any 
   restriction on time representation : data can occur at different time, 
-  data can be discontinuous, data can be unhomogeneous (not lasting
+  data can be discontinuous, data can be heterogeneous (not lasting
   for a unique period), data can overlay each other, etc.
   There are several methods to test/deal/ensure that
   these properties are respected or not, see below.

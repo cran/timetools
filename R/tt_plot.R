@@ -7,7 +7,9 @@ points.TimeIntervalDataFrame <- function (x, y=NULL, cursor=NULL,
 		# individual serial parameters
 		lty <- rep (lty, length.out=length(y))
 		lwd <- rep (lwd, length.out=length(y))
-		pch <- rep (pch, length.out=length(y))
+		if( is.data.frame(pch) )
+			pch <- as.list(pch[rep(1:length(pch), length.out=length(y))]) else
+			pch <- rep (pch, length.out=length(y))
 		if (is.null(col))
 			col <- sample (colors(), length(y)) else
 			col <- rep (col, length.out=length(y))
@@ -24,6 +26,7 @@ points.TimeIntervalDataFrame <- function (x, y=NULL, cursor=NULL,
 			trash <- mapply (points, y=y, pch=pch, col=col, ..., MoreArgs=list(x=start(x), type=type))
 			trash <- mapply (points, y=y, pch=pch, col=col, ..., MoreArgs=list(x=end(x), type=type))
 		}
+		pch <- sapply(pch, paste, collapse=', ')
 		if (length (y) > 0)
 			invisible(data.frame (names=names(y), type, lty, lwd, pch, col, stringsAsFactors=FALSE))
 	} else {
@@ -78,13 +81,16 @@ points.TimeInstantDataFrame <- function (x, y=NULL,
 	type <- rep (type, length.out=length(y))
 	lty <- rep (lty, length.out=length(y))
 	lwd <- rep (lwd, length.out=length(y))
-	pch <- rep (pch, length.out=length(y))
+	if( is.data.frame(pch) )
+		pch <- as.list(pch[rep(1:length(pch), length.out=length(y))]) else
+		pch <- rep (pch, length.out=length(y))
 	if (is.null(col))
 		col <- sample (colors(), length(y)) else
 		col <- rep (col, length.out=length(y))
 	
 	# plotting
 	trash <- mapply (points, y=y, pch=pch, col=col, type=type, lty=lty, lwd=lwd, ..., MoreArgs=list(x=when(x)))
+	pch <- sapply(pch, paste, collapse=', ')
 	if (length(y) > 0)
 		invisible(data.frame (names=names(y), type, lty, lwd, pch, col, stringsAsFactors=FALSE))
 }
@@ -128,13 +134,16 @@ points.SubtimeDataFrame <- function (x, y=NULL,
 	type <- rep (type, length.out=length(y))
 	lty <- rep (lty, length.out=length(y))
 	lwd <- rep (lwd, length.out=length(y))
-	pch <- rep (pch, length.out=length(y))
+	if( is.data.frame(pch) )
+		pch <- as.list(pch[rep(1:length(pch), length.out=length(y))]) else
+		pch <- rep (pch, length.out=length(y))
 	if (is.null(col))
 		col <- sample (colors(), length(y)) else
 		col <- rep (col, length.out=length(y))
 	
 	# plotting
 	trash <- mapply (points, y=y, pch=pch, col=col, type=type, lwd=lwd, lty=lty, ..., MoreArgs=list(x=when(x)))
+	pch <- sapply(pch, paste, collapse=', ')
 	if (length(y) > 0)
 		invisible(data.frame (names=names(y), type, lty, lwd, pch, col, stringsAsFactors=FALSE))
 }

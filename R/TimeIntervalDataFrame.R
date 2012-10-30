@@ -72,7 +72,8 @@ TimeIntervalDataFrame <- function (start, end=NULL, timezone='UTC', data=NULL, .
 	if (is.character (start) ) start <- as.POSIXct (start, timezone)
 	if (is.character (end) ) end <- as.POSIXct (end, timezone)
 	if (is.null (data)) data <- data.frame (matrix (NA, ncol=0, nrow=length(start) ) )
-	new ('TimeIntervalDataFrame', start=start, end=end, timezone=timezone, data=data)
+	new ('TimeIntervalDataFrame', start=start, end=end,
+	     timezone=timezone, data=data)
 }
 
 #' Create a regular TimeIntervalDataFrame from scratch
@@ -141,25 +142,27 @@ RegularTimeIntervalDataFrame <- function (from, to, by, period, timezone='UTC', 
 	end <- end[tk]
 
 	if (is.null (data)) data <- data.frame (matrix (NA, ncol=0, nrow=length(start) ) )
-	new ('TimeIntervalDataFrame', start=start, end=end, timezone=timezone, data=data)
+	new ('TimeIntervalDataFrame', start=start, end=end,
+	     timezone=timezone, data=data)
 }
 
 # definition des accesseurs de l'objet
 #-------------------------------------
 
-start.TimeIntervalDataFrame <- function(x, ...) return(x@start)
-end.TimeIntervalDataFrame <- function(x, ...) return(x@end)
+start.TimeIntervalDataFrame <- function(x, ...) return(as.POSIXct(as.POSIXlt(x@start, timezone(x))))
+end.TimeIntervalDataFrame <- function(x, ...) return(as.POSIXct(as.POSIXlt(x@end, timezone(x))))
 #' @rdname time.properties
 #' @aliases timezone,TimeIntervalDataFrame-method
 setMethod (f='timezone', signature='TimeIntervalDataFrame',
-	   definition=function(object) return(object@timezone) )
+	   definition=function(object) return(object@timezone[1]) )
 #' @rdname time.properties
 #' @aliases timezone<-,TimeIntervalDataFrame-method
 setMethod (f='timezone<-', signature='TimeIntervalDataFrame',
 		  definition=function(object, value) {
 	start <- as.POSIXct (as.POSIXlt (object@start, value) )
 	end <- as.POSIXct (as.POSIXlt (object@end, value) )
-	new ('TimeIntervalDataFrame', start=start, end=end, timezone=value, data=data.frame (object) )
+	new ('TimeIntervalDataFrame', start=start, end=end,
+	     timezone=value, data=data.frame (object) )
 } )
 #' @rdname time.properties
 #' @aliases interval,TimeIntervalDataFrame-method
@@ -334,15 +337,24 @@ rbind.TimeIntervalDataFrame <- function (...) {
 }
 # cbind # a faire eventuellement entre un Time*DataFrame et une data.frame
 merge.TimeIntervalDataFrame <- function(x, y, by, all=TRUE, tz='UTC', ...) {
-	if (!inherits(y, 'TimeIntervalDataFrame')) stop ("'y' must be a 'TimeIntervalDataFrame'.")
+	if (!inherits(y, 'TimeIntervalDataFrame'))
+		stop ("'y' must be a 'TimeIntervalDataFrame'.")
 	if (missing (by) ) by <- intersect (names (x), names(y))
 	start.vec <- list (start(x), start(y))
 	end.vec <- list (end(x), end(y))
-	x.data <- data.frame (start=format (start(x), format='%Y-%m-%d %H:%M:%S', tz='UTC'),
-			      end=format (end(x), format='%Y-%m-%d %H:%M:%S', tz='UTC'),
+	x.data <- data.frame (start=format (start(x),
+					    format='%Y-%m-%d %H:%M:%S',
+					    tz='UTC'),
+			      end=format (end(x),
+					  format='%Y-%m-%d %H:%M:%S',
+					  tz='UTC'),
 			      x@data)
-	y.data <- data.frame (start=format (start(y), format='%Y-%m-%d %H:%M:%S', tz='UTC'),
-			      end=format (end(y), format='%Y-%m-%d %H:%M:%S', tz='UTC'),
+	y.data <- data.frame (start=format (start(y),
+					    format='%Y-%m-%d %H:%M:%S',
+					    tz='UTC'),
+			      end=format (end(y),
+					  format='%Y-%m-%d %H:%M:%S',
+					  tz='UTC'),
 			      y@data)
 	z <- merge (x.data, y.data, by=unique (c('start', 'end', by) ), all=all, ...)
 	z <- new ('TimeIntervalDataFrame',
@@ -362,7 +374,8 @@ setMethod ('lapply', signature('TimeIntervalDataFrame', 'ANY'),
 			   X@data <- data.frame (res[names(X)])
 		   } else if (all (sapply (res, length) == 1)) {
 			   X <- new ('TimeIntervalDataFrame',
-				     start=min(start(X)), end=max(end(X)), timezone=timezone(X),
+				     start=min(start(X)), end=max(end(X)),
+				     timezone=timezone(X),
 				     data=data.frame (res))
 		   } else {
 			   stop ("try to apply inadequate function over SubtimeDataFrame.")
@@ -410,7 +423,8 @@ setMethod (f='continuous<-', signature='TimeIntervalDataFrame',
 		   data <-  as.data.frame (matrix(NA, nrow=nrow(x)-1, ncol=ncol(x) ) )
 		   names (data) <- names (x)
 		   complementaire <- new ('TimeIntervalDataFrame',
-					  start=end(x)[-nrow(x)], end=start(x)[-1], timezone=x@timezone,
+					  start=end(x)[-nrow(x)], end=start(x)[-1],
+					  timezone=x@timezone,
 					  data= data)
 		   return (merge (x, complementaire, tz=timezone(x) ) )
 	   } )
@@ -456,7 +470,8 @@ as.TimeInstantDataFrame.TimeIntervalDataFrame <- function(from, cursor=NULL, ...
 				weighted.mean (c(x, y), c(wx, wy), na.rm=TRUE),
 			   start(from), end(from), 1-cursor, cursor)
 	instant <- as.POSIXct(instant, origin=timetools::origin)
-	to <- new ('TimeInstantDataFrame', instant=instant, timezone=timezone(from), data=from@data)
+	to <- new ('TimeInstantDataFrame', instant=instant,
+		   timezone=timezone(from), data=from@data)
 	validObject(to)
 	return (to)
 }

@@ -1,10 +1,10 @@
-225670c18eef8088607afb65d2915921 *DESCRIPTION
+ccf6f6024b6dbb123966d67ea32df43a *DESCRIPTION
 49265ea708c234b31e08519cfcf5847a *NAMESPACE
 2c864d3825013340dc48c1797f90b22c *R/00generic.R
 f46e1463f73aae845eba09ab238eee7e *R/01utils.R
 cefd3b1b551f1196e3b975a9425e0dd9 *R/SubtimeDataFrame.R
-349eb07ddf49caacc95ba2ea052f4d42 *R/TimeInstantDataFrame.R
-426fc046e4d3a7eaa13dfce070b17f73 *R/TimeIntervalDataFrame.R
+50e12b0e574f32ab8711bd4d1e86b7d2 *R/TimeInstantDataFrame.R
+fede07fe68af689e55bdfe821d66648b *R/TimeIntervalDataFrame.R
 74f75dce84aae97b3d85f7e84f4d5e9b *R/changeSupport.R
 83af59e462491115b2d86d6771ff2767 *R/compute.lim.R
 33a94a251799c3fc593c15dc1d5d46cd *R/decompose.R
@@ -14,10 +14,10 @@ cefd3b1b551f1196e3b975a9425e0dd9 *R/SubtimeDataFrame.R
 1e772864f787d843bbf150230c8ec811 *R/posixt.R
 91775ab04616071d39aa06b08c763cb9 *R/subtime.R
 c8dfcfe82c3b883948e65367dbbfc5f8 *R/test.R
-57eb2eee586a858327658169b4b8bf20 *R/tt_plot.R
+603bb3d3c4c10974b8e716136d396faf *R/tt_plot.R
 7b57547fec0eadd524c20e066445cc53 *R/zzz.R
-8c24df5b912eeaf291e65e50f239cc56 *README
-e9217510028859d651a15687d666575d *TODO
+18869ebe9e9abcd49041cd27bf35f031 *README
+271afbbd1eaf2811965d5cac3a321a28 *TODO
 fa7722857390a92e13bafd596d0e9e2c *man/POSIXcti-class.Rd
 a5e7111e2f1f1ab1213ed7e120c6eb4b *man/POSIXctp-class.Rd
 598ca38153d3af214037d364915f2d81 *man/POSIXt.units.Rd
@@ -27,7 +27,7 @@ fc668ea1d66b63e6af1cc7363af3139b *man/SubtimeDataFrame-class.Rd
 979a51f8018fee16f4bc4c8a7a9b18b9 *man/SubtimeDataFrame.Rd
 3ca9ffed8c25a28d71ed6729f72202d4 *man/TimeInstantDataFrame-class.Rd
 f2421a14ea36519e0fd65a4130ecbd13 *man/TimeInstantDataFrame.Rd
-cbe708678afef54fd9b24d86da455139 *man/TimeIntervalDataFrame-class.Rd
+8f73ce2842818ada39b9c3f599ef7f2d *man/TimeIntervalDataFrame-class.Rd
 a52a48d3f4ee139e8b1f823112aeaf21 *man/TimeIntervalDataFrame.Rd
 8d8537c9c0d5529cd82b03e4e86cb2f8 *man/as.POSIXcti.Rd
 8a6763dc854cb9fb5fbeaadd7d97b6ba *man/as.POSIXctp.Rd
@@ -43,7 +43,7 @@ d624b6bb053f3b3aac756e924be77d07 *man/compute.lim.Rd
 61ab9f02adff345c913f027e819b6411 *man/posix.properties.Rd
 00581ddf6cf7e0c493f49537c45c6664 *man/subtime.Rd
 3efd6676083acda3317530db51666fa5 *man/time.properties.Rd
-edc85e84a46d12f640185fabfe2795f5 *man/timetools-package.Rd
+5585775d4b01d226556a21729a959fac *man/timetools-package.Rd
 415cb7ed6d87a75c5794917a85e3af96 *src/Makevars
 0961a6779233408bacb59cde992ad382 *src/overlapping.c
 ad87b1bdf25d05b61ade62de3e2d616b *src/project_intersection.c

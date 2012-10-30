@@ -113,11 +113,11 @@ RegularTimeInstantDataFrame <- function (from, to, by, timezone='UTC', data=NULL
 #' @rdname time.properties
 #' @aliases when,TimeInstantDataFrame-method
 setMethod (f='when', signature='TimeInstantDataFrame',
-	   definition=function(x, ...) return(x@instant) )
+	   definition=function(x, ...) return(as.POSIXct(as.POSIXlt(x@instant, timezone(x)))) )
 #' @rdname time.properties
 #' @aliases timezone,TimeInstantDataFrame-method
 setMethod (f='timezone', signature='TimeInstantDataFrame',
-	   definition=function(object) return(object@timezone) )
+	   definition=function(object) return(object@timezone[1]) )
 #' @rdname time.properties
 #' @aliases timezone<-,TimeInstantDataFrame-method
 setMethod (f='timezone<-', signature='TimeInstantDataFrame',
@@ -160,7 +160,8 @@ summary.TimeInstantDataFrame <- function (object, ...)
 	if(missing(i)) i <- seq_len(nrow(x))
 	y <- new ('TimeInstantDataFrame', 
 	     instant = when(x)[i, drop=drop],
-	     data = x@data[i, j, drop=drop])
+	     data = x@data[i, j, drop=drop],
+	     timezone=timezone(x)[1])
 	validObject(y)
 	return(y)
 }
@@ -252,7 +253,7 @@ split.TimeInstantDataFrame <- function(x, f, drop=FALSE, ...) {
 		   i <- split (when(x), f, drop)
 		   data <- split (x@data, f, drop)
 		   mapply (SIMPLIFY=FALSE, new, 'TimeInstantDataFrame',
-			   instant=i, data=data)
+			   instant=i, data=data, timezone=timezone(x))
 	   }
 
 # fonction réalisée en S3 pour ne pas imposer de 'signature'
@@ -269,19 +270,25 @@ rbind.TimeInstantDataFrame <- function (...) {
 	new('TimeInstantDataFrame', instant=instant, timezone=timezone (dots[[1]]), data=df)
 }
 # cbind # a faire eventuellement entre un Time*DataFrame et une data.frame
-merge.TimeInstantDataFrame <- function(x, y, by, all=TRUE, tz='UTC', ...) {
-		instant.vec <- list (when(x), when(y))
-		x.data <- data.frame (instant=format (when(x), format='%Y-%m-%d %H:%M:%S', tz='UTC'),
-				      x@data)
-		y.data <- data.frame (instant=format (when(y), format='%Y-%m-%d %H:%M:%S', tz='UTC'),
-				      y@data)
-		z <- merge (x.data, y.data, by=unique (c('instant', by) ), all=all, ...)
-		z <- new ('TimeInstantDataFrame',
-		     instant=as.POSIXct(z$instant, tz='UTC'),
-		     data=z[setdiff(names(z), c('instant'))])
-		timezone(z) <- tz
-		return (z)
-	   }
+merge.TimeInstantDataFrame <- function(x, y, by, all=TRUE, tz='UTC', ...)
+{
+	instant.vec <- list (when(x), when(y))
+	x.data <- data.frame (instant=format (when(x),
+					      format='%Y-%m-%d %H:%M:%S',
+					      tz='UTC'),
+			      x@data)
+	y.data <- data.frame (instant=format (when(y),
+					      format='%Y-%m-%d %H:%M:%S',
+					      tz='UTC'),
+			      y@data)
+	z <- merge (x.data, y.data, by=unique (c('instant', by) ), all=all, ...)
+	z <- new ('TimeInstantDataFrame',
+     		  instant=as.POSIXct(z$instant, tz='UTC'),
+     		  data=z[setdiff(names(z), c('instant'))],
+     		  timezone=tz)
+	timezone(z) <- tz
+	return (z)
+}
 
 setMethod ('lapply', signature('TimeInstantDataFrame', 'ANY'),
 	   function (X, FUN, ...)
@@ -291,7 +298,8 @@ setMethod ('lapply', signature('TimeInstantDataFrame', 'ANY'),
 			   X@data <- data.frame (res[names(X)])
 		   } else if (all (sapply (res, length) == 1)) {
 			   X <- new ('TimeIntervalDataFrame',
-				     start=min(when(X)), end=max(when(X)), timezone=timezone(X),
+				     start=min(when(X)), end=max(when(X)),
+				     timezone=timezone(X),
 				     data=data.frame (res))
 		   } else {
 			   stop ("try to apply inadequate function over SubtimeDataFrame.")
@@ -337,7 +345,8 @@ as.TimeIntervalDataFrame.TimeInstantDataFrame <- function(from, period, ...) {
 		period <- POSIXctp (period, 'second')
 	}
 
-	to <- new ('TimeIntervalDataFrame', start=when(from), end=when(from)+period, 
+	to <- new ('TimeIntervalDataFrame',
+		   start=when(from), end=when(from)+period, 
 		   timezone=timezone(from), data=from@data)
 	validObject(to)
 	return (to)

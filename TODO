@@ -9,4 +9,6 @@ Pour la version 1.2-0
 
 N'importe quand
 ---------------
-Corriger les fonctions split pour avoir des noms cohérents
+Corriger les fonctions split pour avoir des noms cohérents --> ?
+Ajout d'un argument pour mettre la légende ?
+Ajout d'arguments aux méthodes '[' pour sélectionner sur les dates (type year.end, month.start, etc.) ?
