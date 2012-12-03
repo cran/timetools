@@ -45,6 +45,13 @@ format.POSIXcti <- function (x, format='%Y-%m-%d %H:%M:%S', ...) {
 print.POSIXcti <- function(x, ...) print (format (x) )
 setMethod ('show', 'POSIXcti', function(object) show (format (object) ))
 
+tail.POSIXcti <- function (x, ...) tail(format(x, ...))
+
+head.POSIXcti <- function (x, ...) head(format(x, ...))
+
+summary.POSIXcti <- function (object, ...)
+	summary(format(object, ...))
+
 setMethod ('length', 'POSIXcti', function(x)length (x@start))
 '[<-.POSIXcti' <- function (x, i, value) {
 	s <- start (x)
@@ -93,12 +100,23 @@ as.POSIXcti.logical <- function (from, ...)
 
 # '%union%' <- function(i1, i2) {}
 
+split.POSIXcti <- function(x, f, drop=FALSE, ...)
+{
+	i <- seq_len(length(x))
+	i <- split(i, f)
+	lapply(i, function(i, x) x[i], x)	
+}
+
 c.POSIXcti <- function(...){
 	pers <- list(...)
-	if (!all (sapply (pers, inherits, 'POSIXcti') ) )
+	if (!all (sapply (pers, inherits, 'POSIXcti') ) ) {
 		NextMethod('c')
-	else
-		new('POSIXcti', start=sapply(pers, start), duration=sapply(pers, duration))
+	} else {
+		if( length(unique(sapply(pers, function(x) attributes(start(x))$tz[1]))) > 1 )
+			warning( "timezone are differents. The first is used." )
+		s <- do.call(c, lapply(pers, start))
+		new('POSIXcti', start=s, duration=unlist(lapply(pers, duration)))
+	}
 }
 
 Ops.POSIXcti <- function (e1, e2) {
@@ -121,4 +139,27 @@ Ops.POSIXcti <- function (e1, e2) {
 		return (e2 < e1)
 	if (.Generic == '>=')
 		return (e2 <= e1)
+}
+
+setMethod('match', signature('POSIXcti', 'POSIXcti'),
+	function(x, table, nomatch = NA_integer_, incomparables=NULL)
+	{
+		m <- match(x@start, table@start, nomatch, incomparables)
+		m[table@duration[m]!=x@duration] <- nomatch
+		m
+	} )
+setMethod('%in%', signature('POSIXcti', 'POSIXcti'),
+	function(x, table) match(x, table, 0L) > 0L)
+
+unique.POSIXcti <- function(x, incomparables=FALSE, ...)
+{
+	u <- x[1]
+	if(length(x) > 1)
+	for( i in 2:length(x) ) {
+		xi <- x[i]
+		if(!any(duration(xi) == duration(u) &
+			start(xi) == start(u)))
+			suppressWarnings( u <- c(u, xi) )
+	}
+	return( u )
 }

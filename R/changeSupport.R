@@ -21,8 +21,8 @@
 setMethod ('changeSupport', signature(from='TimeIntervalDataFrame', to='TimeIntervalDataFrame',
 				min.coverage='numeric', FUN='ANY', weights.arg='ANY',
 				split.from='ANY', merge.from='ANY'),
-	   definition=function (from, to, min.coverage, FUN=NULL, weights.arg=NULL, ...,
-				split.from=FALSE, merge.from=TRUE) {
+	   definition=function (from, to, min.coverage, FUN=NULL, weights.arg=NULL,
+				split.from=FALSE, merge.from=TRUE, ...) {
 		   fun.args <- list (...)
 		   if (is.null (FUN) ) {
 			   if (length (fun.args) != 0 | !is.null(weights.arg) )
@@ -208,7 +208,7 @@ setMethod ('changeSupport', signature(from='TimeIntervalDataFrame', to='POSIXctp
 				ifelse(second(e, of='year') == 0, 0, 1)
 		} else if (u == 'month') {
 			e <- max(end(from))
-			nb <- (year(e) - year(s))*12 + month(e) - month(s) +
+			nb <- (year(e) - year(s))*12 + as.numeric(month(e)) - as.numeric(month(s)) +
 				ifelse(second(e, of='month') == 0, 0, 1)
 		} else {
 			u <- switch (u, second='secs', minute='mins',
@@ -217,7 +217,7 @@ setMethod ('changeSupport', signature(from='TimeIntervalDataFrame', to='POSIXctp
 			nb <- ceiling (nb/duration(to))
 		}
 
-		   e <- s+nb * to
+		   e <- s+as.numeric(nb) * to
 
 		   result <- RegularTimeIntervalDataFrame (s, e, by=period, timezone=timezone(from))
 		   result <- do.call (changeSupport, c(from=from, to=result, min.coverage=min.coverage,
@@ -225,3 +225,4 @@ setMethod ('changeSupport', signature(from='TimeIntervalDataFrame', to='POSIXctp
 						       split.from=FALSE, merge.from=TRUE) )
 		   return (result)
 	   } )
+

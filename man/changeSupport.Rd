@@ -6,8 +6,8 @@
 \title{Function to change time support of TimeIntervalDataFrame}
 \usage{
   changeSupport(from, to, min.coverage, FUN = NULL,
-    weights.arg = NULL, ..., split.from = FALSE,
-    merge.from = TRUE)
+    weights.arg = NULL, split.from = FALSE,
+    merge.from = TRUE, ...)
 }
 \arguments{
   \item{from}{\code{\link{TimeIntervalDataFrame}} for wich

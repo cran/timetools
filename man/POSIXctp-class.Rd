@@ -13,8 +13,17 @@
 \alias{[<-.POSIXctp}
 \alias{format.POSIXctp}
 \alias{print.POSIXctp}
+\alias{summary.POSIXctp}
+\alias{head.POSIXctp}
+\alias{tail.POSIXctp}
 \alias{c.POSIXctp}
+\alias{unique.POSIXctp}
+\alias{split.POSIXctp}
+\alias{as.numeric,POSIXctp-method}
 %\alias{as.POSIXctp.logical}
+\alias{match,POSIXctp,POSIXctp-method}
+\alias{match,POSIXctp,ANY-method}
+\alias{\%in\%,POSIXctp,ANY-method}
 
 \title{Class \code{"POSIXctp"}}
 \description{
@@ -68,6 +77,7 @@
     \item{[}{\code{x, i, ...}: ... }
     \item{[<-}{\code{x, i, value}: ... }
     \item{c}{\code{...}: ... }
+    \item{split}{\code{x, f, drop=FALSE, ...}: ... }
   }
 }
 \section{Access to POSIXctp properties}{
@@ -90,6 +100,9 @@
     \item{+}{\code{signature(e1 = "POSIXctp", e2="POSIXctp")}: ... }
     \item{-}{\code{signature(e1 = "POSIXct", e2="POSIXctp")}: ... }
     \item{-}{\code{signature(e1 = "POSIXcti", e2="POSIXctp")}: ... }
+    \item{as.numeric}{\code{x, ...}: ... }
+    \item{match}{\code{x, table, nomatch = NA_integer_, incomparables=NULL}: ... }
+    \item{\%in\%}{\code{x, table}: ... }
   }
 }
 \section{Text representation}{
@@ -97,10 +110,14 @@
     \item{print}{\code{x, ...}: ... }
     \item{format}{\code{x, ...}: ... }
     \item{show}{\code{signature(object='POSIXctp')}: ... }
+    \item{summary}{\code{object, ...}: ... }
+    \item{head}{\code{x, ...}: ... }
+    \item{tail}{\code{x, ...}: ... }
   }
 }
 \seealso{
-  \code{\link[base]{POSIXct}}, \code{\link{POSIXcti}}
+  \code{\link[base]{POSIXct}}, \code{\link{POSIXcti}}, 
+  \code{\link{POSIXst}}
 }
 \examples{
 showClass("POSIXctp")

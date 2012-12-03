@@ -1,5 +1,3 @@
-setOldClass ('subtime')
-
 # fonctions génériques
 #---------------------
 #' @rdname posix.properties
@@ -11,6 +9,7 @@ year <- function(x, ...) UseMethod('year')
 #' \code{year}, \code{month}, \code{day}, \code{hour},
 #' \code{minute} and \code{second} are methods
 #' defined to extract the adequat information from a time object.
+#' These functions are wrappers to \code{\link{POSIXst}}.
 #'
 #' \code{unit} \code{unit<-} is used to extract or set
 #' the unit of a time object
@@ -25,7 +24,7 @@ year <- function(x, ...) UseMethod('year')
 #' For instance : \code{day(x, 'week')} will differ
 #' from \code{day(x, 'year')}.
 #' @param \dots arguments to or from other methods
-#' @inheritParams subtime
+#' @inheritParams POSIXst
 #'
 #' @aliases year-methods
 setGeneric ('year', function (x, ...) standardGeneric ('year') )
@@ -38,9 +37,9 @@ setGeneric ('month', function (x, ...) standardGeneric ('month') )
 day <- function(x, of, ...) UseMethod('day')
 #' @rdname posix.properties
 #' @aliases day-methods
-setGeneric ('day', function (x, of, ..., first.day=0) standardGeneric ('day') )
+setGeneric ('day', function (x, of, ...) standardGeneric ('day') )
 #' @rdname posix.properties
-hour <- function(x, of, ..., first.day=0) UseMethod('hour')
+hour <- function(x, of, ...) UseMethod('hour')
 #' @rdname posix.properties
 #' @aliases hour-methods
 setGeneric ('hour', function (x, of, ...) standardGeneric ('hour') )
@@ -75,6 +74,10 @@ setGeneric ('duration', function (x, ...) standardGeneric ('duration') )
 #----------------
 #' @rdname time.properties
 timezone <- function (object) UseMethod('timezone')
+#' @rdname time.properties
+what <- function(x, ...) UseMethod('what')
+#' @rdname time.properties
+of <- function(x, ...) UseMethod('of')
 
 # generic pour interval (S3)
 #---------------------------
@@ -140,17 +143,19 @@ as.TimeIntervalDataFrame <- function(from, ...) UseMethod ('as.TimeIntervalDataF
 as.TimeInstantDataFrame  <- function(from, ...) UseMethod ('as.TimeInstantDataFrame')
 #' Convert an object to a SubtimeDataFrame
 #'
-#' @param from object to convert to a TimeInstantDataFrame
+#' @param x object to convert to a TimeInstantDataFrame
+#' @inheritParams POSIXst
 #' @param \dots more args to or from other methods or FUN
 #' @return a \code{\link{SubtimeDataFrame}}
-as.SubtimeDataFrame  <- function(from, ...) UseMethod ('as.SubtimeDataFrame')
+as.SubtimeDataFrame  <- function(x, unit, of, ...)
+	UseMethod ('as.SubtimeDataFrame')
 
 # generic pour toutes les classes Time*DataFrame
 #-----------------------------------------------
 # S4
 setGeneric (name='nrow')
 setGeneric (name='ncol')
-#setGeneric (name='split')
+setGeneric (name='split')
 setGeneric (name='lapply')
 
 #' @rdname time.properties
@@ -160,7 +165,7 @@ continuous <- function(x, ...) UseMethod('continuous')
 #' These functions can be applied to Time objects such as
 #' \code{\link[=TimeIntervalDataFrame-class]{TimeIntervalDataFrame}},
 #' \code{\link[=TimeInstantDataFrame-class]{TimeInstantDataFrame}} or
-#' \code{\link{subtime}}.
+#' \code{\link{POSIXst}}.
 #'
 #' @section reminder:
 #' For each class, you can type the following code to know
@@ -277,7 +282,8 @@ setGeneric (name='timezone<-', def=function (object, value) standardGeneric ('ti
 setGeneric (name='interval', def=function(x, ...) standardGeneric('interval'))
 
 #' @rdname changeSupport
-changeSupport <- function(from,to,min.coverage,FUN=NULL,weights.arg=NULL, ...,split.from=FALSE,merge.from=TRUE)
+changeSupport <- function(from,to,min.coverage,FUN=NULL,weights.arg=NULL,
+			  split.from=FALSE,merge.from=TRUE, ...)
 UseMethod ('changeSupport')
 #' Function to change time support of TimeIntervalDataFrame
 #'
@@ -381,7 +387,8 @@ UseMethod ('changeSupport')
 #'
 #' @seealso \code{\link{TimeIntervalDataFrame}}, \code{\link{POSIXcti}}
 setGeneric (name='changeSupport', def=function(from, to, min.coverage,
-					       FUN=NULL, weights.arg=NULL, ...,
-					       split.from=FALSE, merge.from=TRUE)
+					       FUN=NULL, weights.arg=NULL,
+					       split.from=FALSE, merge.from=TRUE,
+					       ...)
 	    standardGeneric('changeSupport') )
  

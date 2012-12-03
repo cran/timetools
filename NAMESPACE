@@ -5,23 +5,11 @@ importFrom (utils, head, tail)
 
 export (origin, POSIXt.units)
 
-exportClasses (TimeIntervalDataFrame, TimeInstantDataFrame, SubtimeDataFrame)
+exportClasses (TimeIntervalDataFrame, TimeInstantDataFrame, SubtimeDataFrame,
+	       POSIXst)
 export (as.TimeInstantDataFrame, as.TimeIntervalDataFrame,
 	compute.lim, as.SubtimeDataFrame)
 
-# subtime extracting
-#-------------------
-export (subtime, subtime.POSIXct, subtime.POSIXlt, timezone.subtime, timezone,
-		subtime.TimeIntervalDataFrame, subtime.TimeInstantDataFrame,
-		subtime.default, subtime.numeric)
-S3method(subtime, POSIXlt)
-S3method(subtime, POSIXct)
-S3method(subtime, default)
-S3method(subtime, numeric)
-S3method(subtime, TimeIntervalDataFrame)
-S3method(subtime, TimeInstantDataFrame)
-S3method(timezone, subtime)
-	
 # generic methods (S3)
 #---------------------
 #POSIXcti
@@ -29,34 +17,81 @@ export ('%intersect%', '%intersect%.POSIXcti',
 	'%included%', '%included%.POSIXcti',
 	POSIXcti, start.POSIXcti, end.POSIXcti, format.POSIXcti, print.POSIXcti,
 	'[.POSIXcti', '[<-.POSIXcti',
-	Ops.POSIXcti, c.POSIXcti,
+	Ops.POSIXcti, c.POSIXcti, unique.POSIXcti,
+	format.POSIXcti, print.POSIXcti, head.POSIXcti, tail.POSIXcti,
+	summary.POSIXcti, split.POSIXcti,
 	as.POSIXcti, as.POSIXcti.logical)
+
 S3method (start, POSIXcti)
 S3method (end, POSIXcti)
-S3method (format, POSIXcti)
-S3method (print, POSIXcti)
+S3method('%intersect%', 'POSIXcti')
+S3method('%included%', 'POSIXcti')
+
+S3method(format, POSIXcti)
+S3method(print, POSIXcti)
+S3method(head, POSIXcti)
+S3method(tail, POSIXcti)
+S3method(summary, POSIXcti)
 S3method (Ops, POSIXcti)
 S3method (c, POSIXcti)
 S3method ('[', POSIXcti)
 S3method ('[<-', POSIXcti)
-S3method('%intersect%', 'POSIXcti')
-S3method('%included%', 'POSIXcti')
+S3method ('split', POSIXcti)
 
 # POSIXctp
 export (POSIXctp, format.POSIXctp, print.POSIXctp,
 	'[.POSIXctp', '[<-.POSIXctp',
-	Ops.POSIXctp, c.POSIXctp,
+	Ops.POSIXctp, c.POSIXctp, unique.POSIXctp,
+	format.POSIXctp, print.POSIXctp, head.POSIXctp, tail.POSIXctp,
+	summary.POSIXctp, split.POSIXctp,
 	as.POSIXctp, as.POSIXctp.logical) #, as.POSIXctp.POSIXt)
-S3method (format, POSIXctp)
-S3method (print, POSIXctp)
+
+S3method(format, POSIXctp)
+S3method(print, POSIXctp)
+S3method(head, POSIXctp)
+S3method(tail, POSIXctp)
+S3method(summary, POSIXctp)
+S3method (Ops, POSIXctp)
 S3method (c, POSIXctp)
 S3method ('[', POSIXctp)
 S3method ('[<-', POSIXctp)
-S3method ('Ops', 'POSIXctp')
-S3method (c, POSIXctp)
+S3method ('split', POSIXctp)
 
 S3method ('as.POSIXctp', logical)
 #S3method ('as.POSIXctp', 'POSIXt')
+
+# POSIXst
+export (POSIXst, POSIXst.POSIXct, POSIXst.POSIXlt, timezone.POSIXst, timezone,
+	POSIXst.TimeIntervalDataFrame, POSIXst.TimeInstantDataFrame,
+	POSIXst.default, POSIXst.integer, POSIXst.numeric,
+	unit.POSIXst, unit, of, of.POSIXst,
+	'[.POSIXst', '[<-.POSIXst',
+	Ops.POSIXst, c.POSIXst, unique.POSIXst,
+	format.POSIXst, print.POSIXst, head.POSIXst, tail.POSIXst,
+	summary.POSIXst, split.POSIXst)
+
+S3method(POSIXst, POSIXlt)
+S3method(POSIXst, POSIXct)
+S3method(POSIXst, default)
+S3method(POSIXst, integer)
+S3method(POSIXst, numeric)
+S3method(POSIXst, TimeIntervalDataFrame)
+S3method(POSIXst, TimeInstantDataFrame)
+
+S3method(timezone, POSIXst)
+S3method(unit, POSIXst)
+S3method(of, POSIXst)
+
+S3method(format, POSIXst)
+S3method(print, POSIXst)
+S3method(head, POSIXst)
+S3method(tail, POSIXst)
+S3method(summary, POSIXst)
+S3method (Ops, POSIXst)
+S3method (c, POSIXst)
+S3method ('[', POSIXst)
+S3method ('[<-', POSIXst)
+S3method ('split', POSIXst)
 
 # TimeIntervalDataFrame
 export (rbind.TimeIntervalDataFrame, print.TimeIntervalDataFrame,
@@ -179,7 +214,5 @@ exportMethods (	interval, when, period,
 		'[[', '$', '$<-',
 		year, month, day, hour, minute, second,
 		unit, 'unit<-', duration, '+', '-', '*',
-		lapply)
-
-
-
+		as.numeric, match, '%in%',
+		lapply, split)

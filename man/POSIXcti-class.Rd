@@ -13,10 +13,17 @@
 \alias{[<-.POSIXcti}
 \alias{format.POSIXcti}
 \alias{print.POSIXcti}
+\alias{summary.POSIXcti}
+\alias{head.POSIXcti}
+\alias{tail.POSIXcti}
 \alias{c.POSIXcti}
+\alias{unique.POSIXcti}
+\alias{split.POSIXcti}
 %\alias{%included%.POSIXcti}
 %\alias{%intersect%.POSIXcti}
 %\alias{as.POSIXcti.logical}
+\alias{match,POSIXcti,POSIXcti-method}
+\alias{\%in\%,POSIXcti,POSIXcti-method}
 
 \title{Class \code{"POSIXcti"}}
 \description{
@@ -68,6 +75,7 @@
     \item{[}{\code{x, i, ...}: ... }
     \item{[<-}{\code{x, i, value}: ... }
     \item{c}{\code{...}: ... }
+    \item{split}{\code{x, f, drop=FALSE, ...}: ... }
   }
 }
 \section{Access to POSIXcti properties}{
@@ -84,6 +92,8 @@
     \item{'+'}{\code{signature(e1 = "POSIXcti", e2="POSIXctp")}: ... }
     \item{'+'}{\code{signature(e1 = "POSIXctp", e2="POSIXcti")}: ... }
     \item{'-'}{\code{signature(e1 = "POSIXcti", e2="POSIXctp")}: ... }
+    \item{match}{\code{x, table, nomatch = NA_integer_, incomparables=NULL}: ... }
+    \item{\%in\%}{\code{x, table}: ... }
   }
 }
 \section{Text representation}{
@@ -91,10 +101,14 @@
     \item{print}{\code{x, ...}: ... }
     \item{format}{\code{x, format = "\%Y-\%m-\%d \%H:\%M:\%S", ...}: ... }
     \item{show}{\code{signature(object='POSIXcti')}: ... }
+    \item{summary}{\code{object, ...}: ... }
+    \item{head}{\code{x, ...}: ... }
+    \item{tail}{\code{x, ...}: ... }
   }
 }
 \seealso{
-  \code{\link[base]{POSIXct}}, \code{\link{POSIXcti}}, \code{\link{TimeIntervalDataFrame}}
+  \code{\link[base]{POSIXct}}, \code{\link{POSIXcti}}, \code{\link{TimeIntervalDataFrame}},
+  \code{\link{POSIXst}}
 }
 \examples{
 showClass("POSIXcti")

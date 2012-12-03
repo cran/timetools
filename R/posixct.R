@@ -1,53 +1,23 @@
 #' @rdname posix.properties
-#' @aliases year,POSIXct-method
-setMethod ('year', 'POSIXct', function(x, ...) as.POSIXlt (x)$year+1900)
+#' @aliases year,ANY-method
+setMethod ('year', 'ANY', function(x, ...) POSIXst(x, unit='year', ...) )
 #' @rdname posix.properties
-#' @aliases month,POSIXct-method
-setMethod ('month', 'POSIXct', function(x, ...) as.POSIXlt (x)$mon)
+#' @aliases month,ANY-method
+setMethod ('month', 'ANY', function(x, ...) POSIXst(x, unit='month', ...) )
 #' @rdname posix.properties
-#' @aliases day,POSIXct-method
-setMethod ('day', 'POSIXct', function(x, of, ..., first.day=0) {
-		switch (of,
-		year = as.POSIXlt (x)$yday,
-		month = as.POSIXlt (x)$mday,
-		week = as.POSIXlt (x)$wday,
-		"'of' should be one of (year, month, week)")
-		})
+#' @aliases day,ANY-method
+setMethod ('day', 'ANY', function(x, of, ...)
+	   POSIXst(x, unit='day', of=of, ...))
 #' @rdname posix.properties
-#' @aliases hour,POSIXct-method
-setMethod ('hour', 'POSIXct', function(x, of, ...) {
-		lt <- as.POSIXlt (x)
-		switch (of,
-		year = 	lt$yday * 24	 + lt$hour,
-		month =	(lt$mday-1) * 24 + lt$hour,
-		week = 	lt$wday * 24	 + lt$hour,
-		day = 			   lt$hour,
-		"'of' should be one of (year, month, week, day)")
-		})
+#' @aliases hour,ANY-method
+setMethod ('hour', 'ANY', function(x, of, ...)
+	   POSIXst(x, unit='hour', of=of, ...))
 #' @rdname posix.properties
-#' @aliases minute,POSIXct-method
-setMethod ('minute', 'POSIXct', function(x, of, ...) {
-		lt <- as.POSIXlt (x)
-		switch (of,
-		year = 	(lt$yday * 24	  + lt$hour) * 60 + lt$min,
-		month =	((lt$mday-1) * 24 + lt$hour) * 60 + lt$min,
-		week = 	(lt$wday * 24	  + lt$hour) * 60 + lt$min,
-		day = 	(		    lt$hour) * 60 + lt$min,
-		hour = 					    lt$min,
-		"'of' should be one of (year, month, week, day, hour)")
-		})
+#' @aliases minute,ANY-method
+setMethod ('minute', 'ANY', function(x, of, ...)
+	   POSIXst(x, unit='minute', of=of, ...))
 #' @rdname posix.properties
-#' @aliases second,POSIXct-method
-setMethod ('second', 'POSIXct', function(x, of, ...) {
-		lt <- as.POSIXlt (x)
-		switch (of,
-		year = 	((lt$yday * 24	   + lt$hour) * 60 + lt$min) * 60 + lt$sec,
-		month =	(((lt$mday-1) * 24 + lt$hour) * 60 + lt$min) * 60 + lt$sec,
-		week = 	((lt$wday * 24	   + lt$hour) * 60 + lt$min) * 60 + lt$sec,
-		day = 	((		     lt$hour) * 60 + lt$min) * 60 + lt$sec,
-		hour = 	(				     lt$min) * 60 + lt$sec,
-		minute = 						    lt$sec,
-		"'of' should be one of (year, month, week, day, hour, minute)")
-		})
-
+#' @aliases second,ANY-method
+setMethod ('second', 'ANY', function(x, of, ...)
+	   POSIXst(x, unit='second', of=of, ...))
 

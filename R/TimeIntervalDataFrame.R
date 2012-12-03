@@ -126,7 +126,7 @@ RegularTimeIntervalDataFrame <- function (from, to, by, period, timezone='UTC', 
 		nb <- year(to) - year(from) +
 			ifelse(second(to, of='year') == 0, 0, 1)
 	} else if (as.character(unit(by)) == 'month') {
-		nb <- (year(to) - year(from))*12 + month(to) - month(from) +
+		nb <- (year(to) - year(from))*12 + as.numeric(month(to)) - as.numeric(month(from)) +
 			ifelse(second(to, of='month') == 0, 0, 1)
 	} else {
 		u <- switch (as.character(unit(by)), second='secs', minute='mins',
@@ -307,22 +307,26 @@ setMethod (f='names<-', signature='TimeIntervalDataFrame',
 		   x
 	   } )
 
-# Ops
 # Math
 
 # manipulation
 #-------------
-split.TimeIntervalDataFrame <- function(x, f, drop=FALSE, ...) {
-		   vect <- seq_len(nrow(x))
-		   s <- split (start(x), f, drop)
-		   e <- split (end(x), f, drop)
-		   data <- split (x@data, f, drop)
-		   mapply (SIMPLIFY=FALSE, new, 'TimeIntervalDataFrame',
-			   start=s, end=e, data=data, timezone=x@timezone)
-	   }
+split.TimeIntervalDataFrame <- function(x, f, drop=FALSE, ...)
+{
+	vect <- seq_len(nrow(x))
+	s <- split (start(x), f, drop)
+	e <- split (end(x), f, drop)
+	data <- split (x@data, f, drop)
+	x <- mapply( SIMPLIFY=FALSE, new, 'TimeIntervalDataFrame',
+		     start=s, end=e, data=data, timezone=x@timezone,
+		     USE.NAMES=FALSE)
+	names( x ) <- names( data )
+	x
+}
 
 # fonction réalisée en S3 pour ne pas imposer de 'signature'
-rbind.TimeIntervalDataFrame <- function (...) {
+rbind.TimeIntervalDataFrame <- function (...)
+{
 	dots <- list (...)
 	names(dots) <- NULL
 	if (!all (sapply (dots, inherits, 'TimeIntervalDataFrame')))
@@ -333,7 +337,8 @@ rbind.TimeIntervalDataFrame <- function (...) {
 	tz <- timezone (dots[[1]])
 	if (!all (tz == sapply (dots, timezone)))
 		warning ("Not all timezone are identical. Timezone of the first object is used.")
-	new('TimeIntervalDataFrame', start=start, end=end, timezone=tz, data=df)
+	new('TimeIntervalDataFrame', start=start, end=end,
+	     timezone=tz, data=df)
 }
 # cbind # a faire eventuellement entre un Time*DataFrame et une data.frame
 merge.TimeIntervalDataFrame <- function(x, y, by, all=TRUE, tz='UTC', ...) {
@@ -378,7 +383,7 @@ setMethod ('lapply', signature('TimeIntervalDataFrame', 'ANY'),
 				     timezone=timezone(X),
 				     data=data.frame (res))
 		   } else {
-			   stop ("try to apply inadequate function over SubtimeDataFrame.")
+			   stop ("try to apply inadequate function over TimeIntervalDataFrame.")
 		   }
 		   return (X)
 	   } )
@@ -478,14 +483,15 @@ as.TimeInstantDataFrame.TimeIntervalDataFrame <- function(from, cursor=NULL, ...
 
 #' @rdname as.SubtimeDataFrame
 #' @usage 
-#' \method{as.SubtimeDataFrame}{TimeIntervalDataFrame}(from, representation, cursor=NULL, FUN=mean, ..., first.day=0)
+#' \method{as.SubtimeDataFrame}{TimeIntervalDataFrame}(x, unit, of, FUN=NULL, cursor=NULL, ...)
 #'
 #' @section TimeIntervalDataFrame:
 #' If \sQuote{from} is a \code{\link{TimeIntervalDataFrame}},
 #' data is first converted to a TimeInstantDataFrame (see \code{\link{as.TimeInstantDataFrame}}).
 #' Then, this TimeInstantDataFrame is converted to a SubtimeDataFrame (see the appropriated section).
 #' 
-#' @inheritParams as.TimeInstantDataFrame
-as.SubtimeDataFrame.TimeIntervalDataFrame <- function(from, representation, cursor=NULL, FUN=mean, ..., first.day=0)
-	as.SubtimeDataFrame (as.TimeInstantDataFrame (from, cursor), representation, FUN, ..., first.day=first.day)
+#' @inheritParams as.TimeInstantDataFrame.TimeIntervalDataFrame
+as.SubtimeDataFrame.TimeIntervalDataFrame <-
+	function(x, unit, of, FUN=NULL, cursor=NULL, ...)
+	as.SubtimeDataFrame (as.TimeInstantDataFrame (x, cursor), unit, of, FUN, ...)
 

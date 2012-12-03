@@ -4,38 +4,32 @@
 \alias{as.SubtimeDataFrame.TimeIntervalDataFrame}
 \title{Convert an object to a SubtimeDataFrame}
 \usage{
-  as.SubtimeDataFrame(from, ...)
+  as.SubtimeDataFrame(x, unit, of, ...)
 
-  \method{as.SubtimeDataFrame}{TimeInstantDataFrame}(from,
-    representation, FUN=mean, ..., first.day=0)
+  \method{as.SubtimeDataFrame}{TimeInstantDataFrame}(x,
+    unit, of, FUN=NULL, ...)
 
-  \method{as.SubtimeDataFrame}{TimeIntervalDataFrame}(from,
-    representation, cursor=NULL, FUN=mean, ...,
-    first.day=0)
+  \method{as.SubtimeDataFrame}{TimeIntervalDataFrame}(x,
+    unit, of, FUN=NULL, cursor=NULL, ...)
 }
 \arguments{
-  \item{from}{object to convert to a TimeInstantDataFrame}
+  \item{x}{object to convert to a TimeInstantDataFrame}
 
   \item{\dots}{more args to or from other methods or FUN}
 
-  \item{FUN}{function to use for the agregation (see
-  \sQuote{details})}
+  \item{FUN}{function to use for the agregation (if wanted,
+  see \sQuote{details})}
 
-  \item{representation}{character string indicating which
-  subtime is to extract ('mday', 'mon', 'wday', 'yday',
-  'sec', 'min', 'hour').}
+  \item{unit}{indicates the subtime part to extract
+  ('year', 'month', 'day', 'hour', 'minute', 'second')}
 
-  \item{first.day}{used only if \code{representation ==
-  'wday'}. Interger indicating the first day of the week. 0
-  -> sunday (the default), 1 -> monday, 2 -> tuesday, etc.}
+  \item{of}{used to specify the main period from wich the
+  is to extract ('year', 'month', day', 'hour', 'minute').
+  Not used for \sQuote{unit in c('year', 'month')}.}
 
-  \item{cursor}{indicates where the TimeInstant must be
-  taken. If \code{0}, start of each intervals is taken as
-  instant ; if \code{1} end of each intervals is taken as
-  instant.  Any other value will determine a weigthed
-  instant between start and end (actually, value higher
-  than 1 or lower than 0 will give instant outside this
-  range).}
+  \item{cursor}{for TimeIntervalDataFrame, if not NULL, the
+  object is first coerced to a TimeInstantDataFrame using
+  the \code{\link{as.TimeInstantDataFrame}} method.}
 }
 \value{
   a \code{\link{SubtimeDataFrame}}
@@ -44,10 +38,15 @@
   Convert an object to a SubtimeDataFrame
 }
 \section{TimeIntervalDataFrame}{
-  If \sQuote{from} is a \code{\link{TimeInstantDataFrame}},
-  data must be agregated befor conversion. The function to
-  use is specified by \sQuote{FUN}. The default function is
-  \code{\link[base]{mean}}.
+  Conversion from a TimeIntervalDataFrame to a
+  SubtimeDataFrame can be direct or after agregation.
+
+  For a direct conversion (where date are only replaced by
+  the desired subtime), FUN must be NULL.
+
+  For an agregateed conversion, the function to use must be
+  indicated by the FUN arg and all arguments to pass to
+  this function can be given (namely).
 }
 
 \section{TimeIntervalDataFrame}{

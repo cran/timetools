@@ -1,9 +1,9 @@
 # definition de la classe
 #------------------------
 setClass (Class = 'SubtimeDataFrame', 
-	  representation = representation (when='subtime',
+	  representation = representation (when='POSIXst',
 					   data='data.frame'),
-	  prototype = prototype (when=structure (factor(), class=c('subtime', 'factor') ),
+	  prototype = prototype (when=new('POSIXst'),
 				 data=data.frame()),
 	  validity=function(object) {
 		  if (length (when (object)) != nrow (object))
@@ -27,10 +27,10 @@ setClass (Class = 'SubtimeDataFrame',
 #' \code{class?SubtimeDataFrame}
 #'
 #' @examples
-#' st <- subtime (1:4, 'wday')
+#' st <- POSIXst (1:4, 'day', 'week')
 #' SubtimeDataFrame (st, data.frame (test=sample (0:100, 4)))
 #' 
-#' @param when \code{\link{subtime}}.
+#' @param when \code{\link{POSIXst}}.
 #' @param data a data.frame with as much rows as the length of \sQuote{when}.
 #' Can be \code{NULL} (hence the data.frame has zero column and as much
 #' rows as needed).
@@ -38,9 +38,10 @@ setClass (Class = 'SubtimeDataFrame',
 #'
 #' @return a \code{\link[=SubtimeDataFrame-class]{SubtimeDataFrame}} object.
 #' @seealso \code{\link[=SubtimeDataFrame-class]{SubtimeDataFrame}},
-#' \code{\link{subtime}}, \code{\link{timetools}}
+#' \code{\link{POSIXst}}, \code{\link{timetools}}
 SubtimeDataFrame <- function (when, data=NULL, ...) {
-	if (is.null (data)) data <- data.frame (matrix (NA, ncol=0, nrow=length(when) ) )
+	if (is.null (data))
+		data <- data.frame (matrix (NA, ncol=0, nrow=length(when) ) )
 	new ('SubtimeDataFrame', when=when, data=data)
 }
 
@@ -54,41 +55,25 @@ setMethod (f='when', signature='SubtimeDataFrame',
 #' @aliases timezone,SubtimeDataFrame-method
 setMethod (f='timezone', signature='SubtimeDataFrame',
 	   definition=function(object) return(timezone(when(object))) )
-#### À voir plus tard
-# @rdname time.properties
-# @aliases timezone<-,SubtimeDataFrame-method
-# setMethod (f='timezone<-', signature='TimeInstantDataFrame',
-# 		  definition=function(object, value) {
-# 			object@timezone <- value
-# 			object@instant <- as.POSIXct (as.POSIXlt (object@instant, value) )
-# 			return(object)
-# 		} )
 
 # mise en forme pour / et affichage
 #----------------------------------
-print.SubtimeDataFrame <- function (x, ...) {
-	print(data.frame (when=when(x), x@data) )
-	print (levels (when (x)))
-}
+print.SubtimeDataFrame <- function (x, ...)
+	print(data.frame (when=format(when(x), ...), x@data) )
+
 setMethod ('show', 'SubtimeDataFrame',
 	   function (object) {
-	   print(data.frame (when=when(object), object@data) )
-	   print (levels (when (object)))
+	   print(data.frame (when=format(when(object)), object@data) )
 	   } )
-tail.SubtimeDataFrame <- function (x, ...) {
-		print (tail (data.frame (when=when(x), x@data) ) )
-		print (levels (when (x)))
-	   }
+tail.SubtimeDataFrame <- function (x, ...)
+		print (tail (data.frame (when=format(when(x), ...), x@data) ) )
 
-head.SubtimeDataFrame <- function (x, ...) {
-		print(head (data.frame (when=when(x), x@data) ) )
-		print (levels (when (x)))
-	   }
+head.SubtimeDataFrame <- function (x, ...)
+		print(head (data.frame (when=format(when(x), ...), x@data) ) )
 
-summary.SubtimeDataFrame <- function (object, ...) {
-		print (summary (data.frame (when=when(object), object@data) ) )
-		print (levels (when (object)))
-	   }
+summary.SubtimeDataFrame <- function (object, ...)
+		print (summary (data.frame (when=format(when(object), ...),
+					    object@data) ) )
 # format
 
 # defintion des accesseurs aux donnees
@@ -101,7 +86,7 @@ summary.SubtimeDataFrame <- function (object, ...) {
 	}
 	if(missing(i)) i <- seq_len(nrow(x))
 	y <- new ('SubtimeDataFrame', 
-	     when =when (x)[i, drop=drop],
+	     when =when (x)[i],
 	     data = x@data[i, j, drop=drop])
 	validObject(y)
 	return(y)
@@ -122,6 +107,7 @@ setMethod (f='$', signature='SubtimeDataFrame',
 		i <- seq_len(nrow(x))
 	}
 	if(missing(i)) i <- seq_len(nrow(x))
+
 	# les ids servent a voir si la data.frame a evoluer
 	#	en nombre de lignes
 	ids <- sprintf ('ID%i', 1:nrow (x))
@@ -129,9 +115,10 @@ setMethod (f='$', signature='SubtimeDataFrame',
 	tmp <- x@data
 	row.names(tmp) <- ids
 	tmp[i, j] <- value
-	if(!all (available.rows <- row.names (tmp) %in% ids) ){
+
+	if(!all (available.rows <- row.names (tmp) %in% ids) )
 		x@when <- x@when[available.rows]
-	}
+
 	row.names(tmp) <- rn
 	x@data <- tmp
 	validObject(x)
@@ -170,10 +157,11 @@ setMethod (f='nrow', signature='SubtimeDataFrame',
 setMethod (f='ncol', signature='SubtimeDataFrame',
 	   definition=function(x) ncol (x@data))
 row.names.SubtimeDataFrame <- function(x) row.names (x@data)
-'row.names<-.SubtimeDataFrame' <- function(x, value) {
-		   row.names (x@data) <- value
-		   x
-	   }
+'row.names<-.SubtimeDataFrame' <- function(x, value)
+{
+	row.names (x@data) <- value
+	x
+}
 setMethod (f='names', signature='SubtimeDataFrame',
 	   definition=function(x) names (x@data))
 setMethod (f='names<-', signature='SubtimeDataFrame',
@@ -182,18 +170,20 @@ setMethod (f='names<-', signature='SubtimeDataFrame',
 		   x
 	   } )
 
-# Ops
 # Math
 
 # manipulation
 #-------------
-split.SubtimeDataFrame <- function(x, f, drop=FALSE, ...) {
-		   vect <- seq_len(nrow(x))
-		   w <- split (when(x), f, drop)
-		   data <- split (x@data, f, drop)
-		   mapply (SIMPLIFY=FALSE, new, 'SubtimeDataFrame',
-			   when=w, data=data)
-	   }
+split.SubtimeDataFrame <- function(x, f, drop=FALSE, ...)
+{
+	vect <- seq_len(nrow(x))
+	w <- split (when(x), f, drop)
+	data <- split (x@data, f, drop)
+	x <- mapply (SIMPLIFY=FALSE, new, 'SubtimeDataFrame',
+		     when=w, data=data, USE.NAMES=FALSE)
+	names( x ) <- names( data )
+	x
+}
 
 # # fonction réalisée en S3 pour ne pas imposer de 'signature'
 # rbind.SubtimeDataFrame <- function (...) {
@@ -206,17 +196,29 @@ split.SubtimeDataFrame <- function(x, f, drop=FALSE, ...) {
 # }
 # cbind # a faire eventuellement entre un Time*DataFrame et une data.frame
 merge.SubtimeDataFrame <- function(x, y, by, all=TRUE, ...) {
-		if (!inherits(y, 'SubtimeDataFrame')) stop ("'y' must be a 'SubtimeDataFrame'.")
+		if (!inherits(y, 'SubtimeDataFrame'))
+			stop ("'y' must be a 'SubtimeDataFrame'.")
 		if (missing (by) ) by <- NULL
+
 		when.vec <- list (when(x), when(y))
-		if (!all (levels (when(x))== levels(when(y))))
-			stop('Levels of x and y should be the same.')
-		x.data <- data.frame (when=when(x), x@data)
-		y.data <- data.frame (when=when(y), y@data)
-		z <- merge (x.data, y.data, by=unique (c('when', by) ), all=all, ...)
-		when <- factor (z$when, levels=levels(when(x)), ordered=TRUE)
-		attributes(when)$timezone <- timezone(when(x))
-		class (when) <- c('subtime', 'factor')
+
+		if( unit(x) != unit(y) )
+			stop("x and y must have same unit") else
+			u <- unit(x)
+		if( of(x) != of(y) )
+			stop("x and y must have same of") else
+			o <- of(x)
+		if( timezone(x) != timezone(y) )
+			stop("x and y must have same timezone") else
+			tz <- timezone(x)
+
+		x.data <- data.frame (when=as.numeric(format(when(x))), x@data)
+		y.data <- data.frame (when=as.numeric(format(when(y))), y@data)
+		z <- merge (x.data, y.data,
+			    by=unique (c('when', by) ), all=all, ...)
+		
+		when <- POSIXst( z$when, u, o, tz )
+
 		z <- new ('SubtimeDataFrame',
 			  when=when,
 			  data=z[setdiff(names(z), c('when'))])
@@ -253,7 +255,8 @@ setMethod ('lapply', signature('SubtimeDataFrame', 'ANY'),
 #         return (to)
 # }
 
-as.data.frame.SubtimeDataFrame <- function (x, row.names=NULL, optional=FALSE, include.dates=FALSE, ...) {
+as.data.frame.SubtimeDataFrame <- function (x, row.names=NULL, optional=FALSE,
+			include.dates=FALSE, ...) {
 	if (include.dates)
 		return (data.frame (when=when(x), x@data) ) else
 		return (x@data)

@@ -15,10 +15,17 @@ setClass ('POSIXctp',
 POSIXctp <- function (duration, unit)
 {
 	if (missing (duration)) duration <- 1L
+	if( missing(unit) )
+	{
+		unit <- duration
+		duration <- 1L
+	}
 	if (inherits(duration, 'numeric') & !inherits(duration, 'integer')) {
 		#warning('duration is not an integer. It will be coerced to')
 		duration <- as.integer (duration)
 	}
+	if( length(duration) > 1 & length(unit) == 1)
+		unit <- rep( unit, length(duration) )
 	if (inherits (unit, 'character'))
 		unit <- POSIXt.units(unit)
 	return (new('POSIXctp', duration=duration, unit=unit))
@@ -66,6 +73,13 @@ format.POSIXctp <- function (x, ...) {
 print.POSIXctp <- function(x, ...) print (format (x) )
 setMethod ('show', 'POSIXctp', function(object) show (format (object) ))
 
+tail.POSIXctp <- function (x, ...) tail(format(x, ...))
+
+head.POSIXctp <- function (x, ...) head(format(x, ...))
+
+summary.POSIXctp <- function (object, ...)
+	summary(format(object, ...))
+
 setMethod ('length', 'POSIXctp', function(x)length (x@duration))
 
 '[<-.POSIXctp' <- function (x, i, value) {
@@ -84,12 +98,19 @@ as.POSIXctp.logical <- function (from, ...)
 		new ('POSIXctp', duration=as.integer (NA), unit=POSIXt.units('second') ) else
 		stop ('Cannot coerce a logical to a POSIXctp.')
 
+split.POSIXctp <- function(x, f, drop=FALSE, ...)
+{
+	i <- seq_len(length(x))
+	i <- split(i, f)
+	lapply(i, function(i, x) x[i], x)	
+}
+
 c.POSIXctp <- function(...){
 	pers <- list(...)
 	if (!all (sapply (pers, inherits, 'POSIXctp') ) )
 		NextMethod('c')
 	else
-		new('POSIXctp', duration=sapply(pers, duration), unit=sapply(pers, unit))
+		new('POSIXctp', duration=unlist(lapply(pers, duration)), unit=unlist(lapply(pers, unit)))
 }
 
 Ops.POSIXctp <- function (e1, e2) {
@@ -119,4 +140,37 @@ Ops.POSIXctp <- function (e1, e2) {
 		return (e2 < e1)
 	if (.Generic == '>=')
 		return (e2 <= e1)
+}
+
+setMethod('as.numeric', 'POSIXctp', function(x, ...) return( x@duration ))
+
+setMethod('match', signature('POSIXctp', 'POSIXctp'),
+	function(x, table, nomatch = NA_integer_, incomparables=NULL)
+	{
+		m <- match(x@duration, table@duration, nomatch, incomparables)
+		m[unit(table)[m]!=unit(x)] <- nomatch
+		m
+	} )
+setMethod('match', signature('POSIXctp', 'ANY'),
+	function(x, table, nomatch = NA_integer_, incomparables=NULL)
+	{
+		if( length(unique(unit(x))) != 1 )
+			stop("unit of table can't be guessed from x")
+		table <- POSIXctp(table, unique(unit(x)))
+		match(x, table, nomatch, incomparables)
+	} )
+setMethod('%in%', signature('POSIXctp', 'ANY'),
+	function(x, table) match(x, table, 0L) > 0L)
+
+unique.POSIXctp <- function(x, incomparables=FALSE, ...)
+{
+	u <- x[1]
+	if(length(x) > 1)
+	for( i in 2:length(x) ) {
+		xi <- x[i]
+		if(!any(duration(xi) == duration(u) &
+			as.character(unit(xi)) == as.character(unit(u))))
+			u <- c(u, xi)
+	}
+	return( u )
 }

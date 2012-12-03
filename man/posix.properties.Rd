@@ -1,23 +1,23 @@
 \name{year}
 \alias{day}
+\alias{day,ANY-method}
 \alias{day-methods}
-\alias{day,POSIXct-method}
 \alias{duration}
 \alias{duration-methods}
 \alias{duration,POSIXctp-method}
 \alias{hour}
+\alias{hour,ANY-method}
 \alias{hour-methods}
-\alias{hour,POSIXct-method}
 \alias{minute}
+\alias{minute,ANY-method}
 \alias{minute-methods}
-\alias{minute,POSIXct-method}
 \alias{month}
+\alias{month,ANY-method}
 \alias{month-methods}
-\alias{month,POSIXct-method}
 \alias{posix.properties}
 \alias{second}
+\alias{second,ANY-method}
 \alias{second-methods}
-\alias{second,POSIXct-method}
 \alias{unit}
 \alias{unit<-}
 \alias{unit<--methods}
@@ -25,15 +25,15 @@
 \alias{unit<-,POSIXctp-method}
 \alias{unit,POSIXctp-method}
 \alias{year}
+\alias{year,ANY-method}
 \alias{year-methods}
-\alias{year,POSIXct-method}
 \title{Extract time properties from POSIX* objects}
 \usage{
   year(x, ...)
 
   month(x, ...)
 
-  day(x, of, ..., first.day = 0)
+  day(x, of, ...)
 
   hour(x, of, ...)
 
@@ -65,10 +65,6 @@
   be effective only if it makes sense (\sQuote{hour} to
   \sQuote{second}, ok ; \sQuote{year} to \sQuote{month}, ok
   ; \sQuote{month} to \sQuote{minute} , NOT ok ; etc.}
-
-  \item{first.day}{used only if \code{representation ==
-  'wday'}. Interger indicating the first day of the week. 0
-  -> sunday (the default), 1 -> monday, 2 -> tuesday, etc.}
 }
 \description{
   Objects can be POSIXct, POSIXcti, POSIXctp, etc.
@@ -76,7 +72,8 @@
 \details{
   \code{year}, \code{month}, \code{day}, \code{hour},
   \code{minute} and \code{second} are methods defined to
-  extract the adequat information from a time object.
+  extract the adequat information from a time object. These
+  functions are wrappers to \code{\link{POSIXst}}.
 
   \code{unit} \code{unit<-} is used to extract or set the
   unit of a time object (cf \code{\link{POSIXt.units}}).

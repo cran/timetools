@@ -91,7 +91,7 @@ RegularTimeInstantDataFrame <- function (from, to, by, timezone='UTC', data=NULL
 		nb <- year(to) - year(from) + 
 			ifelse(second(to, of='year') == 0, 0, 1)
 	} else if (as.character(unit(by)) == 'month') {
-		nb <- (year(to) - year(from))*12 + month(to) - month(from) + 
+		nb <- (year(to) - year(from))*12 + as.numeric(month(to)) - as.numeric(month(from)) + 
 			ifelse(second(to, of='month') == 0, 0, 1)
 	} else {
 		u <- switch (as.character(unit(by)), second='secs', minute='mins',
@@ -243,31 +243,37 @@ setMethod (f='names<-', signature='TimeInstantDataFrame',
 		   x
 	   } )
 
-# Ops
 # Math
 
 # manipulation
 #-------------
-split.TimeInstantDataFrame <- function(x, f, drop=FALSE, ...) {
-		   vect <- seq_len(nrow(x))
-		   i <- split (when(x), f, drop)
-		   data <- split (x@data, f, drop)
-		   mapply (SIMPLIFY=FALSE, new, 'TimeInstantDataFrame',
-			   instant=i, data=data, timezone=timezone(x))
-	   }
+split.TimeInstantDataFrame <- function(x, f, drop=FALSE, ...)
+{
+	vect <- seq_len(nrow(x))
+	i <- split (when(x), f, drop)
+	data <- split (x@data, f, drop)
+	x <- mapply (SIMPLIFY=FALSE, new, 'TimeInstantDataFrame',
+		     instant=i, data=data, timezone=timezone(x),
+		     USE.NAMES=FALSE)
+	names( x ) <- names( data )
+	x
+}
 
 # fonction réalisée en S3 pour ne pas imposer de 'signature'
-rbind.TimeInstantDataFrame <- function (...) {
+rbind.TimeInstantDataFrame <- function (...)
+{
 	dots <- list (...)
 	names(dots) <- NULL
 	if (!all (sapply (dots, inherits, 'TimeInstantDataFrame')))
 		stop ("all arguments must be 'TimeInstantDataFrame'")
-	instant <- as.POSIXct (unlist (lapply (dots, when) ), origin=timetools::origin)
+	instant <- as.POSIXct (unlist (lapply (dots, when) ),
+			       origin=timetools::origin)
 	df <- do.call("rbind", lapply(dots, function(x) x@data) )
 	tz <- timezone (dots[[1]])
 	if (!all (tz == sapply (dots, timezone)))
 		warning ("Not all timezone are identical. Timezone of the first object is used.")
-	new('TimeInstantDataFrame', instant=instant, timezone=timezone (dots[[1]]), data=df)
+	new('TimeInstantDataFrame', instant=instant,
+	    timezone=timezone (dots[[1]]), data=df)
 }
 # cbind # a faire eventuellement entre un Time*DataFrame et une data.frame
 merge.TimeInstantDataFrame <- function(x, y, by, all=TRUE, tz='UTC', ...)
@@ -302,7 +308,7 @@ setMethod ('lapply', signature('TimeInstantDataFrame', 'ANY'),
 				     timezone=timezone(X),
 				     data=data.frame (res))
 		   } else {
-			   stop ("try to apply inadequate function over SubtimeDataFrame.")
+			   stop ("try to apply inadequate function over TimeInstantDataFrame.")
 		   }
 		   return (X)
 	   } )
@@ -354,24 +360,36 @@ as.TimeIntervalDataFrame.TimeInstantDataFrame <- function(from, period, ...) {
 
 #' @rdname as.SubtimeDataFrame
 #' @usage 
-#' \method{as.SubtimeDataFrame}{TimeInstantDataFrame}(from, representation, FUN=mean, ..., first.day=0)
+#' \method{as.SubtimeDataFrame}{TimeInstantDataFrame}(x, unit, of, FUN=NULL, ...)
 #'
 #' @section TimeIntervalDataFrame:
-#' If \sQuote{from} is a \code{\link{TimeInstantDataFrame}},
-#' data must be agregated befor conversion. The function to use
-#' is specified by \sQuote{FUN}. The default function is \code{\link[base]{mean}}.
+#' Conversion from a TimeIntervalDataFrame to a SubtimeDataFrame can be 
+#' direct or after agregation.
 #' 
-#' @inheritParams subtime
-#' @param FUN function to use for the agregation (see \sQuote{details})
-as.SubtimeDataFrame.TimeInstantDataFrame <- function(from, representation, FUN=mean, ..., first.day=0)
+#' For a direct conversion (where date are only replaced by the desired subtime), 
+#' FUN must be NULL.
+#'
+#' For an agregateed conversion, the function to use must be indicated by the FUN
+#' arg and all arguments to pass to this function can be given (namely).
+#' 
+#' @inheritParams POSIXst
+#' @param FUN function to use for the agregation (if wanted, see \sQuote{details})
+as.SubtimeDataFrame.TimeInstantDataFrame <- function(x, unit, of, FUN=NULL, ...)
 {
-	st <- subtime(from, representation, first.day=first.day)
-	to <- split (data.frame (from), st)
-	st <- factor (names(to), levels=levels (st), ordered=TRUE)
-	attributes(st)$timezone <- timezone (from)
-	class (st) <- c('subtime', 'factor')
-	to <- t(data.frame (lapply (to, sapply, FUN, ...)))
-	rownames (to) <- NULL
+	st <- POSIXst(x, unit, of)
+	to <- data.frame( x )
+	if( !is.null(FUN) )
+	{
+		u <- unit(st)
+		o <- of(st)
+		tz <- timezone(st)
+		st <- as.numeric(format( st, "%v" ))
+		to <- split (to, st)
+		to <- lapply (to, sapply, FUN, ...)
+		st <- POSIXst(as.numeric(names(to)), u, o, tz)
+		to <- t(data.frame (to))
+		rownames (to) <- NULL
+	}
 
 	to <- new ('SubtimeDataFrame', when=st, data=data.frame (to))
 	validObject(to)

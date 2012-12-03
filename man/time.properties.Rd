@@ -11,6 +11,8 @@
 \alias{interval}
 \alias{interval-methods}
 \alias{interval,TimeIntervalDataFrame-method}
+\alias{of}
+\alias{of.POSIXst}
 \alias{overlapping}
 \alias{overlapping-methods}
 \alias{overlapping,TimeIntervalDataFrame-method}
@@ -26,12 +28,14 @@
 \alias{timezone<-}
 \alias{timezone<--methods}
 \alias{timezone-methods}
-\alias{timezone.subtime}
+\alias{timezone.POSIXst}
 \alias{timezone,SubtimeDataFrame-method}
 \alias{timezone<-,TimeInstantDataFrame-method}
 \alias{timezone,TimeInstantDataFrame-method}
 \alias{timezone<-,TimeIntervalDataFrame-method}
 \alias{timezone,TimeIntervalDataFrame-method}
+\alias{unit.POSIXst}
+\alias{what}
 \alias{when}
 \alias{when-methods}
 \alias{when,SubtimeDataFrame-method}
@@ -40,6 +44,10 @@
 \title{Test or extract different properties of Time objects}
 \usage{
   timezone(object)
+
+  what(x, ...)
+
+  of(x, ...)
 
   continuous(x, ...)
 
@@ -59,7 +67,11 @@
 
   interval(x, ...)
 
-  \method{timezone}{subtime} (object)
+  \method{unit}{POSIXst} (x, ...)
+
+  \method{of}{POSIXst} (x, ...)
+
+  \method{timezone}{POSIXst} (object)
 }
 \arguments{
   \item{object}{object to test, from which get or set a
@@ -80,7 +92,9 @@
   These functions can be applied to Time objects such as
   \code{\link[=TimeIntervalDataFrame-class]{TimeIntervalDataFrame}},
   \code{\link[=TimeInstantDataFrame-class]{TimeInstantDataFrame}}
-  or \code{\link{subtime}}.
+  or \code{\link{POSIXst}}.
+
+  defined
 }
 \section{reminder}{
   For each class, you can type the following code to know

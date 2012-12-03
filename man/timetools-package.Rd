@@ -6,15 +6,18 @@
 provides objects and tools to manipulate irregular heterogeneous time data and subtime data.
 }
 \description{
-This package is intended to manipulate irregular time series such as subtime series,
-series based on time intervals, etc. This package uses only POSIXt* format.
+This package is intended to manipulate irregular time series such as subtime
+series, series based on time intervals, heterogeneous time series (hourly time
+series and monthly time series at the same time for instance), etc.
+
+This package uses (and extends) only POSIXt* format for time objects.
 
 Main things defined in this package are :
 \enumerate{
   \item the classes POSIXcti (as \sQuote{time intervals}), POSIXctp (as \sQuote{time periods}) and
   subtime (days of week, weeks of year, months of year, etc.), to deal with basic time concepts ;
   \item TimeIntervalDataFrame, TimeInstantDataFrame and SubtimeDataFrame to deal with time series
-  (regular or not) ;
+  (regular, homogeneous,irregular, heterogeneous or whatever) ;
   \item methods to switch from one class to another ;
   \item and the \sQuote{changeSupport} method for TimeIntervalDataFrame (cf
   \code{\link{changeSupport}} for more details).
@@ -24,8 +27,8 @@ Main things defined in this package are :
 \tabular{ll}{
 Package: \tab timetools\cr
 Type: \tab Package\cr
-Version: \tab 1.1-6\cr
-Date: \tab 2012-10-30\cr
+Version: \tab 1.2.0\cr
+Date: \tab 2012-12-03\cr
 Depends: \tab methods\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr

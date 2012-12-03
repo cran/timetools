@@ -5,7 +5,7 @@
   SubtimeDataFrame(when, data = NULL, ...)
 }
 \arguments{
-  \item{when}{\code{\link{subtime}}.}
+  \item{when}{\code{\link{POSIXst}}.}
 
   \item{data}{a data.frame with as much rows as the length
   of \sQuote{when}. Can be \code{NULL} (hence the
@@ -32,11 +32,11 @@
   \code{class?SubtimeDataFrame}
 }
 \examples{
-st <- subtime (1:4, 'wday')
+st <- POSIXst (1:4, 'day', 'week')
 SubtimeDataFrame (st, data.frame (test=sample (0:100, 4)))
 }
 \seealso{
   \code{\link[=SubtimeDataFrame-class]{SubtimeDataFrame}},
-  \code{\link{subtime}}, \code{\link{timetools}}
+  \code{\link{POSIXst}}, \code{\link{timetools}}
 }
 

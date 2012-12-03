@@ -40,7 +40,7 @@
 }
 \details{
   Formally, the class consists of a \code{\link[base]{data.frame}}
-  and, for each row, a \code{\link{subtime}}.
+  and, for each row, a \code{\link{POSIXst}} (or subtime).
   This class is provided to deal with subtime data. This class
   is compatible
   with \code{\link[=TimeIntervalDataFrame-class]{TimeIntervalDataFrame}}
@@ -83,7 +83,7 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{when}:}{Object of class \code{"subtime"}  
+    \item{\code{when}:}{Object of class \code{"POSIXst"}  
        corresponding to the instant of each row of
        the \code{data.frame}.}
     \item{\code{data}:}{Object of class \code{"data.frame"}  data contained
@@ -124,9 +124,9 @@
 }
 \section{Graphic representation}{
   \describe{
-    \item{plot}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, xlim=NULL, ylim=NULL, log, main, sub, xlab, ylab, ann=par("ann"), axes=TRUE, asp=NA, ...}: plot what it is asked for (see \code{\link[graphics]{plot}}). Returns invisibly params used for the plot. }
-    \item{points}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, ...}: plot what it is asked for (see \code{\link[graphics]{points}}). Returns invisibly params used for the plot. }
-    \item{lines}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, ...}: plot what it is asked for (see \code{\link[graphics]{lines}}). Returns invisibly params used for the plot. }
+    \item{plot}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, xlim=NULL, ylim=NULL, log, main, sub, xlab, ylab, ann=par("ann"), axes=TRUE, asp=NA, as.is=TRUE, format=NULL, ...}: plot what it is asked for (see \code{\link[graphics]{plot}}). Returns invisibly params used for the plot. }
+    \item{points}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, as.is=TRUE, format=NULL, ...}: plot what it is asked for (see \code{\link[graphics]{points}}). Returns invisibly params used for the plot. }
+    \item{lines}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, as.is=TRUE, format=NULL, ...}: plot what it is asked for (see \code{\link[graphics]{lines}}). Returns invisibly params used for the plot. }
   }
 }
 \section{Text representation}{
@@ -148,7 +148,7 @@
 }
 \seealso{
   \code{\link{TimeInstantDataFrame}}, \code{\link{TimeIntervalDataFrame}},
-  \code{\link{subtime}}
+  \code{\link{POSIXst}}
 }
 \examples{
 showClass("SubtimeDataFrame")
