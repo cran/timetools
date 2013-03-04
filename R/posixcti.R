@@ -100,13 +100,6 @@ as.POSIXcti.logical <- function (from, ...)
 
 # '%union%' <- function(i1, i2) {}
 
-split.POSIXcti <- function(x, f, drop=FALSE, ...)
-{
-	i <- seq_len(length(x))
-	i <- split(i, f)
-	lapply(i, function(i, x) x[i], x)	
-}
-
 c.POSIXcti <- function(...){
 	pers <- list(...)
 	if (!all (sapply (pers, inherits, 'POSIXcti') ) ) {

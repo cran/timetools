@@ -215,4 +215,4 @@ exportMethods (	interval, when, period,
 		year, month, day, hour, minute, second,
 		unit, 'unit<-', duration, '+', '-', '*',
 		as.numeric, match, '%in%',
-		lapply, split)
+		lapply, split, tapply)

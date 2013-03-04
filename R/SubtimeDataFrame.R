@@ -174,17 +174,6 @@ setMethod (f='names<-', signature='SubtimeDataFrame',
 
 # manipulation
 #-------------
-split.SubtimeDataFrame <- function(x, f, drop=FALSE, ...)
-{
-	vect <- seq_len(nrow(x))
-	w <- split (when(x), f, drop)
-	data <- split (x@data, f, drop)
-	x <- mapply (SIMPLIFY=FALSE, new, 'SubtimeDataFrame',
-		     when=w, data=data, USE.NAMES=FALSE)
-	names( x ) <- names( data )
-	x
-}
-
 # # fonction réalisée en S3 pour ne pas imposer de 'signature'
 # rbind.SubtimeDataFrame <- function (...) {
 # 	dots <- list (...)

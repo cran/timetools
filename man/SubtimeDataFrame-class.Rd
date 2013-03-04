@@ -30,7 +30,7 @@
 %\alias{rbind.SubtimeDataFrame}
 \alias{row.names.SubtimeDataFrame}
 \alias{row.names<-.SubtimeDataFrame}
-\alias{split.SubtimeDataFrame}
+% \alias{split.SubtimeDataFrame}
 \alias{summary.SubtimeDataFrame}
 \alias{tail.SubtimeDataFrame}
 

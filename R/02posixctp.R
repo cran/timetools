@@ -98,13 +98,6 @@ as.POSIXctp.logical <- function (from, ...)
 		new ('POSIXctp', duration=as.integer (NA), unit=POSIXt.units('second') ) else
 		stop ('Cannot coerce a logical to a POSIXctp.')
 
-split.POSIXctp <- function(x, f, drop=FALSE, ...)
-{
-	i <- seq_len(length(x))
-	i <- split(i, f)
-	lapply(i, function(i, x) x[i], x)	
-}
-
 c.POSIXctp <- function(...){
 	pers <- list(...)
 	if (!all (sapply (pers, inherits, 'POSIXctp') ) )

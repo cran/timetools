@@ -18,7 +18,7 @@
 \alias{tail.POSIXcti}
 \alias{c.POSIXcti}
 \alias{unique.POSIXcti}
-\alias{split.POSIXcti}
+%\alias{split.POSIXcti}
 %\alias{%included%.POSIXcti}
 %\alias{%intersect%.POSIXcti}
 %\alias{as.POSIXcti.logical}

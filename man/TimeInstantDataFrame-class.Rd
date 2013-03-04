@@ -34,7 +34,7 @@
 \alias{rbind.TimeInstantDataFrame}
 \alias{row.names.TimeInstantDataFrame}
 \alias{row.names<-.TimeInstantDataFrame}
-\alias{split.TimeInstantDataFrame}
+% \alias{split.TimeInstantDataFrame}
 \alias{summary.TimeInstantDataFrame}
 \alias{tail.TimeInstantDataFrame}
 

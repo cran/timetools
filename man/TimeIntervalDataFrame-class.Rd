@@ -10,6 +10,9 @@
 %\alias{changeSupport,TimeIntervalDataFrame,TimeIntervalDataFrame,numeric,ANY,ANY,ANY,ANY-method}
 %\alias{changeSupport,TimeIntervalDataFrame,character,numeric,ANY,ANY,missing,missing-method}
 %\alias{changeSupport,TimeIntervalDataFrame,POSIXctp,numeric,ANY,ANY,missing,missing-method}
+%\alias{split,TimeIntervalDataFrame,POSIXcti-method}
+%\alias{split,TimeIntervalDataFrame,POSIXctp-method}
+%\alias{split,TimeIntervalDataFrame,TimeIntervalDataFrame-method}
 %\alias{continuous,TimeIntervalDataFrame-method}
 %\alias{continuous<-,TimeIntervalDataFrame-method}
 \alias{dim,TimeIntervalDataFrame-method}
@@ -44,7 +47,7 @@
 \alias{rbind.TimeIntervalDataFrame}
 \alias{row.names.TimeIntervalDataFrame}
 \alias{row.names<-.TimeIntervalDataFrame}
-\alias{split.TimeIntervalDataFrame}
+% \alias{split.TimeIntervalDataFrame}
 \alias{start.TimeIntervalDataFrame}
 \alias{summary.TimeIntervalDataFrame}
 \alias{tail.TimeIntervalDataFrame}
@@ -128,6 +131,9 @@
     \item{merge}{\code{x, y, by, all=TRUE, tz=UTC, ...}: ... }
     \item{lapply}{\code{signature(X = "TimeIntervalDataFrame", FUN = 'ANY')}: ... }
     \item{split}{\code{x, f, drop=FALSE, ...}: ... }
+    \item{split}{\code{signature(x="TimeIntervalDataFrame",f="POSIXcti", split.x="ANY")} : ...}
+    \item{split}{\code{signature(x="TimeIntervalDataFrame",f="POSIXctp", split.x="ANY"}: ...}
+    \item{split}{\code{signature(x="TimeIntervalDataFrame",f="TimeIntervalDataFrame", split.x="ANY", keep.f="ANY")} : ...}
   }
 }
 \section{Access to data properties}{

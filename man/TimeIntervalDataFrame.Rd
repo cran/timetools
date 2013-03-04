@@ -3,7 +3,7 @@
 \title{Create a TimeIntervalDataFrame from scratch}
 \usage{
   TimeIntervalDataFrame(start, end = NULL,
-    timezone = "UTC", data = NULL, ...)
+    timezone = "UTC", data = NULL, period = NULL, ...)
 }
 \arguments{
   \item{start}{POSIXct or character representing a time
@@ -24,6 +24,12 @@
   length of \sQuote{start} if \sQuote{end} is \code{NULL}.
   Can be \code{NULL} (hence the data.frame has zero column
   and as much rows as needed).}
+
+  \item{period}{if not NULL, a \code{\link{POSIXctp}} or a
+  character that can be converted to a
+  \code{\link{POSIXctp}} (see argument \sQuote{unit} of
+  POSIXctp function). See Details to know how to use this
+  argument.}
 
   \item{\dots}{arguments to or from other methods}
 }
@@ -52,6 +58,17 @@
   interval. This is why \code{data}, if given, must be one
   row shorter than \code{start}.
 
+  If period is given it must be a \code{\link{POSIXctp}}
+  object (or a valid character) and \sQuote{start} and
+  \sQuote{end} must have length equal to 1. In that case, a
+  TimeIntervalDataFrame will be created with start date
+  equal to start \sQuote{floored} by the unit of
+  \sQuote{period}, end date \sQuote{ceiled} by the unit of
+  \sQuote{period} and with enough intervals of
+  \sQuote{period} length to fit. If \sQuote{data} given, it
+  must have a number of rows equal to the number of
+  intervals calculated.
+
   To access to the class documentation, type in the R
   console :
 
@@ -65,6 +82,11 @@ TimeIntervalDataFrame (
 TimeIntervalDataFrame (
 	c('2010-01-01', '2010-02-01', '2010-02-02'), NULL,
 	'UTC', data.frame(ex=1:2) )
+
+TimeIntervalDataFrame(
+	as.POSIXct('2013-01-01'), as.POSIXct('2013-03-01'),
+	period=POSIXctp('day')
+)
 }
 \seealso{
   \code{\link[=TimeInstantDataFrame-class]{TimeInstantDataFrame}},

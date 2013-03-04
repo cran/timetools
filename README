@@ -14,6 +14,30 @@ TimeIntervalDataFrame.
 News
 
 -------------------------------------------------------------------------------
+* v1.4.0
+
+The algorithm 'changeSupport' methods has been dispatched into 'split' and
+'tapply' methods. Those two types of methods are more user friendly to use since
+they correspond to function available in the base package.
+
+For backward compatibility, 'changeSupport' are still defined but now are simply
+wrapper to 'tapply' methods. Be aware that default values of arguments are not
+necessarily equivalent between 'changeSupport' and 'tapply'.
+
+See man pages to list all methods defined :
+help('split', 'timetools')
+help('tapply', 'timetools')
+help('changeSupport', 'timetools')
+
+-------------------------------------------------------------------------------
+* v1.2.1
+
+* a split method for signature(ANY,POSIXst) has been added (actually 
+it is a shortcut for "split(x, as.numeric(f))" where f is a POSIXst)
+* definition of split methods have been gathered in a unique file
+* definition of changeSupport methods have been gathered in a unique file
+
+-------------------------------------------------------------------------------
 * V1.2
 
 * 'subtime' class has been replaced by 'POSIXst' class.

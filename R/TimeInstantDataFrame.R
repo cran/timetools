@@ -247,18 +247,6 @@ setMethod (f='names<-', signature='TimeInstantDataFrame',
 
 # manipulation
 #-------------
-split.TimeInstantDataFrame <- function(x, f, drop=FALSE, ...)
-{
-	vect <- seq_len(nrow(x))
-	i <- split (when(x), f, drop)
-	data <- split (x@data, f, drop)
-	x <- mapply (SIMPLIFY=FALSE, new, 'TimeInstantDataFrame',
-		     instant=i, data=data, timezone=timezone(x),
-		     USE.NAMES=FALSE)
-	names( x ) <- names( data )
-	x
-}
-
 # fonction réalisée en S3 pour ne pas imposer de 'signature'
 rbind.TimeInstantDataFrame <- function (...)
 {

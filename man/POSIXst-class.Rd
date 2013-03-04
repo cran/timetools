@@ -20,7 +20,8 @@
 \alias{[<-.POSIXst}
 \alias{c.POSIXst}
 \alias{unique.POSIXst}
-\alias{split.POSIXst}
+% \alias{split.POSIXst}
+% \alias{split,ANY,POSIXst-method}
 \alias{as.numeric,POSIXst-method}
 \alias{match,POSIXst,POSIXst-method}
 \alias{match,POSIXst,ANY-method}

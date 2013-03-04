@@ -1,5 +1,122 @@
 #' @rdname changeSupport
-#' @aliases changeSupport,TimeIntervalDataFrame,TimeIntervalDataFrame,numeric,ANY,ANY,ANY,ANY-method
+changeSupport <- function(from,to,min.coverage,FUN=NULL,weights.arg=NULL,
+			  split.from=FALSE,merge.from=TRUE, ...)
+UseMethod ('changeSupport')
+#' Function to change time support of TimeIntervalDataFrame
+#'
+#' Methods that allows to agregate AND disagregate
+#' homogeneous AND heterogeneous time data.
+#' 
+#' Agregating homogeneous data is for example to calculate
+#' daily means of time series from hourly time series.
+#'
+#' Agregating heterogeneous data is for example to calculate
+#' annual means of time series from monthly time series (because each
+#' month doesn(t have identical weight).
+#'
+#' In above cases, the \code{min.coverage} allows to control
+#' if means should be calculated or not : for the monthly case,
+#' if there are \code{NA} values and the time coverage of \sQuote{not NA}
+#' values is lower \code{min.coverage} the result will be \code{NA} ;
+#' if time coverage is higher than \code{min.coverage}, the 
+#' annual mean will be \sQuote{estimated} by the mean of available
+#' data.
+#'
+#' Disagregating data is more \sQuote{articficial} and is 
+#' disabled by default (with the \code{split.from} argument).
+#' This argument is also used to precise if one value can
+#' be use for agregation in more than one interval in the resulting
+#' TimeIntervalDataFrame (for sliding intervals for instance).
+#' Here are some examples of time disagregration :
+#' \itemize{
+#' \item A weekly mean can be dispatched over the days of the week.
+#'  By default, the value attribuated to each day is the value 
+#' of the week, but this can be changed by using a special function
+#' (\code{FUN} argument).
+#' \item The value of a variable is known from monday at 15 hours to 
+#' tuesday at 15 hours and from tuesday at 15 hours to wednesday at 15 hours.
+#' To \sQuote{evaluate} the value of the variable for tuesday can be 
+#' estimated by doing a weigthed mean between the two values. Weights are
+#' determined by the intersection between each interval and tuesday.
+#' Here weights will be \code{0.625} (15/24) and \code{0.375} (9/24)
+#' (In this case, disagration is combined with a \sQuote{reagregation}).
+#' }
+#'
+#' These are \sQuote{trivial} examples but many other usage can be found
+#' for these methods. Other functions than \code{weighted.mean}
+#' or \code{mean} can be used.
+#' The Qair package (in its legislative part) gives several examples of usage
+#' (this package is not availables on CRAN but see \sQuote{references}
+#' to know where you can find it).
+#'
+#' @examples
+#'ti3 <- TimeIntervalDataFrame (
+#'        c('2010-01-01', '2010-01-02', '2010-01-04'), NULL,
+#'        'UTC', data.frame(ex3=c(6, 1.5)))
+#'
+#'# weighted mean over a period of 3 days with at least 75% of
+#'# coverage (NA is retunr if not)
+#'ti3
+#'d <- POSIXctp(unit='day')
+#'changeSupport (ti3, 3L*d, 0.75)
+#'
+#'ti4 <- TimeIntervalDataFrame (
+#'	c('2010-01-01', '2010-01-02', '2010-01-04',
+#'	  '2010-01-07', '2010-01-09', '2010-01-10'), NULL,
+#'          'UTC', data.frame(ex4=c(6, 1.5, 5, 3, NA)))
+#'
+#'# weighted mean over a period of 3 days with at least 75% of
+#'# coverage (NA is retunr if not) or 50%
+#'ti4
+#'changeSupport (ti4, 3L*d, 0.75)
+#'changeSupport (ti4, 3L*d, 0.5)
+#'
+#'# use of split.from
+#'ti1 <- RegularTimeIntervalDataFrame('2011-01-01', '2011-02-01', 'hour')
+#'ti1$value <- 1:nrow(ti1)
+#'# we can calculate sliding mean over periods of 24 hours.
+#'# first lets build the corresponding TimeIntervalDataFrame
+#'ti2 <- RegularTimeIntervalDataFrame('2011-01-01', '2011-02-01', 'hour', 'day')
+#'# if we try to 'project' ti1 over ti2 it won't work :
+#'summary (changeSupport (ti1, ti2, 0))
+#'# all data are NA because 'spliting' is not enabled. Let's enable it :
+#'summary (changeSupport (ti1, ti2, 0, split.from=TRUE))
+#'
+#' @param from \code{\link{TimeIntervalDataFrame}} for wich
+#' the time support is to change
+#' @param to an object indicating the new support, see specific sections
+#' @param min.coverage a numeric between 0 and 1 indicating the percentage
+#'  of valid values over each interval to allow an aggregation. NA is 
+#' returned if the percentage is not reach. In changeSupport, when values
+#' are aggregated, intervals are not allowed to overlap.
+#' When a function (FUN) has a na.rm argument, the na.rm=TRUE behaviour
+#' is met if na.rm is set to TRUE and min.coverage to 0 (zero) ; the
+#' na.rm=FALSE behaviour is met if na.rm is set to FALSE whatever is the value
+#' of min.coverage.
+#' @param FUN function use to agregate data of from. 
+#' By default \code{\link[base]{mean}} if \sQuote{from} is 
+#' \code{\link{homogeneous}}. \code{\link[stats]{weighted.mean}} otherwise.
+#' @param weights.arg if FUN has a \sQuote{weight} argument, this parameter must
+#' be a character naming the weight argument. For instance, if FUN is 
+#' \code{\link[stats]{weighted.mean}}, then weights.arg is \code{'w'}.
+#' @param \dots arguments for FUN or for other methods
+#' @param split.from logical indicating if data in \sQuote{from} can be
+#' used for several intervals of the new time support (see \sQuote{details}).
+#' @param merge.from logical indicating if data in \sQuote{from} can be
+#' merged over interval of the new time support.
+#' 
+#' @return \code{\link{TimeIntervalDataFrame}}
+#' @references Qair-package : \url{http://sourceforge.net/projects/packagerqair/}
+#'
+#' @seealso \code{\link{TimeIntervalDataFrame}}, \code{\link{POSIXcti}}
+setGeneric (name='changeSupport', def=function(from, to, min.coverage,
+					       FUN=NULL, weights.arg=NULL,
+					       split.from=FALSE, merge.from=TRUE,
+					       ...)
+	    standardGeneric('changeSupport') )
+ 
+#' @rdname changeSupport
+#' @aliases changeSupport,TimeIntervalDataFrame,TimeIntervalDataFrame,numeric-method
 #' @section from=TimeIntervalDataFrame, to=TimeIntervalDataFrame:
 #' \code{to} is a TimeIntervalDataFrame. The method will try to 
 #' adapt data of \code{from} over interval of \code{to}.
@@ -18,117 +135,36 @@
 #' considered as being inside it. So if there is no other values
 #' in the interval, this value will be affected, else \code{NA}
 #' will be affected.
-setMethod ('changeSupport', signature(from='TimeIntervalDataFrame', to='TimeIntervalDataFrame',
-				min.coverage='numeric', FUN='ANY', weights.arg='ANY',
-				split.from='ANY', merge.from='ANY'),
+
+setMethod ('changeSupport',
+	   signature(from='TimeIntervalDataFrame', to='TimeIntervalDataFrame',
+		     min.coverage='numeric', FUN='ANY', weights.arg='ANY',
+		     split.from='ANY', merge.from='ANY'),
 	   definition=function (from, to, min.coverage, FUN=NULL, weights.arg=NULL,
-				split.from=FALSE, merge.from=TRUE, ...) {
-		   fun.args <- list (...)
-		   if (is.null (FUN) ) {
-			   if (length (fun.args) != 0 | !is.null(weights.arg) )
-			  	 warning ('Arguments passed to FUN are set to default.')
-			   if (homogeneous (from) ) {
-			   	FUN <- mean
-			   	fun.args <- list(na.rm = TRUE)
-			   } else {
-			   	FUN <- weighted.mean
-				weights.arg <- 'w'
-			   	fun.args <- list(na.rm = TRUE)
-			   }
-		   } else {
-			   FUN <- match.fun (FUN)
-		   }
-		   if (overlapping (from))
-		   	stop ("'changeSupport' function can not deal with overlapping 'from'.")
-		   if (min.coverage<0 | min.coverage > 1) stop ("'min.coverage' must be between [0-1].")
-		   if (timezone(from) != timezone (to))
-		   {
-		   	warning("'from' and 'to' have a different timezone. The timezone of 'to' is taken for the result")
-			timezone(from) <- timezone(to)
-		   }
-		   int.from <- when (from)
-		   int.to <- when (to)
-		   
-		   s.from <- start (int.from) ; e.from <- end (int.from) #s.from + int.from
-		   s.to <- start (int.to) ; e.to <- end (int.to) #s.to + int.to
-		   
-		   nb <- .C ('project_nb_intersections',
-				  as.integer(s.from), as.integer(e.from), as.integer(length(s.from)),
-				  as.integer(s.to), as.integer(e.to), as.integer(length(s.to)),
-				  nb=integer(1),
-				  NAOK=FALSE, PACKAGE='timetools')$nb
-		   
-		   if (nb > 0) {
-		   whiches <- .C ('project_pos_weight',
-				  as.integer(s.from), as.integer(e.from), as.integer(length(s.from)),
-				  as.integer(s.to), as.integer(e.to), as.integer(length(s.to)),
-				  pos.from=integer(nb), pos.to=integer(nb), weight=integer(nb),
-				  NAOK=FALSE, PACKAGE='timetools')[c('pos.from', 'pos.to', 'weight')]
-		   whiches <- as.data.frame (whiches)
-		   } else {
-		   	whiches <- data.frame (pos.from=numeric(), pos.to=numeric(), weight=numeric())
-		   }
+				split.from=FALSE, merge.from=TRUE, ...)
+{
+	fun.args <- list (...)
+	if (is.null (FUN) ) {
+		if (length (fun.args) != 0 | !is.null(weights.arg) )
+			warning ('Arguments passed to FUN are set to default.')
+		if (homogeneous (from) ) {
+			FUN <- mean
+			fun.args <- list(na.rm = TRUE)
+		} else {
+			FUN <- weighted.mean
+			weights.arg <- 'w'
+			fun.args <- list(na.rm = TRUE)
+		}
+	}
 
-		   # si from.split = FALSE, on dégage les from qui intersectent plusieurs to et on avertie
-		   if (!split.from)
-			   whiches <- whiches[!whiches$pos.from %in% unique (whiches$pos.from[duplicated(whiches$pos.from)] ),]
+	do.call(tapply, c(X=from, INDEX=to, FUN=FUN, fun.args, min.coverage=min.coverage,
+		weights.arg=weights.arg, merge.X=merge.from, split.X=split.from,
+		keep.INDEX=TRUE, simplify=TRUE))
 
-		   # si merge.from = FALSE, on dégage les to avec plusieurs from et on avertie
-		   if (!merge.from)
-			   whiches <- whiches[!whiches$pos.to %in% unique (whiches$pos.to[duplicated(whiches$pos.to)] ),]
-		   # euh... si on merge pas on doit quand même pouvoir "dupliquer des lignes de to ?" Non pas forcément...
-		   #	à voir
-
-		   # pour ce qui restent on calcul les poids de from ramenées à 100% de to (ie : si to est complètement
-		   #	couvert, la somme des poids est 1, sinon inférieure)
-		   dur.to <- as.numeric(difftime(e.to, s.to, units='secs')) #as.duration(int.to)
-		   whiches$weight <- whiches$weight / dur.to[whiches$pos.to]
-		   whiches <- split (whiches, whiches$pos.to)
-		   start <- s.to[as.numeric(names(whiches))]
-		   end <- e.to[as.numeric(names(whiches))]
-
-		   # enfin, on fait la projection
-		   calc <- function(x, w, min.cov, weights.arg, FUN, fun.args) {
-			   if (!is.null (weights.arg) )
-				   fun.args[[weights.arg]] <- w
-			   fun.args <- c(list(x), fun.args)
-			   if (sum (w[!is.na (x)] ) >= min.cov)
-				   res <- try (do.call (FUN, fun.args) ) else
-				   res <- NA
-			   if (inherits (res, 'try-error') )
-				   res <- paste (x, collapse='-')
-			   return (res)
-		   }
-
-		   interm <- mapply (list, whiches=whiches,
-		   		     data=lapply (whiches,
-				     	          function (i, x) x[i$pos.from,,drop=FALSE],
-						  from@data),
-				     SIMPLIFY=FALSE)
-		   interm <- lapply (interm, function(x, ...)
-				     as.data.frame (lapply (x$data, calc, x$whiches$weight, ...) ),
-				     min.coverage, weights.arg, FUN, fun.args)
-
-		   if (length (interm) > 0) {
-			   while (length (interm) > 1) {
-				   interm[[1]] <- rbind (interm[[1]], interm[[2]])
-				   interm[[2]] <- NULL
-			   }
-			   interm <- interm[[1]]
-			   interm <- new ('TimeIntervalDataFrame', start=start, end=end,
-			   		  timezone=timezone(to), data=interm)
-		   } else {
-			   data <- data.frame(matrix(ncol=length(names(from)), nrow=0))
-			   names (data) <- names (from)
-			   interm <- new ('TimeIntervalDataFrame', start=start, end=end,
-			   		  timezone=timezone(to), data=data)
-		   }
-		   
-		   merge (to, interm)
-	   } )
+} )
 
 #' @rdname changeSupport
-#' @aliases changeSupport,TimeIntervalDataFrame,character,numeric,ANY,ANY,missing,missing-method
+#' @aliases changeSupport,TimeIntervalDataFrame,character,numeric-method
 #' @section from=TimeIntervalDataFrame, to=character:
 #' \code{to} is one of 'year', 'month', 'day', 'hour', 'minute' or 'second'.
 #' It defines the period (\code{\link{POSIXctp}}) to use to build
@@ -138,16 +174,21 @@ setMethod ('changeSupport', signature(from='TimeIntervalDataFrame', to='TimeInte
 #' So first, an \sQuote{empty} (no data) TimeIntervalDataFrame is created,
 #' and then, the agregation is done accordingly to the  
 #' \sQuote{from=TimeIntervalDataFrame, to=TimeIntervalDataFrame} section.
-setMethod ('changeSupport', signature(from='TimeIntervalDataFrame', to='character', min.coverage='numeric',
-				      FUN='ANY', weights.arg='ANY', 
-				      split.from='missing', merge.from='missing'),
-	   definition= function (from, to, min.coverage, FUN=NULL, weights.arg=NULL, ...) {
-		   period <- POSIXctp(unit=to)
-		   return (changeSupport (from, period, min.coverage, FUN, weights.arg, ...) )
-	   } )
+setMethod ('changeSupport',
+	   signature(from='TimeIntervalDataFrame', to='character',
+		     min.coverage='numeric', FUN='ANY', weights.arg='ANY', 
+		     split.from='ANY', merge.from='ANY'),
+	   definition= function (from, to, min.coverage, FUN=NULL,
+				 weights.arg=NULL, split.from=FALSE,
+				 merge.from=TRUE, ...)
+{
+	period <- POSIXctp(unit=to)
+	return (changeSupport (from, period, min.coverage, FUN, weights.arg,
+			       split.from, merge.from, ...) )
+} )
 
 #' @rdname changeSupport
-#' @aliases changeSupport,TimeIntervalDataFrame,POSIXctp,numeric,ANY,ANY,missing,missing-method
+#' @aliases changeSupport,TimeIntervalDataFrame,POSIXctp,numeric-method
 #' @section from=TimeIntervalDataFrame, to=POSIXctp:
 #' \code{to} is period (see \code{\link{POSIXctp}}).
 #' It defines the base of the new TimeIntervalDataFrame on which
@@ -156,73 +197,27 @@ setMethod ('changeSupport', signature(from='TimeIntervalDataFrame', to='characte
 #' So first, an \sQuote{empty} (no data) TimeIntervalDataFrame is created,
 #' and then, the agregation is done accordingly to the  
 #' \sQuote{from=TimeIntervalDataFrame, to=TimeIntervalDataFrame} section.
-setMethod ('changeSupport', signature(from='TimeIntervalDataFrame', to='POSIXctp', min.coverage='numeric',
-				      FUN='ANY', weights.arg='ANY', 
-				      split.from='missing', merge.from='missing'),
-	   definition= function (from, to, min.coverage, FUN=NULL, weights.arg=NULL, ...) {
-		   if (homogeneous (from) && continuous(from)  && to == period (from) ) return (from)
-		   fun.args <- list (...)
-		   if (is.null (FUN) ) {
-			   if (length (fun.args) != 0 | !is.null (weights.arg) )
-			   	warning ('Arguments passed to FUN are set to default.')
-			   if (homogeneous (from) ) {
-			   	FUN <- mean
-			   	fun.args <- list(na.rm = TRUE)
-			   } else {
-			   	FUN <- weighted.mean
-			   	fun.args <- list(na.rm = TRUE, weights.arg='w')
-			   }
-		   } else {
-			   FUN <- match.fun (FUN)
-		   }
-		   if (length (to) > 1) {
-			   warning ('Only the first given period is used as \'to\'.')
-			   to <- to[1]
-		   }
-		   period <- to
-		   #to <- names (to)[data.frame(to)>0]
-		   #to <- to[length(to)]
-		   u <- as.character (unit(to))
-		   if (u == 'second') {
-		   	s <- trunc (min(start(from)), 'secs')
-		   } else if (u == 'minute') {
-		   	s <- trunc (min(start(from)), 'mins')
-		   } else if (u == 'hour') {
-		   	s <- trunc (min(start(from)), 'hours')
-		   } else if (u == 'day') {
-		   	s <- trunc (min(start(from)), 'days')
-		   } else if (u == 'month') {
-		   	s <- as.POSIXct(sprintf('%s-01',
-						format(min(start(from)), '%Y-%m')),
-					timezone(from))
-		   } else if (u == 'year') {
-		   	s <- as.POSIXct(sprintf('%s-01-01',
-						format(min(start(from)), '%Y')),
-					timezone(from))
-		   }
-		   s <- as.POSIXct(s)
+setMethod ('changeSupport',
+	   signature(from='TimeIntervalDataFrame', to='POSIXctp',
+		     min.coverage='numeric', FUN='ANY', weights.arg='ANY', 
+		     split.from='ANY', merge.from='ANY'),
+	   definition= function (from, to, min.coverage, FUN=NULL,
+				 weights.arg=NULL, split.from=FALSE,
+				 merge.from=TRUE, ...)
+{
+	# if from and to have same base, no calculus to do 
 
-		if (u == 'year') {
-			e <- max(end(from))
-			nb <- year(e) - year(s) +
-				ifelse(second(e, of='year') == 0, 0, 1)
-		} else if (u == 'month') {
-			e <- max(end(from))
-			nb <- (year(e) - year(s))*12 + as.numeric(month(e)) - as.numeric(month(s)) +
-				ifelse(second(e, of='month') == 0, 0, 1)
-		} else {
-			u <- switch (u, second='secs', minute='mins',
-							     hour='hours', day='days')
-			nb <- as.numeric (difftime(max(end(from)), s, units=u))
-			nb <- ceiling (nb/duration(to))
-		}
+	if (homogeneous (from) &&
+	    continuous(from)  &&
+	    to == period (from) )
+		return (from)
 
-		   e <- s+as.numeric(nb) * to
-
-		   result <- RegularTimeIntervalDataFrame (s, e, by=period, timezone=timezone(from))
-		   result <- do.call (changeSupport, c(from=from, to=result, min.coverage=min.coverage,
-						       FUN=FUN, weights.arg=weights.arg, fun.args,
-						       split.from=FALSE, merge.from=TRUE) )
-		   return (result)
-	   } )
+	s <- min(start( from ))
+	e <- max(end( from ))
+	tzone <- timezone( from )
+	to <- TimeIntervalDataFrame(s, e, period=to, timezone=tzone)
+	
+	return( changeSupport(from, to, min.coverage, FUN, weights.arg,
+	      		      split.from, merge.from, ...) )
+} )
 

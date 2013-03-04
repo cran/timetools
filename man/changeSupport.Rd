@@ -1,13 +1,24 @@
 \name{changeSupport}
 \alias{changeSupport}
-\alias{changeSupport,TimeIntervalDataFrame,character,numeric,ANY,ANY,missing,missing-method}
-\alias{changeSupport,TimeIntervalDataFrame,POSIXctp,numeric,ANY,ANY,missing,missing-method}
-\alias{changeSupport,TimeIntervalDataFrame,TimeIntervalDataFrame,numeric,ANY,ANY,ANY,ANY-method}
+\alias{changeSupport,TimeIntervalDataFrame,character,numeric-method}
+\alias{changeSupport,TimeIntervalDataFrame,POSIXctp,numeric-method}
+\alias{changeSupport,TimeIntervalDataFrame,TimeIntervalDataFrame,numeric-method}
 \title{Function to change time support of TimeIntervalDataFrame}
 \usage{
   changeSupport(from, to, min.coverage, FUN = NULL,
     weights.arg = NULL, split.from = FALSE,
     merge.from = TRUE, ...)
+
+  \S4method{changeSupport}{TimeIntervalDataFrame,POSIXctp,numeric}(from, to, min.coverage, FUN=NULL,
+				 weights.arg=NULL, split.from=FALSE,
+				 merge.from=TRUE, ...)
+  \S4method{changeSupport}{TimeIntervalDataFrame,TimeIntervalDataFrame,numeric}(from, to, min.coverage,
+				FUN=NULL, weights.arg=NULL,
+				split.from=FALSE, merge.from=TRUE, ...)
+  \S4method{changeSupport}{TimeIntervalDataFrame,character,numeric}(from, to, min.coverage, FUN=NULL,
+				 weights.arg=NULL, split.from=FALSE,
+				 merge.from=TRUE, ...)
+
 }
 \arguments{
   \item{from}{\code{\link{TimeIntervalDataFrame}} for wich
@@ -17,7 +28,14 @@
   specific sections}
 
   \item{min.coverage}{a numeric between 0 and 1 indicating
-  the for}
+  the percentage of valid values over each interval to
+  allow an aggregation. NA is returned if the percentage is
+  not reach. In changeSupport, when values are aggregated,
+  intervals are not allowed to overlap. When a function
+  (FUN) has a na.rm argument, the na.rm=TRUE behaviour is
+  met if na.rm is set to TRUE and min.coverage to 0 (zero)
+  ; the na.rm=FALSE behaviour is met if na.rm is set to
+  FALSE whatever is the value of min.coverage.}
 
   \item{FUN}{function use to agregate data of from. By
   default \code{\link[base]{mean}} if \sQuote{from} is
@@ -25,7 +43,7 @@
   \code{\link[stats]{weighted.mean}} otherwise.}
 
   \item{weights.arg}{if FUN has a \sQuote{weight} argument,
-  this parameter should a character naming the weight
+  this parameter must be a character naming the weight
   argument. For instance, if FUN is
   \code{\link[stats]{weighted.mean}}, then weights.arg is
   \code{'w'}.}
@@ -37,8 +55,8 @@
   new time support (see \sQuote{details}).}
 
   \item{merge.from}{logical indicating if data in
-  \sQuote{from} can be can be merged over interval of the
-  new time support.}
+  \sQuote{from} can be merged over interval of the new time
+  support.}
 }
 \value{
   \code{\link{TimeIntervalDataFrame}}

@@ -210,13 +210,6 @@ setMethod (f='length', signature='POSIXst',
 
 # manipulation
 #-------------
-split.POSIXst <- function(x, f, drop=FALSE, ...)
-{
-	i <- seq_len(length(x))
-	i <- split(i, f)
-	lapply(i, function(i, x) x[i], x)	
-}
-
 c.POSIXst <- function(...)
 {
 	pers <- list(...)

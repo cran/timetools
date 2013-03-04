@@ -34,6 +34,15 @@ setClass (Class = 'TimeIntervalDataFrame',
 #' only the end of the last interval. This is why \code{data}, if given,
 #' must be one row shorter than \code{start}.
 #'
+#' If period is given it must be a \code{\link{POSIXctp}} object
+#' (or a valid character) and \sQuote{start}
+#' and \sQuote{end} must have length equal to 1. In that case, a
+#' TimeIntervalDataFrame will be created with start date equal to start
+#' \sQuote{floored} by the unit of \sQuote{period}, end date \sQuote{ceiled}
+#' by the unit of \sQuote{period} and with enough intervals of \sQuote{period}
+#' length to fit. If \sQuote{data} given, it must have a number of rows 
+#' equal to the number of intervals calculated.
+#' 
 #' To access to the class documentation, type in the R console :
 #'
 #' \code{class?TimeIntervalDataFrame}
@@ -46,6 +55,11 @@ setClass (Class = 'TimeIntervalDataFrame',
 #' TimeIntervalDataFrame (
 #'	c('2010-01-01', '2010-02-01', '2010-02-02'), NULL,
 #' 	'UTC', data.frame(ex=1:2) )
+#'
+#' TimeIntervalDataFrame(
+#' 	as.POSIXct('2013-01-01'), as.POSIXct('2013-03-01'), 
+#'	period=POSIXctp('day')
+#' )
 #' 
 #' @param start POSIXct or character representing a time with a valid
 #' format (see \code{\link[base:as.POSIXct]{POSIXct}}).
@@ -59,12 +73,80 @@ setClass (Class = 'TimeIntervalDataFrame',
 #' and end, or with one row less than the length of \sQuote{start} if \sQuote{end} is
 #' \code{NULL}. Can be \code{NULL} (hence the data.frame has zero column and as much
 #' rows as needed).
+#' @param period if not NULL, a \code{\link{POSIXctp}} or a character that 
+#' can be converted to a \code{\link{POSIXctp}} (see argument \sQuote{unit} of
+#' POSIXctp function). See Details to know how to use this argument.
 #' @param \dots arguments to or from other methods
 #'
 #' @return a \code{\link[=TimeIntervalDataFrame-class]{TimeIntervalDataFrame}} object.
 #' @seealso \code{\link[=TimeInstantDataFrame-class]{TimeInstantDataFrame}},
 #' \code{\link{RegularTimeIntervalDataFrame}}, \code{\link{timetools}}
-TimeIntervalDataFrame <- function (start, end=NULL, timezone='UTC', data=NULL, ...) {
+TimeIntervalDataFrame <- function (start, end=NULL, timezone='UTC', data=NULL, period=NULL, ...) {
+	# cas avec period
+
+	if(!is.null(period)) {
+		if(length(start) != 1 & length(end) != 1)
+			stop("both 'start' and 'end' arguments must have a length of 1.")
+			
+		if (length (period) > 1) {
+			warning ('Only the first given period is used as \'to\'.')
+			period <- period[1]
+		}
+
+		if( is.character(start) ) start <- as.POSIXct (start, timezone)
+		if( is.character(end) ) end <- as.POSIXct (end, timezone)
+		if( is.character(period) ) period <- POSIXctp( period )
+		tz <- if(is.null(timezone)) attributes(start)$tzone[1] else timezone
+
+		# construction de ls structure qui va servir 
+
+		u <- as.character (unit(period))
+		if (u == 'second') {
+			s <- trunc (start, 'secs')
+		} else if (u == 'minute') {
+			s <- trunc (start, 'mins')
+		} else if (u == 'hour') {
+			s <- trunc (start, 'hours')
+		} else if (u == 'day') {
+			s <- trunc (start, 'days')
+		} else if (u == 'month') {
+			s <- as.POSIXct(
+				sprintf('%s-01', format(start, '%Y-%m')),
+				tz)
+		} else if (u == 'year') {
+			s <- as.POSIXct(
+				sprintf('%s-01-01', format(start, '%Y')),
+				tz)
+		}
+		
+		s <- as.POSIXct(s)
+		
+		if (u == 'year') {
+			e <- end
+			nb <- year(e) - year(s) +
+			ifelse(second(e, of='year') == 0, 0, 1)
+		} else if (u == 'month') {
+			e <- end
+			nb <- (year(e) - year(s))*12 +
+				as.numeric(month(e)) -
+				as.numeric(month(s)) +
+			ifelse(second(e, of='month') == 0, 0, 1)
+		} else {
+			u <- switch (u, second='secs', minute='mins',
+				     hour='hours', day='days')
+			nb <- as.numeric (difftime(end, s, units=u))
+			nb <- ceiling (nb/duration(period))
+		}
+		
+		e <- s+as.numeric(nb) * period
+		
+		result <- RegularTimeIntervalDataFrame(
+			s, e, by=period, timezone=tz)
+		return( result )
+	}
+
+	# cas classique
+
 	if (is.null (end) ) {
 		end <- start[-1]
 		start <- start[-length(start)]
@@ -311,19 +393,6 @@ setMethod (f='names<-', signature='TimeIntervalDataFrame',
 
 # manipulation
 #-------------
-split.TimeIntervalDataFrame <- function(x, f, drop=FALSE, ...)
-{
-	vect <- seq_len(nrow(x))
-	s <- split (start(x), f, drop)
-	e <- split (end(x), f, drop)
-	data <- split (x@data, f, drop)
-	x <- mapply( SIMPLIFY=FALSE, new, 'TimeIntervalDataFrame',
-		     start=s, end=e, data=data, timezone=x@timezone,
-		     USE.NAMES=FALSE)
-	names( x ) <- names( data )
-	x
-}
-
 # fonction réalisée en S3 pour ne pas imposer de 'signature'
 rbind.TimeIntervalDataFrame <- function (...)
 {

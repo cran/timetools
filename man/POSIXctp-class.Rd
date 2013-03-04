@@ -18,7 +18,7 @@
 \alias{tail.POSIXctp}
 \alias{c.POSIXctp}
 \alias{unique.POSIXctp}
-\alias{split.POSIXctp}
+% \alias{split.POSIXctp}
 \alias{as.numeric,POSIXctp-method}
 %\alias{as.POSIXctp.logical}
 \alias{match,POSIXctp,POSIXctp-method}
