@@ -14,6 +14,31 @@ TimeIntervalDataFrame.
 News
 
 -------------------------------------------------------------------------------
+* v1.5.2
+- few enhancements for splot methods.
+- split('ANY', 'POSIXctp') method defined
+- split('ANY', 'POSIXcti') method defined
+- split documentation improved (both sources and docmentations)
+- format manpage added
+- timezone  manpage added
+- time properties man pages have been re-arranged (and developped)
+- roxygen documentations in sources code for 'format', 'timezone' and time
+properties removed.
+- minor bugs fixed.
+
+-------------------------------------------------------------------------------
+* v1.5.1
+
+tapply optimisation.
+Improvement of tapply documentation (Rd file and internal mecanisms).
+
+-------------------------------------------------------------------------------
+* v1.5.0
+
+'barplot' have been defined for SubtimeDataFrame, TimeIntervalDataFrame and
+TimeInstantDataFrame.
+
+-------------------------------------------------------------------------------
 * v1.4.0
 
 The algorithm 'changeSupport' methods has been dispatched into 'split' and

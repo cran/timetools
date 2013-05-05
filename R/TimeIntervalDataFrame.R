@@ -233,37 +233,38 @@ RegularTimeIntervalDataFrame <- function (from, to, by, period, timezone='UTC', 
 
 start.TimeIntervalDataFrame <- function(x, ...) return(as.POSIXct(as.POSIXlt(x@start, timezone(x))))
 end.TimeIntervalDataFrame <- function(x, ...) return(as.POSIXct(as.POSIXlt(x@end, timezone(x))))
-#' @rdname time.properties
-#' @aliases timezone,TimeIntervalDataFrame-method
+
 setMethod (f='timezone', signature='TimeIntervalDataFrame',
 	   definition=function(object) return(object@timezone[1]) )
-#' @rdname time.properties
-#' @aliases timezone<-,TimeIntervalDataFrame-method
+
 setMethod (f='timezone<-', signature='TimeIntervalDataFrame',
-		  definition=function(object, value) {
-	start <- as.POSIXct (as.POSIXlt (object@start, value) )
-	end <- as.POSIXct (as.POSIXlt (object@end, value) )
-	new ('TimeIntervalDataFrame', start=start, end=end,
-	     timezone=value, data=data.frame (object) )
-} )
-#' @rdname time.properties
-#' @aliases interval,TimeIntervalDataFrame-method
+definition=function(object, value) {
+	start <- as.POSIXct(as.POSIXlt( object@start, value ))
+	end   <- as.POSIXct(as.POSIXlt( object@end, value ))
+
+	new ('TimeIntervalDataFrame',
+	     start=start, end=end,
+	     timezone=value, data=data.frame (object)
+	     ) } )
+
 setMethod (f='interval', signature='TimeIntervalDataFrame',
-	   definition=function(x, ...) return(POSIXcti (start(x), end(x)) ) )
-#' @rdname time.properties
-#' @aliases when,TimeIntervalDataFrame-method
+definition=function(x, ...) return(POSIXcti (start(x), end(x)) ) )
+
 setMethod (f='when', signature='TimeIntervalDataFrame',
-	   definition=function(x, ...) return(POSIXcti (start(x), end(x)) ) )
-#' @rdname time.properties
-#' @aliases period,TimeIntervalDataFrame-method
+definition=function(x, ...) return(POSIXcti (start(x), end(x)) ) )
+
 setMethod (f='period', signature='TimeIntervalDataFrame',
-	   definition=function(x, ...) {
-		   if (!homogeneous(x)) stop ("x should be homogeneous to have a 'period'")
-		   if (!continuous(x)) stop ("x should be continuous to have a 'period'")
-		   res <- difftime(end(x), start(x), units='secs')
-		   res <- POSIXctp (unique(res), unit=rep ('second', length(unique(res))))
-		   return (res)
-	   } )
+definition=function(x, ...) {
+	if (!homogeneous(x))
+		stop ("x should be homogeneous to have a 'period'")
+
+	if (!continuous(x))
+		stop ("x should be continuous to have a 'period'")
+	
+	res <- difftime(end(x), start(x), units='secs')
+	res <- POSIXctp (unique(res), unit=rep ('second', length(unique(res))))
+	return (res)
+} )
 
 # mise en forme pour / et affichage
 #----------------------------------
@@ -459,61 +460,58 @@ setMethod ('lapply', signature('TimeIntervalDataFrame', 'ANY'),
 # acces/modification de certaines propriétés
 #-------------------------------------------
 # tous les intervalles sont de même durée
-#' @rdname time.properties
-#' @aliases homogeneous,TimeIntervalDataFrame-method
 setMethod (f='homogeneous', signature='TimeIntervalDataFrame',
-	   definition=function(x, ..) {
-		   len <- length(unique(difftime(end(x), start(x))))
-		   return(len == 1)
-	   } )
+definition=function(x, ...) {
+	len <- length(unique(difftime(end(x), start(x))))
+	return(len == 1)
+} )
 # tous les intervalles sont de même durée et espacés d'une même période
-#' @rdname time.properties
-#' @aliases regular,TimeIntervalDataFrame-method
 setMethod (f='regular', signature='TimeIntervalDataFrame',
-	   definition=function(x, ...) {
-		   len <- length(unique(difftime(start(x)[-1], start(x)[-nrow(x)])))
-		   return(homogeneous(x) & length(len) == 1)
-	   } )
-# entre le début du premier intervalle et la fin du dernier, il n'y a pas de 'trous' ET
-#	il n'y a pas de superposition entre deux intervalles
-#' @rdname time.properties
-#' @aliases continuous,TimeIntervalDataFrame-method
+definition=function(x, ...) {
+	len <- length(unique(difftime(start(x)[-1], start(x)[-nrow(x)])))
+	return(homogeneous(x) & length(len) == 1)
+} )
+# entre le début du premier intervalle et la fin du dernier, il
+# n'y a pas de 'trous' ET il n'y a pas de superposition entre deux
+# intervalles
 setMethod (f='continuous', signature='TimeIntervalDataFrame',
-	   definition=function(x, ...) {
-		   start <- start(x)
-		   end <- end(x)
-		   ordre <- order (start, end)
-		   start <- start[ordre]
-		   end <- end[ordre]
-		   return(all (start[-1] == end[-nrow(x)]) )
-	   } )
-#' @rdname time.properties
-#' @aliases continuous<-,TimeIntervalDataFrame-method
-setMethod (f='continuous<-', signature='TimeIntervalDataFrame',
-	   definition=function(x, value) {
-		   if (!value) return (x)
-		   if (overlapping (x) ) stop ("Can't make continuous a 'TimeIntervalDataFrame' with overlapping intervals.")
-		   if (continuous (x) ) return (x)
-		   data <-  as.data.frame (matrix(NA, nrow=nrow(x)-1, ncol=ncol(x) ) )
-		   names (data) <- names (x)
-		   complementaire <- new ('TimeIntervalDataFrame',
-					  start=end(x)[-nrow(x)], end=start(x)[-1],
-					  timezone=x@timezone,
-					  data= data)
-		   return (merge (x, complementaire, tz=timezone(x) ) )
-	   } )
-# certains intervalles se superposent-ils ?
-#' @rdname time.properties
-#' @aliases overlapping,TimeIntervalDataFrame-method
-setMethod (f='overlapping', signature='TimeIntervalDataFrame',
-	   definition=function(x, ...) {
-		   ol <- .C ('overlapping_timeintervaldf',
-				  as.integer(start(x)), as.integer(end(x)), as.integer(nrow(x)),
-				  ol=integer(1),
-				  NAOK=FALSE, PACKAGE='timetools')$ol
-		   return (ol == 1)
-	   } )
+definition=function(x, ...) {
+	start <- start(x)
+	end <- end(x)
+	ordre <- order (start, end)
+	start <- start[ordre]
+	end <- end[ordre]
+	return(all (start[-1] == end[-nrow(x)]) )
+} )
 
+setMethod (f='continuous<-', signature='TimeIntervalDataFrame',
+definition=function(x, value) {
+	if (!value) return (x)
+	if (overlapping (x) ) stop ("Can't make continuous a 'TimeIntervalDataFrame' with overlapping intervals.")
+	if (continuous (x) ) return (x)
+
+	data <-  as.data.frame (matrix(NA, nrow=nrow(x)-1, ncol=ncol(x) ) )
+	names (data) <- names (x)
+
+	complementaire <- new ('TimeIntervalDataFrame',
+			       start=end(x)[-nrow(x)], end=start(x)[-1],
+			       timezone=x@timezone,
+			       data= data)
+
+	return (merge (x, complementaire, tz=timezone(x) ) )
+} )
+
+# certains intervalles se superposent-ils ?
+setMethod (f='overlapping', signature='TimeIntervalDataFrame',
+definition=function(x, ...) {
+	ol <- .C ('overlapping_timeintervaldf',
+		  as.integer(start(x)),
+		  as.integer(end(x)),
+		  as.integer(nrow(x)),
+		  ol=integer(1),
+		  NAOK=FALSE, PACKAGE='timetools')$ol
+	return (ol == 1)
+} )
 
 # transformateur de classe
 #-------------------------

@@ -47,12 +47,9 @@ SubtimeDataFrame <- function (when, data=NULL, ...) {
 
 # definition des accesseurs de l'objet
 #-------------------------------------
-#' @rdname time.properties
-#' @aliases when,SubtimeDataFrame-method
 setMethod (f='when', signature='SubtimeDataFrame',
 	   definition=function(x, ...) return(x@when) )
-#' @rdname time.properties
-#' @aliases timezone,SubtimeDataFrame-method
+
 setMethod (f='timezone', signature='SubtimeDataFrame',
 	   definition=function(object) return(timezone(when(object))) )
 

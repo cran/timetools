@@ -36,9 +36,11 @@ end.POSIXcti <- function (x, ...) start (x) + duration(x)
 format.POSIXcti <- function (x, format='%Y-%m-%d %H:%M:%S', ...) {
 	if (length (x) == 0) return ('POSIXcti()')
 	tz <- attributes(x)$tzone
-	s <- start(x)
-	e <- end(x)
-	tp <- paste (format (s, format=format), format (e, format=format), sep=' <-> ')
+	s  <- start(x)
+	e  <- end(x)
+	tp <- paste(format(s, format=format),
+		    format(e, format=format),
+		    sep=' <-> ')
 	return (tp)
 }
 

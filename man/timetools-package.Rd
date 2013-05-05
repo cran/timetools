@@ -14,10 +14,12 @@ This package uses (and extends) only POSIXt* format for time objects.
 
 Main things defined in this package are :
 \enumerate{
-  \item the classes POSIXcti (as \sQuote{time intervals}), POSIXctp (as \sQuote{time periods}) and
-  subtime (days of week, weeks of year, months of year, etc.), to deal with basic time concepts ;
-  \item TimeIntervalDataFrame, TimeInstantDataFrame and SubtimeDataFrame to deal with time series
-  (regular, homogeneous,irregular, heterogeneous or whatever) ;
+  \item the classes POSIXcti (as \sQuote{time intervals}), POSIXctp
+  (as \sQuote{time periods}) and subtime (days of week, weeks of year,
+  months of year, etc.), to deal with basic time concepts ;
+  \item TimeIntervalDataFrame, TimeInstantDataFrame and SubtimeDataFrame
+  to deal with time series (regular, homogeneous,irregular, heterogeneous
+  or whatever) ;
   \item methods to switch from one class to another ;
   \item and the \sQuote{changeSupport} method for TimeIntervalDataFrame (cf
   \code{\link{changeSupport}} for more details).
@@ -27,51 +29,16 @@ Main things defined in this package are :
 \tabular{ll}{
 Package: \tab timetools\cr
 Type: \tab Package\cr
-Version: \tab 1.4.0\cr
-Date: \tab 2013-03-04\cr
+Version: \tab 1.5.2\cr
+Date: \tab 2013-05-05\cr
 Depends: \tab methods\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 URL: \tab http://sourceforge.net/projects/timetools/\cr
 Encoding: \tab UTF-8\cr
 }
+}
 
-Index:
-\preformatted{
-%included%              test inclusion of 2 'interval' objects
-%intersect%             intersects 2 'interval' objects
-RegularTimeIntervalDataFrame
-                        Create a regular TimeIntervalDataFrame from
-                        scratch
-SubtimeDataFrame-class
-                        Class '"SubtimeDataFrame"'
-TimeInstantDataFrame-class
-                        Class '"TimeInstantDataFrame"'
-TimeIntervalDataFrame   Create a TimeIntervalDataFrame from scratch
-TimeIntervalDataFrame-class
-                        Class '"TimeIntervalDataFrame"'
-as.SubtimeDataFrame     Convert an object to a SubtimeDataFrame
-as.TimeInstantDataFrame
-                        Convert an object to a TimeInstantDataFrame
-as.TimeIntervalDataFrame
-                        Convert an object to a TimeIntervalDataFrame
-changeSupport           Function to change time support of
-                        TimeIntervalDataFrame
-compute.lim             Calculate limits for plotting
-subtime                 Extract a specific subtime of of POSIXt object
-                        or define a subtime object
-timetools-package       provides objects and tools to manipulate
-                        irregular heterogeneous time data and subtime
-                        data.
-timezone                Test different properties of Time objects
-as.POSIXctp		Convert an object to a POSIXctp
-ops.posixctpi		Operators to sum or substract POSIXctp from POSIXct or POSIXcti
-origin			1970-01-01 GMT
-POSIXt.units		define valid units for time objects
-posix.properties	Extract time properties from POSIX* objects
-as.POSIXcti		Convert an object to a POSIXcti
-}
-}
 \author{
 Vladislav Navel <vnavel@yahoo.fr>
 }

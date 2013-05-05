@@ -30,6 +30,7 @@
 \alias{plot.TimeInstantDataFrame}
 \alias{points.TimeInstantDataFrame}
 \alias{lines.TimeInstantDataFrame}
+\alias{barplot.TimeInstantDataFrame}
 \alias{print.TimeInstantDataFrame}
 \alias{rbind.TimeInstantDataFrame}
 \alias{row.names.TimeInstantDataFrame}
@@ -140,6 +141,8 @@
     \item{plot}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, xlim=NULL, ylim=NULL, log, main, sub, xlab, ylab, ann=par("ann"), axes=TRUE, asp=NA, ...}: plot what it is asked for (see \code{\link[graphics]{plot}}). Returns invisibly params used for the plot. }
     \item{points}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, ...}:plot what it is asked for (see \code{\link[graphics]{points}}). Returns invisibly params used for the plot. }
     \item{lines}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, ...}: plot what it is asked for (see \code{\link[graphics]{lines}}). Returns invisibly params used for the plot. }
+    \item{barplot}{\code{height, format='', ...}} see \code{\link[graphics]{barplot}}
+
   }
 }
 \section{Text representation}{

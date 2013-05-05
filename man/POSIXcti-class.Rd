@@ -5,13 +5,13 @@
 \alias{POSIXcti}
 \alias{length,POSIXcti-method}
 \alias{show,POSIXcti-method}
-\alias{duration,POSIXcti-method}
+%\alias{duration,POSIXcti-method}
 
 \alias{start.POSIXcti}
 \alias{end.POSIXcti}
 \alias{[.POSIXcti}
 \alias{[<-.POSIXcti}
-\alias{format.POSIXcti}
+%\alias{format.POSIXcti}
 \alias{print.POSIXcti}
 \alias{summary.POSIXcti}
 \alias{head.POSIXcti}

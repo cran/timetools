@@ -4,6 +4,19 @@
 \alias{tapply,TimeIntervalDataFrame,POSIXctp-method}
 \alias{tapply,TimeIntervalDataFrame,TimeIntervalDataFrame-method}
 \title{Apply a Function Over a time properties}
+\usage{
+  \S4method{tapply}{TimeIntervalDataFrame,TimeIntervalDataFrame}(X, INDEX, FUN, ...,
+       min.coverage=1, weights.arg=NULL, merge.X=TRUE, split.X=FALSE,
+       keep.INDEX=TRUE, simplify=TRUE)
+
+  \S4method{tapply}{TimeIntervalDataFrame,POSIXctp}(X, INDEX, FUN, ...,
+       min.coverage=1, weights.arg=NULL, merge.X=TRUE, split.X=FALSE,
+       simplify=TRUE)
+
+  \S4method{tapply}{TimeIntervalDataFrame,POSIXcti}(X, INDEX, FUN, ...,
+       min.coverage=1, weights.arg=NULL, merge.X=TRUE, split.X=FALSE,
+       simplify=TRUE)
+}
 \arguments{
   \item{X}{a \code{\link{TimeIntervalDataFrame}} or a
   \code{\link{TimeInstantDataFrame}}}
@@ -54,7 +67,8 @@
 }
 \description{
   Apply a function over a Time*DataFrame that is first
-  splitted into several sets according to time properties.
+  splitted into several sets according to time properties
+  specified by INDEX.
 }
 \details{
   These functions are equivalent to old

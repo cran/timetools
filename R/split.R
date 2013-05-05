@@ -1,73 +1,38 @@
-#' Divide into Groups and Reassemble (Time*DataFrame objects)
-#'
-#' \sQuote{split} divides the data in the vector \sQuote{x} into the groups defined
-#' by \sQuote{f}.  The replacement forms replace values corresponding to
-#' such a division.
-#' Here are listed \sQuote{split} methods defined for Time objects defined
-#' in the timetools package (\code{\link{TimeIntervalDataFrame}},
-#' \code{\link{TimeInstantDataFrame}}, \code{\link{POSIXst}},
-#' \code{\link{POSIXcti}}, etc.).
-#' See sections below for complete list of methods. 
-#'
-#' For each new split method defined in \code{\link{timetools}} a 
-#' short description is given there. If the method is an S3 method,
-#' the class of the first argument only is given ; otherwise the complete
-#' signature is given (for S4 methods).
-#' 
-#' @return
-#' The value returned from ‘split’ is a list of vectors containing
-#' the values for the groups.  The components of the list are named
-#' by the levels of ‘f’ (after converting to a factor).
-#'
-#' @inheritParams base::split
-#' @param \dots further potential arguments passed to methods.
-#'
-#' @rdname split
-#'
-#' @seealso \code{\link[base]{split}}, \code{\link{TimeIntervalDataFrame-class}},
-#' \code{\link{TimeInstantDataFrame-class}}, \code{\link{SubtimeDataFrame-class}},
-#' \code{\link{changeSupport}},
-#' \code{\link{POSIXcti-class}}, \code{\link{POSIXst-class}},
-#' \code{\link{POSIXctp-class}}
+# definition of the generic (S4) function
 setGeneric (name='split')
 
-#' @rdname split
-#' @method split POSIXctp
-#' @section POSIXctp:
-#' split POSIXctp objects.
+# the following (S3) methods are wrappers to the split.default method
+# defined in the package 'base'.
+# Those methods allow to split POSIXctp, POSIXst  POSXcti objects
+# which are similar to vectors.
+
 split.POSIXctp <- function(x, f, drop=FALSE, ...)
 {
 	i <- seq_len(length(x))
-	i <- split(i, f)
-	lapply(i, function(i, x) x[i], x)	
+	i <- split(i, f, drop)
+	lapply(i, function(i, x) x[i], x)
 }
 
-#' @rdname split
-#' @method split POSIXst
-#' @section POSIXst:
-#' split POSIXst objects.
 split.POSIXst <- function(x, f, drop=FALSE, ...)
 {
 	i <- seq_len(length(x))
-	i <- split(i, f)
-	lapply(i, function(i, x) x[i], x)	
+	i <- split(i, f, drop)
+	lapply(i, function(i, x) x[i], x)
 }
 
-#' @rdname split
-#' @method split POSIXcti
-#' @section POSIXcti:
-#' split POSIXcti objects.
 split.POSIXcti <- function(x, f, drop=FALSE, ...)
 {
 	i <- seq_len(length(x))
-	i <- split(i, f)
-	lapply(i, function(i, x) x[i], x)	
+	i <- split(i, f, drop=drop)
+	lapply(i, function(i, x) x[i], x)
 }
 
-#' @rdname split
-#' @method split SubtimeDataFrame
-#' @section SubtimeDataFrame:
-#' split SubtimeDataFrame objects.
+# the following (S3) methods are wrappers to the split.data.frame
+# method defined in the package 'base'.
+# Those methods allow to split SubtimeDataFrame, TimeInstantDataFrame
+# and TimeIntervalDataFrame in the same way that data.frame are
+# used to be splitted.
+
 split.SubtimeDataFrame <- function(x, f, drop=FALSE, ...)
 {
 	vect <- seq_len(nrow(x))
@@ -79,10 +44,6 @@ split.SubtimeDataFrame <- function(x, f, drop=FALSE, ...)
 	x
 }
 
-#' @rdname split
-#' @method split TimeInstantDataFrame
-#' @section TimeInstantDataFrame:
-#' split TimeInstantDataFrame objects.
 split.TimeInstantDataFrame <- function(x, f, drop=FALSE, ...)
 {
 	vect <- seq_len(nrow(x))
@@ -95,10 +56,6 @@ split.TimeInstantDataFrame <- function(x, f, drop=FALSE, ...)
 	x
 }
 
-#' @rdname split
-#' @method split TimeIntervalDataFrame
-#' @section TimeIntervalDataFrame:
-#' split TimeIntervalDataFrame objects.
 split.TimeIntervalDataFrame <- function(x, f, drop=FALSE, ...)
 {
 	vect <- seq_len(nrow(x))
@@ -112,43 +69,69 @@ split.TimeIntervalDataFrame <- function(x, f, drop=FALSE, ...)
 	x
 }
 
-#' @rdname split
-#' @aliases split,ANY,POSIXst-method
-#' @section signature(ANY, POSIXst):
-#' split any objects over \code{\link{POSIXst}}.
+# Since POSIXst, POSIXctp and POSIXcti objects are simila to vector
+# it must be possible to split other type of objects against those ones.
+# Here are the definition of such methods
+
 setMethod('split', signature('ANY', 'POSIXst'),
-	  function(x, f, ...)
+	  function(x, f, drop=FALSE, ...)
 	  {
 		  f <- as.numeric(f)
-		  split(x, f )
+		  split(x, f, drop=FALSE, ...)
 	  } )
 
-#' @rdname split
-#' @aliases split,TimeIntervalDataFrame,TimeIntervalDataFrame-method
-#' 
-#' @param split.x logical indicating if data in \sQuote{x} that are over
-#' several intervals of 'f' must be 'cut' to fit to new intervals (TRUE) or
-#' ignored (FALSE).
-#' @param keep.f logical indicating if f values must be kept on the resulting list.
-#'
-#' @section signature(TimeIntervalDataFrame, TimeIntervalDataFrame):
-#' split \code{\link{TimeIntervalDataFrame}}  over another
-#' \code{\link{TimeIntervalDataFrame}}.
-#' This methode actually act more or less like the function
-#' \code{\link{changeSupport}}
-#' with the split.from argument set to TRUE. The difference is the output : 
-#' there the result is a list of TimeIntervalDataFrame whereas the result of 
-#' changeSupport is a TimeIntervalDataFrame.
-setMethod('split', signature=signature(x='TimeIntervalDataFrame',
-				       f='TimeIntervalDataFrame'),
-	definition=function(x, f, ...,
-			    split.x=FALSE, keep.f=TRUE)
+setMethod('split', signature('ANY', 'POSIXctp'),
+	  function(x, f, drop=FALSE, ...)
+	  {
+		  f <- format(f)
+		  split(x, f, drop=FALSE, ...)
+	  } )
+
+setMethod('split', signature('ANY', 'POSIXcti'),
+	  function(x, f, drop=FALSE, ...)
+	  {
+		  f <- format(f, ...)
+		  split(x, f, drop=FALSE)
+	  } )
+
+
+# the next methods are more specialised methods and each one will
+# be described independently.
+
+# split a TimeIntervalDataFrame into another TimeIntervalDataFrame.
+# The method take each time interval of the first TimeIntervalDataFrame
+# (TitDF) and search in which time intervals of the second it
+# intersects. Each time interval of the first TItDF can intersect with
+# none, one or several time intervals of the second TItDF. The arguments
+# 'split.x' is defined to tell the method what to do : 
+# - if the time interval in the first TItDF (ti1) doesn't match any in the 
+# second TItDF, nothing to do ;
+# - if it (ti1) matches one in the second TItDF (ti2) and is
+# included inside it, it (ti1) is entirely taken in the final result ;
+# - if it (ti1) intersects one and only one (ti2) inside the second
+# TItDF, (ti1) is truncated to be included inside (ti2) if 'split.x' is
+# TRUE and (ti1) is removed if 'split.x' is FALSE ;
+# - if it (ti1) is over several time intervals of the second TItDF
+# (ti2.a, ti2.b, etc.) :
+# -- if 'split.x' is TRUE, (ti1) is truncated into each ti2.x to be
+# included inside each one ;
+# -- if 'split.x' is FALSE, (ti1) is removed.
+
+setMethod('split',
+	  signature=signature(x='TimeIntervalDataFrame',
+			      f='TimeIntervalDataFrame'),
+	  definition=function(x, f, ...,
+			      split.x=FALSE, keep.f=TRUE)
 {
 	if (timezone(x) != timezone (f))
 	{
 		warning("'x' and 'f' have a different timezone. The timezone of 'f' is taken for the result")
 		timezone(x) <- timezone(f)
 	}
+
+	# retrieving informations from input data to define the arguments
+	# to pass to the C functions (see below)
+
 	int.x <- when (x)
 	int.f <- when (f)
 	   
@@ -156,7 +139,11 @@ setMethod('split', signature=signature(x='TimeIntervalDataFrame',
 	e.x <- end (int.x)
 	s.f <- start (int.f)
 	e.f <- end (int.f)
-	   
+
+	# the underlying C function determine the number of time
+	# intersections between time intervals of 'x' and time intervals
+	# of 'f'. This number is necessary for the enxt step.
+
 	nb <- .C ('project_nb_intersections',
 			as.integer(s.x), as.integer(e.x),
 			as.integer(length(s.x)),
@@ -164,6 +151,16 @@ setMethod('split', signature=signature(x='TimeIntervalDataFrame',
 			as.integer(length(s.f)),
 			nb=integer(1),
 			NAOK=FALSE, PACKAGE='timetools')$nb
+
+	# The 'whiches'  structure 
+	# is a data.frame containing 3 variables. Each row of the
+	# data.frame represents a time intersection between 'x'
+	# and 'f'.
+	# pos.x: the row index in 'x' corresponding to the time
+	#	interserction ;
+	# pos.f: the row index in 'f' corresponding to the time
+	#	interserction ;
+	# weight: this one is not used is this function.
 
 	if (nb > 0) {
 
@@ -183,8 +180,18 @@ setMethod('split', signature=signature(x='TimeIntervalDataFrame',
 
 	}
 
-	# si x.split = FALSE, on dégage les x qui intersectent plusieurs f
-	# sinon on garde une trace de ceux qui sont "à cheval"
+	# if 'split.x' is FALSE, time intervals of 'x' are not allowed to
+	# be over several time intervals of 'f' neither to intersect one
+	# time interval of 'f' being not completely included in it.
+	# The first condition implies that in the 'pos.x' variable of 
+	# 'whiches', every value must appear only once. Rows in 'whiches'
+	# where the 'pos.x' value is not unique are removed.
+	# WARNING : the second condition is not yet tested so we have
+	# to keep it in mind to treat it later.
+	#
+	# 'splitted', 's' and 'e' (start and end of the time interval
+	# of 'x') ans 'si' and 'ei' (start and end of the time interval
+	# of 'f') variables are added to 'whiches'.
 
 	if (!split.x) {
 		whiches <- whiches[!whiches$pos.x %in%
@@ -194,19 +201,49 @@ setMethod('split', signature=signature(x='TimeIntervalDataFrame',
 		whiches$splitted <- whiches$pos.x %in%
 			unique( whiches$pos.x[duplicated(whiches$pos.x)] )
 	}
-	whiches$s <- as.numeric(start(x)[whiches$pos.x])
-	whiches$e <- as.numeric( end (x)[whiches$pos.x])
 
-	## si merge.x = FALSE, on dégage les f avec plusieurs x
-	#
-	#if (!merge.x)
-	#	whiches <- whiches[!whiches$pos.f %in%
-	#		unique( whiches$pos.f[duplicated(whiches$pos.f)] ),]
+	whiches$s <- as.numeric(start(x))[whiches$pos.x]
+	whiches$e <- as.numeric( end (x))[whiches$pos.x]
 
+	whiches$si <- as.numeric(start(f))[whiches$pos.f]
+	whiches$ei <- as.numeric( end (f))[whiches$pos.f]
+
+	if (!split.x) {
+		# with the new variables, we can now easily test the
+		# second condition about time interval of 'x' that are
+		# not commpletely included in a time interval of 'f'.
+		# The condition is not met if the "x"'s interval begin before
+		# or end after the "f"'s one.
+
+		whiches <- whiches[whiches$s >= whiches$si &
+				   whiches$e <= whiches$ei,]
+
+	} else {
+		# as explained in the description of the function,
+		# if splitting of "x"'s intervals is allowed, those
+		# that are not completely included in "f"'s intervals
+		# are truncated : there start ('s') and end ('e')
+		# are modified in accordance with this rule.
+
+		early  <- whiches$s < whiches$si
+		lately <- whiches$e > whiches$ei
+		whiches$s[early ] <- whiches$si[ early]
+		whiches$e[lately] <- whiches$ei[lately]
+	}
+
+	# some of the time intervals of 'f' may have intersection with
+	# none of the time intervals of 'x'.
+	# First, we determine the TimeIntervalDataFrame for those
+	# that are not empty.
+
+	# get 'pos.f' values for not empty "f"'s intervals and
+	# corresponding start and end.
 	f.notempty <- sort(unique( whiches$pos.f ))
-	whiches <- split (whiches, whiches$pos.f)
 	start <- s.f[f.notempty]
 	end <- e.f[f.notempty]
+
+	# get whiches splitted into "f"'s intervals
+	whiches <- split (whiches, whiches$pos.f)
  
 	# split effectif des donnees
 	# pour chaque element du whiches (et donc de start et end)
@@ -232,21 +269,21 @@ setMethod('split', signature=signature(x='TimeIntervalDataFrame',
 		whiches, as.numeric(start), as.numeric(end),
 		MoreArgs=list(x), SIMPLIFY=FALSE)
 
-	# pour les intervals de f pour lesquels aucune données dans x n'est
-	# présente, des TItDFD vides sont insérés
+	# for empty "f"'s intervals, empty TimeIntervalDataFrame are
+	# set in the resultint structure.
 
 	result[setdiff(1:nrow(f), f.notempty)] <- TimeIntervalDataFrame(
 		as.POSIXct(character()),
 		as.POSIXct(character()),
 		data = x@data[0,,drop=FALSE])
 
-	# finalement on remet les valeurs du f (si souhaitées)
+	# adding initial values of 'f' in the result if asked.
 
 	if( keep.f )
 		for( n in names(f) )
 		{
-			# tests et manip pour gérer les problèmes en cas de 
-			# noms identiques entre x et f
+			# if 'x' and 'f' have variables with identical names
+			# those of 'f' are modified
 			new.n <- n
 			i <- 1
 			while( new.n %in% names(x) ) {
@@ -257,7 +294,7 @@ setMethod('split', signature=signature(x='TimeIntervalDataFrame',
 				warning(sprintf("'%s' in f renamed as '%s'",
 						n, new.n))
 
-			# ajout des valeurs de f dans result
+			# add "f"'s vars
 			result <- mapply(function(x, i, value)
 			       {
 				       x@data[[i]] <- rep(value, nrow(x))
@@ -270,12 +307,9 @@ setMethod('split', signature=signature(x='TimeIntervalDataFrame',
 	return( result )
 } )
 
-#' @rdname split
-#' @aliases split,TimeIntervalDataFrame,POSIXctp-method
-#' 
-#' @section signature(TimeIntervalDataFrame, POSIXctp):
-#' split a \code{\link{TimeIntervalDataFrame}} against 
-#' regular time intervals with a period defined by f (a \code{\link{POSIXctp}}).
+# split a TimeIntervalDataFrame into a time period (of length 1).
+# A TimeIntervalDataFrame is created (cf TimeIntervalDataFrame
+# constructor) and the the above method is called.
 
 setMethod (
 	'split',
@@ -290,12 +324,11 @@ setMethod (
 	split(x, f, ..., split.x=split.x)
 } )
 
-#' @rdname split
-#' @aliases split,TimeIntervalDataFrame,POSIXcti-method
-#' 
-#' @section signature(TimeIntervalDataFrame, POSIXcti):
-#' split \code{\link{TimeIntervalDataFrame}} against specified 
-#' intervals f (\code{\link{POSIXcti}}).
+# split a TimeIntervalDataFrame into time intervals (POSIXcti).
+# It is exactly the same as splitting a TimeIntervalDataFrame into
+# another except that 'f' has not data.
+# So a TimeIntervalDataFrame is created according to 'f' and the 
+# the above method is called.
 
 setMethod('split',
 	  signature=signature(x='TimeIntervalDataFrame', f='POSIXcti'),
@@ -307,19 +340,5 @@ setMethod('split',
 	split(x, f, ..., split.x=split.x)
 } )
 
-# pas sûr que celui-ci soit possible
-# setMethod ('split', signature=signature(x='TimeIntervalDataFrame', f='SubtimeDataFrame', drop='ANY'),
-# 	   definition=function(x, f, drop, ..., boundaries=c('include', 'exclude', 'cut'), keep.f=TRUE)
-# 	   {
-# 	   } )
-# 
-# setMethod ('split', signature=c(x='TimeInstantDataFrame', f='TimeIntervalDataFrame', drop='ANY'),
-# 	   definition=function(x, f, boundaries=c('include', 'exclude', 'cut'), keep.f=TRUE, drop, ...)
-# 	   {
-# 	   } )
-# 
-# setMethod ('split', signature=c(x='TimeIntervalDataFrame', f='character', drop='ANY'),
-# 	   definition=function(x, f, boundaries=c('include', 'exclude', 'cut'), keep.f=TRUE, drop, ...)
-# 	   {
-# 	   } )
-# 
+# TODO : split,TimeInstantDataFrame,TimeIntervalDataFrame-method
+

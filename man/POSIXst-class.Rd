@@ -18,6 +18,7 @@
 \alias{tail.POSIXst}
 \alias{[.POSIXst}
 \alias{[<-.POSIXst}
+%\alias{format.POSIXst}
 \alias{c.POSIXst}
 \alias{unique.POSIXst}
 % \alias{split.POSIXst}

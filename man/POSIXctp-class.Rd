@@ -11,7 +11,7 @@
 
 \alias{[.POSIXctp}
 \alias{[<-.POSIXctp}
-\alias{format.POSIXctp}
+%\alias{format.POSIXctp}
 \alias{print.POSIXctp}
 \alias{summary.POSIXctp}
 \alias{head.POSIXctp}

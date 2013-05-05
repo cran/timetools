@@ -33,44 +33,44 @@ POSIXctp <- function (duration, unit)
 
 # acces aux proprietes
 #---------------------
-#' @rdname posix.properties
-#' @aliases unit,POSIXctp-method
 setMethod ('unit', 'POSIXctp', function(x, ...) (x@unit))
-#' @rdname posix.properties
-#' @param object POSIXctp to which the unit is to be changed
-#' @param value a character or a \code{\link{POSIXt.units}} indicating 
-#' the new units of object. The conversion will be effective only 
-#' if it makes sense  (\sQuote{hour} to \sQuote{second}, ok ; 
-#' \sQuote{year} to \sQuote{month}, ok ; \sQuote{month} to \sQuote{minute}
-#' , NOT ok ; etc.
-#' @aliases unit<-,POSIXctp-method
+
 setMethod (f='unit<-', signature='POSIXctp',
-		  definition=function(object, value) {
-			  value <- POSIXt.units(value)
-			  conversion <- array (
-				c(1, 12, rep(NA, 5),
-				  NA, 1, rep(NA, 5), 
-				  rep(NA, 2), 1, 7, 7*24, 7*24*60, 7*24*60*60,
-				  rep(NA, 3), 1, 24, 24*60, 24*60*60,
-				  rep(NA, 4), 1, 60, 60*60,
-				  rep(NA, 5), 1, 60, rep(NA, 6), 1),
-				dim=c(7, 7),
-				dimnames=list (to=c('year', 'month', 'week', 'day', 'hour', 'minute', 'second'),
-					       from=c('year', 'month', 'week', 'day', 'hour', 'minute', 'second')))
-			  conv <- conversion[cbind (as.character(value), as.character(unit(object)))]
-			  if (any (is.na(conv)))
-			      warning('some POSIXctp can not be converted due to incompatible units (year to hour for instance)')
-			  POSIXctp (duration(object) * ifelse(is.na(conv), 1, conv),
-				    ifelse(is.na(conv), as.character (unit(object)), as.character(value)))
+definition=function(object, value) {
+	value <- POSIXt.units(value)
+	conversion <- array (
+		c(1, 12, rep(NA, 5),
+		  NA, 1, rep(NA, 5), 
+		  rep(NA, 2), 1, 7, 7*24, 7*24*60, 7*24*60*60,
+		  rep(NA, 3), 1, 24, 24*60, 24*60*60,
+		  rep(NA, 4), 1, 60, 60*60,
+		  rep(NA, 5), 1, 60, rep(NA, 6), 1),
+		dim=c(7, 7),
+		dimnames=list (
+			to=c('year', 'month', 'week', 'day',
+			     'hour', 'minute', 'second'),
+			from=c('year', 'month', 'week', 'day',
+			       'hour', 'minute', 'second')))
+
+	conv <- conversion[cbind (as.character(value),
+				  as.character(unit(object)))]
+	
+	if (any (is.na(conv)))
+		warning('some POSIXctp can not be converted due to incompatible units (year to hour for instance)')
+
+	POSIXctp(duration(object) * ifelse(is.na(conv), 1, conv),
+		 ifelse(is.na(conv), as.character (unit(object)),
+				     as.character(value)))
 } )
-#' @rdname posix.properties
-#' @aliases duration,POSIXctp-method
+
 setMethod ('duration', 'POSIXctp', function(x, ...) x@duration)
 
 format.POSIXctp <- function (x, ...) {
-	sprintf ('%i %s%s', x@duration, as.character (x@unit), ifelse(x@duration>1, 's', ''))
-}
+	sprintf('%i %s%s',
+	x@duration, as.character (x@unit), ifelse(x@duration>1, 's', ''))}
+
 print.POSIXctp <- function(x, ...) print (format (x) )
+
 setMethod ('show', 'POSIXctp', function(object) show (format (object) ))
 
 tail.POSIXctp <- function (x, ...) tail(format(x, ...))

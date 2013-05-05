@@ -68,51 +68,23 @@ setClass (Class = 'POSIXst',
 #---------------------
 # properties accessors
 
-#' @rdname time.properties
-#' @aliases unit.POSIXst
-#' @method unit POSIXst
 unit.POSIXst <- function(x, ...) x@unit
 
-#' @rdname time.properties
-#' @aliases of.POSIXst
-#' @method of POSIXst
 of.POSIXst <- function(x, ...) x@of
 
-#' @rdname time.properties
-#' @aliases timezone.POSIXst
-#' @method timezone POSIXst
 timezone.POSIXst <- function(object) object@timezone
 
 #-----------------
 # printing methods
 
-#' format a POSIXst object
-#'
-#' @method format POSIXst
-#'
-#' @param x POSIXst object to format
-#' @param format character string containing 
-#' 	the following special characters.
-#' \itemize{
-#' \item \%v value
-#' \item \%s subtime unit (slot \sQuote{unit})
-#' \item \%m main unit (slot \sQuote{of})
-#' \item \%a Abbreviated weekday name in the current locale.
-#' \item \%A Full weekday name in the current locale.
-#' \item \%b Abbreviated month name in the current locale.
-#' \item \%B Full month name in the current locale.
-#' \item \%r timezone
-#' }
-#' @param \dots other arguments to or from other methods
-#' 
-#' @return character string
 format.POSIXst <- function (x, format=NULL, ...)
 {
 	if( is.null(format) )
 	{
 		if( x@unit == POSIXt.units('month') )
 			format <- '%B' else
-		if( x@unit == POSIXt.units('day') & x@of == POSIXt.units('week') )
+		if( x@unit == POSIXt.units('day') &
+		    x@of == POSIXt.units('week') )
 			format <- '%A' else
 		if( x@unit == POSIXt.units('year') )
 			format <- '%s %v' else
@@ -127,7 +99,8 @@ format.POSIXst <- function (x, format=NULL, ...)
 		    x@of != POSIXt.units('week') ) {
 			stop('%a, %A format can only be used with month.')
 		} else {
-			tmp <- as.POSIXct(sprintf('2011-12-%02i', 25:31))[x@subtime+1]
+			tmp <- as.POSIXct(sprintf('2011-12-%02i', 25:31))[
+								x@subtime+1]
 			result <- mapply(
 				function(result, tmp)
 				{
@@ -140,18 +113,17 @@ format.POSIXst <- function (x, format=NULL, ...)
 
 	# case of month
 	if( any( sapply(c('%b', '%B'), grepl, format) ) )
-		if( x@unit != POSIXt.units('month') )
-			stop( '%b, %B format can only be used with month.' ) else
-			{
-				tmp <- as.POSIXct(sprintf('1970-%02i-01', x@subtime+1))
-				result <- mapply(function(result, tmp)
-						 {
-							 gsub('%b', format(tmp, '%b'),
-	     						 gsub('%B', format(tmp, '%B'),
-	 							   result))
-						 },
-						 result, tmp, USE.NAMES=FALSE)
-			}
+		if( x@unit != POSIXt.units('month') ) {
+			stop( '%b, %B format can only be used with month.' )
+		} else {
+			tmp <- as.POSIXct(sprintf('1970-%02i-01', x@subtime+1))
+			result <- mapply(function(result, tmp) {
+				 gsub('%b', format(tmp, '%b'),
+				 gsub('%B', format(tmp, '%B'),
+				      result))
+				},
+				result, tmp, USE.NAMES=FALSE)
+		}
 
 	result <- mapply(function(result, v, s, m, t)
 		 		 gsub('%v', v,
@@ -159,7 +131,8 @@ format.POSIXst <- function (x, format=NULL, ...)
 				 gsub('%m', m,
 				 gsub('%t', t,
 	       			      result)))),
-			 result, x@subtime, as.character(x@unit), as.character(x@of), x@timezone[1],
+			 result, x@subtime, as.character(x@unit),
+			 as.character(x@of), x@timezone[1],
 			 USE.NAMES=FALSE)
 	result
 }
@@ -173,8 +146,7 @@ tail.POSIXst <- function (x, ...) tail(format(x, ...))
 
 head.POSIXst <- function (x, ...) head(format(x, ...))
 
-summary.POSIXst <- function (object, ...)
-	summary(format(object, ...))
+summary.POSIXst <- function (object, ...) summary(format(object, ...))
 
 #-----------------
 # common accessors

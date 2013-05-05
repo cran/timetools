@@ -110,22 +110,18 @@ RegularTimeInstantDataFrame <- function (from, to, by, timezone='UTC', data=NULL
 # definition des accesseurs de l'objet
 #-------------------------------------
 
-#' @rdname time.properties
-#' @aliases when,TimeInstantDataFrame-method
 setMethod (f='when', signature='TimeInstantDataFrame',
-	   definition=function(x, ...) return(as.POSIXct(as.POSIXlt(x@instant, timezone(x)))) )
-#' @rdname time.properties
-#' @aliases timezone,TimeInstantDataFrame-method
+definition=function(x, ...)
+	return(as.POSIXct(as.POSIXlt(x@instant, timezone(x)))) )
+
 setMethod (f='timezone', signature='TimeInstantDataFrame',
 	   definition=function(object) return(object@timezone[1]) )
-#' @rdname time.properties
-#' @aliases timezone<-,TimeInstantDataFrame-method
+
 setMethod (f='timezone<-', signature='TimeInstantDataFrame',
-		  definition=function(object, value) {
-			object@timezone <- value
-			object@instant <- as.POSIXct (as.POSIXlt (object@instant, value) )
-			return(object)
-		} )
+definition=function(object, value) {
+	object@timezone <- value
+	object@instant  <- as.POSIXct(as.POSIXlt( object@instant, value ))
+	return(object) } )
 
 # mise en forme pour / et affichage
 #----------------------------------
@@ -303,13 +299,11 @@ setMethod ('lapply', signature('TimeInstantDataFrame', 'ANY'),
 
 # acces/modification de certaines propriétés
 #-------------------------------------------
-#' @rdname time.properties
-#' @aliases regular,TimeInstantDataFrame-method
 setMethod (f='regular', signature='TimeInstantDataFrame',
-	   definition=function(x, ...) {
-		   len <- length(unique(difftime(start(x)[-1], start(x)[-nrow(x)])))
-		   return(length(len) == 1)
-	   })
+definition=function(x, ...) {
+	len <- length(unique(difftime(when(x)[-1], when(x)[-nrow(x)])))
+	return(length(len) == 1)
+} )
 
 # transformateur de classe
 #-------------------------

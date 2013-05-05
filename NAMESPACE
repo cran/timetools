@@ -2,6 +2,7 @@
 importFrom ('stats', start, end)
 importFrom (methods, show)
 importFrom (utils, head, tail)
+importFrom( graphics, barplot)
 
 export (origin, POSIXt.units)
 
@@ -104,9 +105,8 @@ export (rbind.TimeIntervalDataFrame, print.TimeIntervalDataFrame,
 	merge.TimeIntervalDataFrame, split.TimeIntervalDataFrame,
 	head.TimeIntervalDataFrame, tail.TimeIntervalDataFrame, summary.TimeIntervalDataFrame,
 	start.TimeIntervalDataFrame, end.TimeIntervalDataFrame,
-	plot.TimeIntervalDataFrame,
-	lines.TimeIntervalDataFrame,
-	points.TimeIntervalDataFrame,
+	plot.TimeIntervalDataFrame, lines.TimeIntervalDataFrame,
+	points.TimeIntervalDataFrame, barplot.TimeIntervalDataFrame,
 	TimeIntervalDataFrame, RegularTimeIntervalDataFrame)
 
 S3method(rbind, TimeIntervalDataFrame)
@@ -120,6 +120,7 @@ S3method(end, TimeIntervalDataFrame)
 S3method(plot, TimeIntervalDataFrame)
 S3method(points, TimeIntervalDataFrame)
 S3method(lines, TimeIntervalDataFrame)
+S3method(barplot, TimeIntervalDataFrame)
 
 S3method(as.TimeInstantDataFrame, TimeIntervalDataFrame)
 S3method(as.SubtimeDataFrame, TimeIntervalDataFrame)
@@ -143,14 +144,14 @@ export (rbind.TimeInstantDataFrame, print.TimeInstantDataFrame,
 	as.SubtimeDataFrame.TimeInstantDataFrame,
 	merge.TimeInstantDataFrame, split.TimeInstantDataFrame,
 	head.TimeInstantDataFrame, tail.TimeInstantDataFrame, summary.TimeInstantDataFrame,
-	plot.TimeInstantDataFrame,
-	points.TimeInstantDataFrame,
-	lines.TimeInstantDataFrame,
+	plot.TimeInstantDataFrame, points.TimeInstantDataFrame,
+	lines.TimeInstantDataFrame, barplot.TimeInstantDataFrame,
 	TimeInstantDataFrame, RegularTimeInstantDataFrame)
 
 S3method(plot, TimeInstantDataFrame)
 S3method(points, TimeInstantDataFrame)
 S3method(lines, TimeInstantDataFrame)
+S3method(barplot, TimeInstantDataFrame)
 
 S3method(rbind, TimeInstantDataFrame)
 S3method(print, TimeInstantDataFrame)
@@ -179,11 +180,12 @@ export (print.SubtimeDataFrame,
 	merge.SubtimeDataFrame, split.SubtimeDataFrame,
 	head.SubtimeDataFrame, tail.SubtimeDataFrame, summary.SubtimeDataFrame,
 	plot.SubtimeDataFrame, lines.SubtimeDataFrame, points.SubtimeDataFrame,
-	SubtimeDataFrame)
+	SubtimeDataFrame, barplot.SubtimeDataFrame)
 
 S3method(plot, SubtimeDataFrame)
 S3method(points, SubtimeDataFrame)
 S3method(lines, SubtimeDataFrame)
+S3method(barplot, SubtimeDataFrame)
 
 #S3method(rbind, SubtimeDataFrame)
 S3method(print, SubtimeDataFrame)

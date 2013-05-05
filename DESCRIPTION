@@ -2,8 +2,8 @@ Package: timetools
 Type: Package
 Title: provides objects and tools to manipulate irregular heterogeneous
         time data and subtime data.
-Version: 1.4.0
-Date: 2013-03-04
+Version: 1.5.2
+Date: 2013-05-05
 Depends: methods
 Author: Vladislav Navel
 Maintainer: Vladislav Navel <vnavel@yahoo.fr>
@@ -18,7 +18,7 @@ License: GPL
 LazyLoad: yes
 URL: http://sourceforge.net/projects/timetools/
 Encoding: UTF-8
-Packaged: 2013-04-11 12:17:33 UTC; vladislav
+Packaged: 2013-05-05 14:52:39 UTC; vadi
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2013-04-11 14:50:01
+Date/Publication: 2013-05-05 22:01:11

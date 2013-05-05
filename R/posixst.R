@@ -1,25 +1,5 @@
-#' Create an object of class POSIXst (subtime object) (S4 class)
-#'
-#' @param x object to which extract subtime
-#' @param unit indicates the subtime part to extract ('year', 'month',
-#'	'day', 'hour', 'minute', 'second')
-#' @param of used to specify the main period 
-#'	from wich the is to extract ('year', 'month', day', 'hour', 'minute').
-#'	Not used for \sQuote{unit in c('year', 'month')}.
-#' @param tz if needed, specifies th timezone of POSIXst
-#' @param \dots more arguments to or from other methods
-#'
-#' @return  a factor which depends on the subtime asked for. See \sQuote{Details}.
-#'
-#' @seealso \code{\link[base]{DateTimeClasses}}, \code{\link[base]{timezone}},
-#' \code{\link{time.properties}}
 POSIXst <- function (x, unit, of=NULL, tz='UTC', ...) UseMethod('POSIXst')
-#' @rdname POSIXst
-#' @section default:
-#' If \sQuote{x} is missing, an empty factor with the appropriated
-#' levels (according to \sQuote{unit and of}) is returned.
-#' 
-#' @method POSIXst default
+
 POSIXst.default <- function (x, unit, of=NULL, tz='UTC', ...)
 {
 	if (missing (x))
@@ -27,11 +7,7 @@ POSIXst.default <- function (x, unit, of=NULL, tz='UTC', ...)
 				unit, of, tz, ...))
 	stop(sprintf("'POSIXst' method not implemented for %s object", class(x)))
 }
-#' @rdname POSIXst
-#' @section integer:
-#' This is the default constructor.
-#' 
-#' @method POSIXst integer
+
 POSIXst.integer <- function (x, unit, of=NULL, tz='UTC', ...)
 {
 	unit <- POSIXt.units(unit)
@@ -42,12 +18,7 @@ POSIXst.integer <- function (x, unit, of=NULL, tz='UTC', ...)
 		of <- POSIXt.units(of)
 	new('POSIXst', subtime=x, unit=unit, of=of, timezone=tz)
 }
-#' @rdname POSIXst
-#' @section numeric:
-#' If \sQuote{x} is a numeric, its values must be in the right range
-#' (see \code{\link[base]{DateTimeClasses}} and must be "like" an integer.
-#' 
-#' @method POSIXst numeric
+
 POSIXst.numeric <- function (x, unit, of=NULL, tz='UTC', ...)
 {
 	x <- as.character(x)
@@ -55,21 +26,13 @@ POSIXst.numeric <- function (x, unit, of=NULL, tz='UTC', ...)
 	x <- as.integer(x)
 	POSIXst(x, unit, of, tz, ...)
 }
-#' @rdname POSIXst
-#' @section POSIXct:
-#' with the \sQuote{tz} argument, one can specify/change
-#' the timezone of the resulting POSIXst
-#' @method POSIXst POSIXct
+
 POSIXst.POSIXct <- function (x, unit, of=NULL, tz=attributes(x)$tzone, ...)
 {
 	x <- as.POSIXlt(x)
 	POSIXst (x, unit, of, tz[1], ...)
 }
-#' @rdname POSIXst
-#' @section POSIXlt:
-#' with the \sQuote{tz} argument, one can specify/change
-#' the timezone of the resulting POSIXst
-#' @method POSIXst POSIXlt
+
 POSIXst.POSIXlt <- function (x, unit, of=NULL, tz=attributes(x)$tzone, ...)
 {
 	unit <- POSIXt.units(unit)
@@ -119,37 +82,16 @@ POSIXst.POSIXlt <- function (x, unit, of=NULL, tz=attributes(x)$tzone, ...)
 	return( POSIXst(res, unit, of, tz) )
 }
 
-#' @rdname POSIXst
-#' @section TimeInstantDataFrame:
-#' This methode extract subtimes (\code{\link{POSIXst}}), from 
-#' \code{\link{TimeInstantDataFrame}}.
-#'
-#' with the \sQuote{tz} argument, one can specify/change
-#' the timezone of the resulting POSIXst
-#' @method POSIXst TimeInstantDataFrame
-POSIXst.TimeInstantDataFrame <- function (x, unit, of=NULL, tz=timezone(x), ...)
-{
+POSIXst.TimeInstantDataFrame <-
+	function(x, unit, of=NULL, tz=timezone(x), ...) {
 	POSIXst(force(when(x)), unit, of, tz, ...)
 }
 
-#' @rdname POSIXst
-#' @param cursor for TimeIntervalDataFrame, if not NULL, the object
-#' is first coerced to a TimeInstantDataFrame using the
-#' \code{\link{as.TimeInstantDataFrame}} method.
-#' @method POSIXst TimeIntervalDataFrame
-#'
-#' @section TimeIntervalDataFrame:
-#' Because an time interval can contain several POSIXst of one kind
-#' for instance a day contains all 'hours of day'), the result
-#' of this function for TimeIntervalDataFrame is a list
-#' of POSIXst. Each element of the list contains the POSIXsts asked
-#' for corresponding to each row of the TimeIntervalDataFrame
-#' object.
-#'
-POSIXst.TimeIntervalDataFrame <- function (x, unit, of=NULL, tz=timezone(x), ..., cursor=NULL)
-{
+POSIXst.TimeIntervalDataFrame <-
+	function(x, unit, of=NULL, tz=timezone(x), ..., cursor=NULL) {
 	if( !is.null(cursor) )
-		return( POSIXst(as.TimeInstantDataFrame(x, cursor), unit, of, tz) )
+		return( POSIXst(as.TimeInstantDataFrame(x, cursor),
+				unit, of, tz) )
 
 	unit <- POSIXt.units(unit)
 	u <- as.character(unit)
@@ -164,5 +106,33 @@ POSIXst.TimeIntervalDataFrame <- function (x, unit, of=NULL, tz=timezone(x), ...
 	return( st )
 }
 
+# intuitive wrappers
 
+year	<- function(x, ...) UseMethod('year')
+month	<- function(x, ...) UseMethod('month')
+day	<- function(x, of, ...) UseMethod('day')
+hour	<- function(x, of, ...) UseMethod('hour')
+minute	<- function(x, of, ...) UseMethod('minute')
+second	<- function(x, of, ...) UseMethod('second')
 
+setGeneric ('year',	function (x, ...) standardGeneric ('year') )
+setGeneric ('month',	function (x, ...) standardGeneric ('month') )
+setGeneric ('day',	function (x, of, ...) standardGeneric ('day') )
+setGeneric ('hour',	function (x, of, ...) standardGeneric ('hour') )
+setGeneric ('minute',	function (x, of, ...) standardGeneric ('minute') )
+setGeneric ('second',	function (x, of, ...) standardGeneric ('second') )
+
+setMethod ('year', 'ANY',
+	   function(x, ...) POSIXst(x, unit='year', ...) )
+setMethod ('month', 'ANY',
+	   function(x, ...) POSIXst(x, unit='month', ...) )
+setMethod ('day', 'ANY',
+	   function(x, of, ...) POSIXst(x, unit='day', of=of, ...))
+setMethod ('hour', 'ANY',
+	   function(x, of, ...) POSIXst(x, unit='hour', of=of, ...))
+setMethod ('minute', 'ANY',
+	   function(x, of, ...) POSIXst(x, unit='minute', of=of, ...))
+setMethod ('second', 'ANY',
+	   function(x, of, ...) POSIXst(x, unit='second', of=of, ...))
+
+# TODO : define 'timezone' and 'timezone<-' for POSIXct.

@@ -26,6 +26,7 @@
 \alias{plot.SubtimeDataFrame}
 \alias{points.SubtimeDataFrame}
 \alias{lines.SubtimeDataFrame}
+\alias{barplot.SubtimeDataFrame}
 \alias{print.SubtimeDataFrame}
 %\alias{rbind.SubtimeDataFrame}
 \alias{row.names.SubtimeDataFrame}
@@ -127,6 +128,7 @@
     \item{plot}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, xlim=NULL, ylim=NULL, log, main, sub, xlab, ylab, ann=par("ann"), axes=TRUE, asp=NA, as.is=TRUE, format=NULL, ...}: plot what it is asked for (see \code{\link[graphics]{plot}}). Returns invisibly params used for the plot. }
     \item{points}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, as.is=TRUE, format=NULL, ...}: plot what it is asked for (see \code{\link[graphics]{points}}). Returns invisibly params used for the plot. }
     \item{lines}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, as.is=TRUE, format=NULL, ...}: plot what it is asked for (see \code{\link[graphics]{lines}}). Returns invisibly params used for the plot. }
+    \item{barplot}{\code{height, format=NULL, ...}} see \code{\link[graphics]{barplot}}
   }
 }
 \section{Text representation}{
