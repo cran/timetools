@@ -1,13 +1,11 @@
 \name{period}
 \alias{period}
 \alias{period-methods}
-\alias{period,TimeIntervalDataFrame-method}
+%\alias{period,TimeIntervalDataFrame-method}
 
 \title{Test or extract different properties of Time objects}
 \usage{
   period(x, ...)
-
-  \S4method{period}{TimeIntervalDataFrame}(x, ...)
 }
 \arguments{
   \item{x}{object from which get the period}

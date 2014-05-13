@@ -1,16 +1,10 @@
 \name{duration}
 \alias{duration}
 \alias{duration-methods}
-\alias{duration,POSIXctp-method}
-\alias{duration,POSIXcti-method}
 
 \title{Extract duration of a Time object}
 \usage{
   duration(x, ...)
-
-  \S4method{duration}{POSIXcti}(x, ...)
-
-  \S4method{duration}{POSIXctp}(x, ...)
 }
 \arguments{
   \item{x}{object from which get the duration}
@@ -35,6 +29,5 @@
   \code{> 1 2}
 }
 \seealso{
-  \link{POSIXcti},
-  \link{POSIXctp}
+  \link{POSIXcti}, \link{POSIXctp}
 }

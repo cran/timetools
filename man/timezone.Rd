@@ -3,26 +3,15 @@
 \alias{timezone<-}
 \alias{timezone<--methods}
 \alias{timezone-methods}
-\alias{timezone.POSIXst}
-\alias{timezone,SubtimeDataFrame-method}
-\alias{timezone<-,TimeInstantDataFrame-method}
-\alias{timezone,TimeInstantDataFrame-method}
-\alias{timezone<-,TimeIntervalDataFrame-method}
-\alias{timezone,TimeIntervalDataFrame-method}
+%\alias{timezone,SubtimeDataFrame-method}
+%\alias{timezone<-,TimeInstantDataFrame-method}
+%\alias{timezone,TimeInstantDataFrame-method}
+%\alias{timezone<-,TimeIntervalDataFrame-method}
+%\alias{timezone,TimeIntervalDataFrame-method}
 \title{Get or set timezone property}
 \usage{
   timezone(object)
   timezone(object) <- value
-
-  \method{timezone}{POSIXst} (object)
-
-  \S4method{timezone}{SubtimeDataFrame}(object)
-
-  \S4method{timezone}{TimeInstantDataFrame}(object)
-  \S4method{timezone}{TimeInstantDataFrame}(object) <- value
-
-  \S4method{timezone}{TimeIntervalDataFrame}(object)
-  \S4method{timezone}{TimeIntervalDataFrame}(object) <- value
 }
 \arguments{
   \item{object}{object to get or set timezone property. }

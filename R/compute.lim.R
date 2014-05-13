@@ -1,12 +1,3 @@
-#' Calculate limits for plotting
-#'
-#' This function retunrn a 2 elements vectors (numeric)
-#' which can be use as graph limits (xlim, ylim, rlim, etc.)
-#'
-#' @param x 'numeric' for which limits must be calculated
-#' @param na.rm boolean should NA values be removed before calculation ?
-#' @return numeric of length 2
-
 compute.lim <- function(x, na.rm=FALSE) {
 	x <- range(x, na.rm=na.rm)
 

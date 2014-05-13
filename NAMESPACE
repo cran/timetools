@@ -20,7 +20,7 @@ export ('%intersect%', '%intersect%.POSIXcti',
 	'[.POSIXcti', '[<-.POSIXcti',
 	Ops.POSIXcti, c.POSIXcti, unique.POSIXcti,
 	format.POSIXcti, print.POSIXcti, head.POSIXcti, tail.POSIXcti,
-	summary.POSIXcti, split.POSIXcti,
+	summary.POSIXcti, split.POSIXcti, rep.POSIXcti,
 	as.POSIXcti, as.POSIXcti.logical)
 
 S3method (start, POSIXcti)
@@ -28,35 +28,39 @@ S3method (end, POSIXcti)
 S3method('%intersect%', 'POSIXcti')
 S3method('%included%', 'POSIXcti')
 
+S3method ('[', POSIXcti)
+S3method ('[<-', POSIXcti)
+S3method (Ops, POSIXcti)
+S3method (c, POSIXcti)
+S3method(unique, POSIXcti)
 S3method(format, POSIXcti)
 S3method(print, POSIXcti)
 S3method(head, POSIXcti)
 S3method(tail, POSIXcti)
 S3method(summary, POSIXcti)
-S3method (Ops, POSIXcti)
-S3method (c, POSIXcti)
-S3method ('[', POSIXcti)
-S3method ('[<-', POSIXcti)
-S3method ('split', POSIXcti)
+S3method (split, POSIXcti)
+S3method (rep, POSIXcti)
 
 # POSIXctp
-export (POSIXctp, format.POSIXctp, print.POSIXctp,
+export (POSIXctp,
 	'[.POSIXctp', '[<-.POSIXctp',
 	Ops.POSIXctp, c.POSIXctp, unique.POSIXctp,
 	format.POSIXctp, print.POSIXctp, head.POSIXctp, tail.POSIXctp,
-	summary.POSIXctp, split.POSIXctp,
+	summary.POSIXctp, split.POSIXctp, rep.POSIXctp,
 	as.POSIXctp, as.POSIXctp.logical) #, as.POSIXctp.POSIXt)
 
+S3method ('[', POSIXctp)
+S3method ('[<-', POSIXctp)
+S3method (Ops, POSIXctp)
+S3method (c, POSIXctp)
+S3method (unique, POSIXctp)
 S3method(format, POSIXctp)
 S3method(print, POSIXctp)
 S3method(head, POSIXctp)
 S3method(tail, POSIXctp)
 S3method(summary, POSIXctp)
-S3method (Ops, POSIXctp)
-S3method (c, POSIXctp)
-S3method ('[', POSIXctp)
-S3method ('[<-', POSIXctp)
-S3method ('split', POSIXctp)
+S3method (split, POSIXctp)
+S3method (rep, POSIXctp)
 
 S3method ('as.POSIXctp', logical)
 #S3method ('as.POSIXctp', 'POSIXt')
@@ -67,12 +71,12 @@ export (POSIXst, POSIXst.POSIXct, POSIXst.POSIXlt, timezone.POSIXst, timezone,
 	POSIXst.default, POSIXst.integer, POSIXst.numeric,
 	unit.POSIXst, unit, of, of.POSIXst,
 	'[.POSIXst', '[<-.POSIXst',
-	Ops.POSIXst, c.POSIXst, unique.POSIXst,
+	Ops.POSIXst, c.POSIXst, unique.POSIXst, duplicated.POSIXst,
 	format.POSIXst, print.POSIXst, head.POSIXst, tail.POSIXst,
-	summary.POSIXst, split.POSIXst)
+	summary.POSIXst, split.POSIXst, rep.POSIXst, seq.POSIXst)
 
-S3method(POSIXst, POSIXlt)
 S3method(POSIXst, POSIXct)
+S3method(POSIXst, POSIXlt)
 S3method(POSIXst, default)
 S3method(POSIXst, integer)
 S3method(POSIXst, numeric)
@@ -90,9 +94,12 @@ S3method(tail, POSIXst)
 S3method(summary, POSIXst)
 S3method (Ops, POSIXst)
 S3method (c, POSIXst)
+S3method (unique, POSIXst)
 S3method ('[', POSIXst)
 S3method ('[<-', POSIXst)
-S3method ('split', POSIXst)
+S3method (split, POSIXst)
+S3method (rep, POSIXst)
+S3method (seq, POSIXst)
 
 # TimeIntervalDataFrame
 export (rbind.TimeIntervalDataFrame, print.TimeIntervalDataFrame,
@@ -180,6 +187,7 @@ export (print.SubtimeDataFrame,
 	merge.SubtimeDataFrame, split.SubtimeDataFrame,
 	head.SubtimeDataFrame, tail.SubtimeDataFrame, summary.SubtimeDataFrame,
 	plot.SubtimeDataFrame, lines.SubtimeDataFrame, points.SubtimeDataFrame,
+	unit.SubtimeDataFrame, of.SubtimeDataFrame,
 	SubtimeDataFrame, barplot.SubtimeDataFrame)
 
 S3method(plot, SubtimeDataFrame)
@@ -195,6 +203,8 @@ S3method('[[<-', SubtimeDataFrame)
 
 S3method(as.data.frame, SubtimeDataFrame)
 
+S3method(unit, SubtimeDataFrame)
+S3method(of, SubtimeDataFrame)
 S3method(merge, SubtimeDataFrame)
 S3method(split, SubtimeDataFrame)
 S3method(head, SubtimeDataFrame)

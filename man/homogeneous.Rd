@@ -1,13 +1,11 @@
 \name{homogeneous}
 \alias{homogeneous}
 \alias{homogeneous-methods}
-\alias{homogeneous,TimeIntervalDataFrame-method}
+%\alias{homogeneous,TimeIntervalDataFrame-method}
 
 \title{Test if a time object is homogeneous}
 \usage{
   homogeneous(x, ...)
-
-  \S4method{homogeneous}{TimeIntervalDataFrame}(x, ...)
 }
 \arguments{
   \item{x}{object to test for homogeneity}

@@ -1,49 +1,189 @@
-\name{TimeInstantDataFrame-class}
-\Rdversion{1.1}
+\name{TimeInstantDataFrame}
 \docType{class}
 \alias{TimeInstantDataFrame-class}
-%\alias{TimeInstantDataFrame}
-%\alias{RegularTimeInstantDataFrame}
+\alias{TimeInstantDataFrame}
+\alias{RegularTimeInstantDataFrame}
+
 \alias{$,TimeInstantDataFrame-method}
 \alias{$<-,TimeInstantDataFrame-method}
+\alias{[.TimeInstantDataFrame}
+\alias{[<-.TimeInstantDataFrame}
 \alias{[[,TimeInstantDataFrame-method}
+\alias{[[<-.TimeInstantDataFrame}
+
+\alias{rbind.TimeInstantDataFrame}
+\alias{merge.TimeInstantDataFrame}
+\alias{split.TimeInstantDataFrame}
+\alias{lapply,TimeInstantDataFrame-method}
+
+\alias{regular,TimeInstantDataFrame-method}
+\alias{timezone,TimeInstantDataFrame-method}
+\alias{timezone<-,TimeInstantDataFrame-method}
+\alias{when,TimeInstantDataFrame-method}
+
 \alias{dim,TimeInstantDataFrame-method}
 \alias{length,TimeInstantDataFrame-method}
 \alias{names,TimeInstantDataFrame-method}
 \alias{names<-,TimeInstantDataFrame-method}
 \alias{ncol,TimeInstantDataFrame-method}
 \alias{nrow,TimeInstantDataFrame-method}
-%\alias{regular,TimeInstantDataFrame-method}
-\alias{show,TimeInstantDataFrame-method}
-\alias{lapply,TimeInstantDataFrame-method}
-%\alias{timezone,TimeInstantDataFrame-method}
-%\alias{timezone<-,TimeInstantDataFrame-method}
-%\alias{when,TimeInstantDataFrame-method}
+\alias{row.names.TimeInstantDataFrame}
+\alias{row.names<-.TimeInstantDataFrame}
 
-\alias{[.TimeInstantDataFrame}
-\alias{[<-.TimeInstantDataFrame}
-\alias{[[<-.TimeInstantDataFrame}
-%\alias{as.TimeIntervalDataFrame.TimeInstantDataFrame}
-\alias{as.data.frame.TimeInstantDataFrame}
+\alias{print.TimeInstantDataFrame}
+\alias{summary.TimeInstantDataFrame}
 \alias{head.TimeInstantDataFrame}
-\alias{merge.TimeInstantDataFrame}
+\alias{tail.TimeInstantDataFrame}
+\alias{show,TimeInstantDataFrame-method}
+
 \alias{plot.TimeInstantDataFrame}
 \alias{points.TimeInstantDataFrame}
 \alias{lines.TimeInstantDataFrame}
 \alias{barplot.TimeInstantDataFrame}
-\alias{print.TimeInstantDataFrame}
-\alias{rbind.TimeInstantDataFrame}
-\alias{row.names.TimeInstantDataFrame}
-\alias{row.names<-.TimeInstantDataFrame}
-% \alias{split.TimeInstantDataFrame}
-\alias{summary.TimeInstantDataFrame}
-\alias{tail.TimeInstantDataFrame}
+
+\alias{as.TimeInstantDataFrame}
+\alias{as.TimeInstantDataFrame.TimeIntervalDataFrame}
+
+%\alias{as.TimeIntervalDataFrame.TimeInstantDataFrame}
+%\alias{as.SubtimeDataFrame.TimeInstantDataFrame}
+%\alias{as.data.frame.TimeInstantDataFrame}
 
 \title{Class \code{"TimeInstantDataFrame"}}
 \description{
-  Class to hold time data that ARE not 'punctual'.
+  Class to hold time data that ARE 'instantaneous'.
 }
-\details{
+\usage{
+  TimeInstantDataFrame(when, timezone = "UTC", data = NULL, \dots)
+
+  as.TimeInstantDataFrame(from, \dots)
+  \method{as.TimeInstantDataFrame}{TimeIntervalDataFrame}(from, cursor = NULL, \dots)
+
+  RegularTimeInstantDataFrame(from, to, by, timezone = "UTC", data = NULL)
+
+  \S4method{$}{TimeInstantDataFrame}(x, name)
+  \S4method{$}{TimeInstantDataFrame}(x, name) <- value
+  \method{[}{TimeInstantDataFrame}(x, i, j, drop=FALSE)
+  \method{[}{TimeInstantDataFrame}(x, i, j) <- value
+  \S4method{[[}{TimeInstantDataFrame}(x ,i, j, \dots)
+  \method{[[}{TimeInstantDataFrame}(x, i, j) <- value
+
+  \method{rbind}{TimeInstantDataFrame}(\dots)
+  \method{merge}{TimeInstantDataFrame}(x, y, by, all=TRUE, tz='UTC', \dots)
+  \method{split}{TimeInstantDataFrame}(x, f, drop=FALSE, \dots)
+  \S4method{lapply}{TimeInstantDataFrame}(X, FUN, \dots)
+
+  \S4method{regular}{TimeInstantDataFrame}(x, \dots)
+  \S4method{timezone}{TimeInstantDataFrame}(object)
+  \S4method{timezone}{TimeInstantDataFrame}(object) <- value
+  \S4method{when}{TimeInstantDataFrame}(x, \dots)
+
+  \S4method{dim}{TimeInstantDataFrame}(x)
+  \S4method{length}{TimeInstantDataFrame}(x)
+  \S4method{names}{TimeInstantDataFrame}(x)
+  \S4method{names}{TimeInstantDataFrame}(x) <- value
+  \S4method{ncol}{TimeInstantDataFrame}(x)
+  \S4method{nrow}{TimeInstantDataFrame}(x)
+  \method{row.names}{TimeInstantDataFrame}(x)
+  \method{row.names}{TimeInstantDataFrame}(x) <- value
+
+  \method{print}{TimeInstantDataFrame}(x, tz=NULL, \dots)
+  \method{summary}{TimeInstantDataFrame}(object, \dots)
+  \method{head}{TimeInstantDataFrame}(x, tz, \dots)
+  \method{tail}{TimeInstantDataFrame}(x, tz, \dots)
+  \S4method{show}{TimeInstantDataFrame}(object)
+
+  \method{plot}{TimeInstantDataFrame}(x, y=NULL, type="p",
+	lty=1:6, lwd=1, pch=1:25, col=NULL,
+	xlim=NULL, ylim=NULL, log, main, sub, xlab, ylab,
+	ann=par("ann"), axes=TRUE, asp=NA, \dots)
+  \method{points}{TimeInstantDataFrame}(x, y=NULL, type="p",
+	lty=1:6, lwd=1, pch=1:25, col=NULL, \dots)
+  \method{lines}{TimeInstantDataFrame}(x, y=NULL, type="l",
+	lty=1:6, lwd=1, pch=1:25, col=NULL, \dots)
+  \method{barplot}{TimeInstantDataFrame}(height, format='', \dots)
+}
+\arguments{
+  \item{when}{POSIXct or character representing a time with a valid format (see
+	  \code{\link[base:as.POSIXct]{POSIXct}}). It gives the instant of each
+	  row.}
+  \item{timezone}{character representing a valid timezone (see
+	  \code{\link[base]{timezone}}).}
+  \item{data}{a data.frame with as much rows as needed for the created object. Can
+	  be \code{NULL} (hence the data.frame has zero column and as much rows
+	  as needed).}
+
+  \item{from}{\describe{
+    \item{as.TimeInstantDataFrame}{object to convert to a TimeInstantDataFrame}
+    \item{RegularTimeInstantDataFrame}{
+      POSIXct or character representing a time with a valid format (see
+      \code{\link[base:as.POSIXct]{POSIXct}}). It represents the start of the
+      object.}
+  }}
+  \item{cursor}{To convert TimeIntervalDataFrame,
+	  it indicates where the TimeInstant
+	  must be taken. If \code{0}, start of each intervals is taken as
+	  instant ; if \code{1} end of each intervals is taken as instant.
+	  Any other value will determine a weigthed instant between start and
+	  end (actually, value higher than 1 or lower than 0 will give instant
+	  outside this range).}
+
+  \item{to}{POSIXct or character representing a time with a valid format (see
+	  \code{\link[base:as.POSIXct]{POSIXct}}). It represents the end of the
+	  object. If missing, its value is deduced from \sQuote{from},
+	  \sQuote{by} and \sQuote{data}.}
+  \item{by}{\describe{
+    \item{RegularTimeInstantDataFrame}{a \code{\link{POSIXctp}} object indicating
+	    the increment to use between instants of the object.}
+    \item{merge}{specifications of the columns used for merging.}
+  }}
+
+  \item{x}{TimeInstantDataFrame object (to modify, to extract or to test)}
+  \item{i}{indices specifying elements to extract or replace. (See
+	  \code{\link[base]{Extract}})}
+  \item{j}{indices specifying elements to extract or replace. (See
+	  \code{\link[base]{Extract}})}
+  \item{name}{A litteral character string or a name. (See
+	  \code{\link[base]{Extract}})}
+  \item{drop}{Used for compatibility with data.frame methods.}
+  \item{value}{New value for the object designated (data.frame, names, row.names,
+	  etc.).}
+
+  \item{y}{TimeInstantDataFrame to merge with x}
+  \item{all}{logical; see \code{\link[base]{merge}}}
+  \item{tz}{character representing a valid timezone (see
+	  \code{\link[base]{timezone}}).}
+
+  \item{f}{a 'factor' in the sense that ‘as.factor(f)’ defines the
+            grouping, or a list of such factors in which case their
+            interaction is used for the grouping. See \code{\link{split}}.}
+
+  \item{X}{a TimeInstantDataFrame on which the FUN must be applied.}
+  \item{FUN}{function to apply over eahc columns of X.}
+
+  \item{object}{TimeInstantDataFrame object (to modify, to extract or to test)}
+
+  \item{type}{plotting argument, see \code{\link[graphics]{plot.default}}}
+  \item{lty}{plotting argument, see \code{\link[graphics]{plot.default}}}
+  \item{lwd}{plotting argument, see \code{\link[graphics]{plot.default}}}
+  \item{pch}{plotting argument, see \code{\link[graphics]{plot.default}}}
+  \item{col}{plotting argument, see \code{\link[graphics]{plot.default}}}
+  \item{xlim}{plotting argument, see \code{\link[graphics]{plot.default}}}
+  \item{ylim}{plotting argument, see \code{\link[graphics]{plot.default}}}
+  \item{log}{plotting argument, see \code{\link[graphics]{plot.default}}}
+  \item{main}{plotting argument, see \code{\link[graphics]{plot.default}}}
+  \item{sub}{plotting argument, see \code{\link[graphics]{plot.default}}}
+  \item{xlab}{plotting argument, see \code{\link[graphics]{plot.default}}}
+  \item{ylab}{plotting argument, see \code{\link[graphics]{plot.default}}}
+  \item{ann}{plotting argument, see \code{\link[graphics]{plot.default}}}
+  \item{axes}{plotting argument, see \code{\link[graphics]{plot.default}}}
+  \item{asp}{plotting argument, see \code{\link[graphics]{plot.default}}}
+
+  \item{height}{plotting argument, see \code{\link[graphics]{barplot}}}
+  \item{format}{plotting argument, see \code{\link[graphics]{barplot}}}
+
+  \item{\dots}{More arguments.}
+}
+\section{Objects from the Class}{
   Formally, the class consists of a \code{\link[base]{data.frame}}
   and, for each row, a \code{\link[base]{POSIXct}}.
   This class is provided to deal with punctual time data. Many 
@@ -52,117 +192,94 @@
   with \code{\link[=TimeIntervalDataFrame-class]{TimeIntervalDataFrame}}
   and \code{\link[=SubtimeDataFrame-class]{SubtimeDataFrame}}.
 
-  To list all methods available for TimeInstantDataFrame, type in the
-  R console :
-
-  \code{methods(class='TimeInstantDataFrame') # for S3 methods}
-
-  \code{showMethods(class='TimeInstantDataFrame') # for S4 methods}
-
-  To get back to this documentation from the R console :
-  
-  \code{class?TimeInstantDataFrame}
-
   The construction of the class allows to manipulate objects as if they
-  were data.frame (see \sQuote{Access to data} and \sQuote{Access to data properties}).
-  Several functions are also available to access to time properties (see \sQuote{Access
-  to time properties}).
+  were data.frame (see \sQuote{Access to data} and \sQuote{Access to data
+  properties}).
  
-  Methods are also available to facilitate the representations of instances of that class :
-  see \sQuote{graphic representation} and \sQuote{text representation}.
-
-  Finally, some specific methods allow to easily deal with agregation of data over time
-  properties (day, hour, week, special or specific time).
 }
-\section{Objects from the Class}{
+\section{Slots}{
+  \describe{
+    \item{\code{instant}:}{Object of class \code{"POSIXct"} corresponding to
+ 	    the instant of each row of the \code{data.frame}.}
+    \item{\code{timezone}:}{Object of class \code{"character"} indicating the
+	    timezone of data both for representation and calculation.}
+    \item{\code{data}:}{Object of class \code{"data.frame"}  data contained by
+	    the object.}
+  }
+}
+\section{TimeInstantDataFrame constructors}{
   Objects can be created by calls of the form
   \itemize{
     \item \code{new("TimeInstantDataFrame", ...)} \dots argument must be replaced
     by named arguments coresponding to slots of a TimeInstantDataFrame (see below).
     See also \code{\link[methods]{new}}.
     \item \code{TimeInstantDataFrame (when, timezone='UTC', data=NULL, ...)}
-    Arguments of the function correspond to object slots. See \code{\link{TimeInstantDataFrame}}
-    for details.
-    \item \code{RegularTimeInstantDataFrame (from, to, by, timezone='UTC', data=NULL)}
-    Wrapper to construct TimeInstantDataFrame with specific properties (see
-    \code{\link{RegularTimeInstantDataFrame}}).
+    Arguments of the function correspond to object slots.
+    \item \code{RegularTimeInstantDataFrame (from, to, by, timezone='UTC', data=NULL)}, Wrapper to construct TimeInstantDataFrame with specific properties. Instants
+    of the TimeInstantDataFrame go from 'from' to 'to' regularly spaced by 
+    'by', which is a \code{\link{POSIXctp}} or an object which can be coerced to.
     \item \code{as.TimeInstantDataFrame (from, ...)} Converting object to
     TimeInstantDataFrame.
   }
 }
-\section{Slots}{
-  \describe{
-    \item{\code{instant}:}{Object of class \code{"POSIXct"}  
-       corresponding to the instant of each row of
-       the \code{data.frame}.}
-    \item{\code{timezone}:}{Object of class \code{"character"} 
-      indicating the timezone of data both for 
-      representation and calculation.}
-    \item{\code{data}:}{Object of class \code{"data.frame"}  data contained
-      by the object.}
+\section{Accessing to and manipulating data}{
+  The TimeInstantDataFrame class is defined to works like the data.frame class
+  with the difference that a time instant (\code{\link[base]{POSIXct}}) is
+  attached to each rows of the data.frame. Thus to access and manipulate
+  data of a TimeInstantDataFrame the following methods are defined : 
+  '$', '$<-', '[', '[<-', '[[', '[[<-'. See \code{\link[base]{Extract}} for 
+  details.
+
+  Other methods have been defined to allow some operations over
+  TimeInstantDataFrame :
+  \itemize{
+    \item rbind and merge to join two (or more)
+  TimeInstantDataFrame (see \code{\link[base]{rbind}} and
+  \code{\link[base]{merge}}),
+    \item a TimeInstantDataFrame can be splitted exactly the same way that
+    a data.frame can (see \code{\link[base]{split}} in the base
+  package),
+    \item a function can be applied over each column of a TimeInstantDataFrame
+    via the lapply function provided that the function return one value (in
+    this case the resulting value is a \code{\link{TimeIntervalDataFrame}}
+    beginning at the first instant of the object and ending at the latest one),
+    or as much values as the number of rows of the object (in this case the
+    TimeInstantDataFrame given in argument in returned with the new values
+    calculated).
   }
-}
-\section{Access to and manipulate data}{
-  \describe{
-    \item{$}{\code{signature(x = "TimeInstantDataFrame")}: ... }
-    \item{$<-}{\code{signature(x = "TimeInstantDataFrame")}: ... }
-    \item{[}{\code{x, i, j, drop=FALSE}: ... }
-    \item{[<-}{\code{x, i, j, value}: ... }
-    \item{[[}{\code{signature(x = "TimeInstantDataFrame")}: ... }
-    \item{[[<-}{\code{x, i, j, value}: ... }
-    \item{merge}{\code{x, y, by, all=TRUE, tz=UTC, ...}: ... }
-    \item{lapply}{\code{signature(X = "TimeInstantDataFrame", FUN = 'ANY')}: ... }
-    \item{rbind}{\code{...}: ... }
-    \item{split}{\code{x, f, drop=FALSE, ...}: ... }
-  }
-}
-\section{Access to data properties}{
-  \describe{
-    \item{dim}{\code{signature(x = "TimeInstantDataFrame")}: ... }
-    \item{length}{\code{signature(x = "TimeInstantDataFrame")}: ... }
-    \item{names}{\code{signature(x = "TimeInstantDataFrame")}: ... }
-    \item{names<-}{\code{signature(x = "TimeInstantDataFrame")}: ... }
-    \item{ncol}{\code{signature(x = "TimeInstantDataFrame")}: ... }
-    \item{nrow}{\code{signature(x = "TimeInstantDataFrame")}: ... }
-    \item{row}{\code{x}: ... }
-    \item{row<-}{\code{x, value}: ... }
-  }
+
+  Because a TimeInstantDataFrame works more or less like a data.frame, 
+  the following methods work on a TimeInstantDataFrame :
+  \code{\link[base]{dim}},
+  \code{\link[base]{length}},
+  \code{\link[base]{names}},
+  \code{\link[base]{names<-}},
+  \code{\link[base]{ncol}},
+  \code{\link[base]{nrow}},
+  \code{\link[base]{row.names}},
+  \code{\link[base]{row.names<-}}.
 }
 \section{Access to time properties}{
+  A TimeInstantDataFrame can be tested for a few time properties :
   \describe{
-    \item{regular}{\code{signature(x = "TimeInstantDataFrame")}: ... }
-    \item{timezone}{\code{signature(object = "TimeInstantDataFrame")}: ... }
-    \item{timezone<-}{\code{signature(object = "TimeInstantDataFrame")}: ... }
-    \item{when}{\code{signature(x = "TimeInstantDataFrame")}: ... }
+    \item{regular}{TRUE if all time instants are equally spaced ;}
+    \item{timezone}{gives or sets the timezone of the TimeInstantDataFrame ;}
+    \item{when}{returns a POSIXct object with the time instant of the 
+	    TimeInstantDataFrame.}
   }
 }
 \section{Graphic representation}{
-  \describe{
-    \item{plot}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, xlim=NULL, ylim=NULL, log, main, sub, xlab, ylab, ann=par("ann"), axes=TRUE, asp=NA, ...}: plot what it is asked for (see \code{\link[graphics]{plot}}). Returns invisibly params used for the plot. }
-    \item{points}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, ...}:plot what it is asked for (see \code{\link[graphics]{points}}). Returns invisibly params used for the plot. }
-    \item{lines}{\code{x, y=NULL, type=p, lty=1:6, lwd=1, pch=1:25, col=NULL, ...}: plot what it is asked for (see \code{\link[graphics]{lines}}). Returns invisibly params used for the plot. }
-    \item{barplot}{\code{height, format='', ...}} see \code{\link[graphics]{barplot}}
+  To plot a \code{TimeInstantDataFrame} available functions are
+  \code{\link[graphics]{plot}}, \code{\link[graphics]{lines}},
+  \code{\link[graphics]{points}} and \code{\link[graphics]{barplot}}.
 
-  }
+  These functions works more or less like their generic definition.
 }
 \section{Text representation}{
-  \describe{
-    \item{show}{\code{signature(object = "TimeInstantDataFrame")}: ... }
-    \item{print}{\code{x, tz=NULL, ...}: ... }
-    \item{summary}{\code{object, ...}: ... }
-    \item{head}{\code{x, tz, ...}: ... }
-    \item{tail}{\code{x, tz, ...}: ... }
-  }
-}
-\section{Specific methods}{
-  Actually, there is no specific methods for this class.
-}
-\section{Converting TimeInstantDataFrame to other classes}{
-  \describe{
-    \item{as.TimeIntevalDataFrame}{\code{from, period, ...}: ... }
-    \item{as.SubtimeDataFrame}{\code{from, representation, FUN=mean, ...}: ... }
-    \item{as.data.frame}{\code{x, row.names=NULL, optional=FALSE, include.dates=FALSE, ...}: ... }
-  }
+  To represent a \code{TimeInstantDataFrame} available functions are
+  \code{\link[base:print.data.frame]{print}},
+  \code{\link[base:data.frame]{summary}}, \code{\link[utils]{head}},
+  \code{\link[utils]{tail}} and \code{\link[methods]{show}}.
 }
 \seealso{
   \code{\link{TimeIntervalDataFrame}}, \code{\link{SubtimeDataFrame}}

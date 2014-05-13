@@ -129,6 +129,43 @@ setMethod('split',
 		timezone(x) <- timezone(f)
 	}
 
+	#=========================================================================
+	if (homogeneous (x) && continuous(x) &&
+	    homogeneous (f) && continuous(f) &&
+	    (as.numeric(period(f)) / as.numeric(period(x)))%%1 == 0 &&
+	    start(x)[1] == start(f)[1] ) {
+	# trivial case where time support of 'x' is a subdivision of the time
+	# support of 'f', a specific algorithm is used to improve speed
+	# calculation
+
+	# x and f are ordered and the number of rows of x per rows of f
+	# is calculated
+	x <- x[order(start(x)), ]
+	f <- f[order(start(f)), ]
+
+	nb.x <- (as.numeric(period(f)) / as.numeric(period(x)))
+
+	# definition of a vector containing the grouping value
+	split.vect <- rep(1:nrow(f), each=nb.x)
+
+	# every needed data to build the final result are splitted over
+	# the vector defined above
+	s <- split(start(x), split.vect)
+	e <- split(end(x), split.vect)
+	tz <- timezone(x)
+	data <- split(x@data, split.vect)
+
+	# building of the result
+	result <- mapply(
+		function(s, e, d, tz)
+			TimeIntervalDataFrame(start=s, end=e, timezone=tz, data=d),
+    		s, e, data, MoreArgs=list(tz=tz))
+
+	#=========================================================================
+	} else {
+	# universal algorithm which works for every case (for trivial case 
+	# above to, but less efficiently)
+
 	# retrieving informations from input data to define the arguments
 	# to pass to the C functions (see below)
 
@@ -239,8 +276,8 @@ setMethod('split',
 	# get 'pos.f' values for not empty "f"'s intervals and
 	# corresponding start and end.
 	f.notempty <- sort(unique( whiches$pos.f ))
-	start <- s.f[f.notempty]
-	end <- e.f[f.notempty]
+	start <- as.numeric(s.f[f.notempty])
+	end <- as.numeric(e.f[f.notempty])
 
 	# get whiches splitted into "f"'s intervals
 	whiches <- split (whiches, whiches$pos.f)
@@ -249,9 +286,11 @@ setMethod('split',
 	# pour chaque element du whiches (et donc de start et end)
 	# on créé un TimeIntervalDataFrame
 
+	tz <- timezone(x)
+
 	result <- list()
 	result[f.notempty] <- mapply(
-		function(w, s, e, x) {
+		function(w, s, e, x, tz) {
 
 			sx <- w$s
 			ex <- w$e
@@ -259,15 +298,14 @@ setMethod('split',
 				sx[w$splitted] <- sapply(sx[w$splitted], max, s)
 				ex[w$splitted] <- sapply(ex[w$splitted], min, e)
 			}
-			sx <- as.POSIXct(sx, origin=origin)
-			ex <- as.POSIXct(ex, origin=origin)
 
-			TimeIntervalDataFrame(start=sx, end=ex,
-					      timezone=timezone(x),
+			TimeIntervalDataFrame(start=as.POSIXct(sx, origin=origin),
+					      end=as.POSIXct(ex, origin=origin),
+					      timezone=tz,
 			      		      data=x@data[w$pos.x,,drop=FALSE])
 		},
-		whiches, as.numeric(start), as.numeric(end),
-		MoreArgs=list(x), SIMPLIFY=FALSE)
+		whiches, start, end,
+		MoreArgs=list(x, tz=tz), SIMPLIFY=FALSE)
 
 	# for empty "f"'s intervals, empty TimeIntervalDataFrame are
 	# set in the resultint structure.
@@ -276,6 +314,9 @@ setMethod('split',
 		as.POSIXct(character()),
 		as.POSIXct(character()),
 		data = x@data[0,,drop=FALSE])
+
+	} # end of switching over trivial case or not
+	#=========================================================================
 
 	# adding initial values of 'f' in the result if asked.
 

@@ -1,12 +1,10 @@
 \name{interval}
 \alias{interval}
 \alias{interval-methods}
-\alias{interval,TimeIntervalDataFrame-method}
+%\alias{interval,TimeIntervalDataFrame-method}
 \title{Extract time intervals of a time object.}
 \usage{
   interval(x, ...)
-
-  \S4method{interval}{TimeIntervalDataFrame}(x, ...)
 }
 \arguments{
   \item{x}{object from which get time intervals}

@@ -3,16 +3,13 @@
 \alias{continuous<-}
 \alias{continuous<--methods}
 \alias{continuous-methods}
-\alias{continuous,TimeIntervalDataFrame-method}
-\alias{continuous<-,TimeIntervalDataFrame-method}
+%\alias{continuous,TimeIntervalDataFrame-method}
+%\alias{continuous<-,TimeIntervalDataFrame-method}
 
 \title{Test if a time object is continuous/set an time object continuous.}
 \usage{
   continuous(x, ...)
   continuous(x) <- value
-
-  \S4method{continuous}{TimeIntervalDataFrame}(x, ...)
-  \S4method{continuous}{TimeIntervalDataFrame}(x) <- value
 }
 \arguments{
   \item{x}{object to test}

@@ -1,6 +1,6 @@
 \name{\%intersect\%}
 \alias{\%intersect\%}
-\alias{\%intersect\%.POSIXcti}
+%\alias{\%intersect\%.POSIXcti}
 \title{intersects 2 \sQuote{POSIXcti} objects}
 \usage{
   %intersect%(i1, i2)

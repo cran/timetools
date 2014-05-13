@@ -1,17 +1,11 @@
 \name{regular}
 \alias{regular}
 \alias{regular-methods}
-\alias{regular,TimeInstantDataFrame-method}
-\alias{regular,TimeIntervalDataFrame-method}
+%\alias{regular,TimeInstantDataFrame-method}
+%\alias{regular,TimeIntervalDataFrame-method}
 \title{Test if a time object is regular}
 \usage{
-
   regular(x, ...)
-
-  \S4method{regular}{TimeInstantDataFrame}(x, ...)
-
-  \S4method{regular}{TimeIntervalDataFrame}(x, ...)
-
 }
 \arguments{
   \item{x}{object to test, from which get or set a

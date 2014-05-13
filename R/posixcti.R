@@ -26,8 +26,6 @@ POSIXcti <- function (start, end, timezone='UTC', ...)
 
 # acces aux proprietes
 #---------------------
-#' @rdname posix.properties
-#' @aliases duration,POSIXctp-method
 setMethod ('duration', 'POSIXcti', function(x, ...) x@duration)
 
 start.POSIXcti <- function (x, ...) {return (x@start) }
@@ -64,15 +62,11 @@ setMethod ('length', 'POSIXcti', function(x)length (x@start))
 }
 '[.POSIXcti' <- function (x, i, ...) new ('POSIXcti', start=start(x)[i], duration=duration (x)[i])
 
-#' @rdname as.POSIXcti
-#' @method as.POSIXcti logical
 as.POSIXcti.logical <- function (from, ...)
 	if (is.na(from))
 		new ('POSIXcti', start=as.POSIXct(NA), duration=as.integer (NA)) else
 		stop ('Cannot coerce a logical to a POSIXcti.')
 
-#' @rdname intersect
-#' @usage i1 \%intersect\% i2
 '%intersect%.POSIXcti' <- function(i1, i2) {
 	s1 <- start (i1)#attr (i1, 'start')
 	s2 <- start (i2)#attr (i2, 'start')
@@ -90,8 +84,6 @@ as.POSIXcti.logical <- function (from, ...)
 	return (interval)
 }
 
-#' @rdname included
-#' @usage i1 \%included\% i2
 '%included%.POSIXcti' <- function(i1, i2) {
 	mapply ('&', SIMPLIFY=TRUE,
 		mapply ('>=', SIMPLIFY=FALSE, start(i1), start(i2)),
@@ -158,3 +150,6 @@ unique.POSIXcti <- function(x, incomparables=FALSE, ...)
 	}
 	return( u )
 }
+
+rep.POSIXcti <- function(x, ...)
+	new('POSIXcti', start=rep(start(x), ...), duration=rep(duration(x), ...))

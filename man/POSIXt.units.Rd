@@ -3,13 +3,9 @@
 \alias{POSIXt.units}
 \alias{unit}
 \alias{unit-methods}
-\alias{unit,POSIXctp-method}
-\alias{unit.POSIXst}
 \alias{unit<-}
 \alias{unit<--methods}
-\alias{unit<-,POSIXctp-method}
 \alias{of}
-\alias{of.POSIXst}
 \title{define valid units for time objects/retrieve-set time unit of a time object}
 \usage{
   POSIXt.units(x = NULL, ...)
@@ -17,12 +13,6 @@
   unit(x, ...)
   unit(object) <- value
   of(x, ...)
-
-  \method{unit}{POSIXst} (x, ...)
-  \method{of}{POSIXst} (x, ...)
-
-  \S4method{unit}{POSIXctp}(x, ...)
-  \S4method{unit}{POSIXctp}(object) <- value
 }
 \arguments{
   \item{x}{a character string representing the needed
@@ -63,13 +53,3 @@
   'day'.
 }
 
-\section{unit('POSIXctp') <- value}{
-  This function is used to convert
-  \code{\link[=POSIXctp-class]{period objects}} from its unit to
-  a new one (for instance, from 'year's to 'month's : 1 year = 12 months).
-
-  The conversion will
-  be effective only if it makes sense (\sQuote{hour} to
-  \sQuote{second}, ok ; \sQuote{year} to \sQuote{month}, ok
-  ; \sQuote{month} to \sQuote{minute} , NOT ok ; etc.
-}

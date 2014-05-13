@@ -1,20 +1,14 @@
 \name{when}
 \alias{when}
 \alias{when-methods}
-\alias{when,SubtimeDataFrame-method}
-\alias{when,TimeInstantDataFrame-method}
-\alias{when,TimeIntervalDataFrame-method}
+%\alias{when,SubtimeDataFrame-method}
+%\alias{when,TimeInstantDataFrame-method}
+%\alias{when,TimeIntervalDataFrame-method}
 
 \title{Retrieve the 'timestamp' of a Time*DataFrame}
 
 \usage{
   when(x, ...)
-
-  \S4method{when}{TimeInstantDataFrame}(x, ...)
-
-  \S4method{when}{TimeIntervalDataFrame}(x, ...)
-
-  \S4method{when}{SubtimeDataFrame}(x, ...)
 }
 \arguments{
   \item{x}{object from which get the timestamp}

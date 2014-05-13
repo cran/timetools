@@ -14,20 +14,29 @@ setClass ('POSIXctp',
 #-------------
 POSIXctp <- function (duration, unit)
 {
-	if (missing (duration)) duration <- 1L
-	if( missing(unit) )
-	{
+	if( missing (duration) ) duration <- 1L
+	if( missing(unit) ) {
 		unit <- duration
-		duration <- 1L
+		duration <- rep(1L, length(unit))
 	}
-	if (inherits(duration, 'numeric') & !inherits(duration, 'integer')) {
-		#warning('duration is not an integer. It will be coerced to')
+
+	if (inherits(duration, 'numeric') | inherits(duration, 'logical')) {
 		duration <- as.integer (duration)
 	}
-	if( length(duration) > 1 & length(unit) == 1)
+
+	if( length(duration) > 1 & length(unit) == 1) {
 		unit <- rep( unit, length(duration) )
+	} else if( length(duration) < length(unit) ) {
+		warning("'duration' is shorter than 'unit'. 'duration' is recycled.")
+		duration <- rep(duration, length.out=length(unit))
+	} else if( length(duration) > length(unit) ) {
+		warning("'unit' is shorter than 'duration'. 'unit' is recycled.")
+		unit <- rep(unit, length.out=length(duration))
+	}
+
 	if (inherits (unit, 'character'))
 		unit <- POSIXt.units(unit)
+
 	return (new('POSIXctp', duration=duration, unit=unit))
 }
 
@@ -66,8 +75,13 @@ definition=function(object, value) {
 setMethod ('duration', 'POSIXctp', function(x, ...) x@duration)
 
 format.POSIXctp <- function (x, ...) {
-	sprintf('%i %s%s',
-	x@duration, as.character (x@unit), ifelse(x@duration>1, 's', ''))}
+	ifelse( is.na(x@duration),
+		'NA', 
+		sprintf('%i %s%s',
+			x@duration,
+			as.character( x@unit ),
+			ifelse(abs(x@duration)>1, 's', '')))
+}
 
 print.POSIXctp <- function(x, ...) print (format (x) )
 
@@ -91,11 +105,9 @@ setMethod ('length', 'POSIXctp', function(x)length (x@duration))
 }
 '[.POSIXctp' <- function (x, i, ...) new ('POSIXctp', duration=duration (x)[i], unit=unit (x)[i])
 
-#' @rdname as.POSIXctp
-#' @method as.POSIXctp logical
 as.POSIXctp.logical <- function (from, ...)
 	if (is.na(from))
-		new ('POSIXctp', duration=as.integer (NA), unit=POSIXt.units('second') ) else
+		POSIXctp(from) else
 		stop ('Cannot coerce a logical to a POSIXctp.')
 
 c.POSIXctp <- function(...){
@@ -103,36 +115,39 @@ c.POSIXctp <- function(...){
 	if (!all (sapply (pers, inherits, 'POSIXctp') ) )
 		NextMethod('c')
 	else
-		new('POSIXctp', duration=unlist(lapply(pers, duration)), unit=unlist(lapply(pers, unit)))
+		new('POSIXctp',
+		    duration=unlist(lapply(pers, duration)),
+		    unit=POSIXt.units(unlist(lapply(pers, unit))))
 }
 
 Ops.POSIXctp <- function (e1, e2) {
 	if (!inherits (e2, 'POSIXctp') ) return (NextMethod (.Generic) )
-	if (!.Generic %in% c('==', '!=', '<=', '<', '>', '>='))# stop (sprintf ("%s not implemented for 'period' objects"), .Generic)
-		#                 stop(gettextf("'%s' not defined for \"period\" objects", 
-		#                                           .Generic), domain = NA)
+	if (!.Generic %in% c('==', '!=', '<=', '<', '>', '>='))
 		return (NextMethod(.Generic) )
-	if (.Generic == '==') {
-		if (any (unit(e1) > unit(e2)))
-			suppressWarnings (unit(e1[unit(e1) > unit(e2)]) <- unit(e2)[unit(e1) > unit(e2)])
-		if (any (unit(e2) > unit(e1)))
-			suppressWarnings (unit(e2[unit(e2) > unit(e1)]) <- unit(e1)[unit(e2) > unit(e1)])
-		return (duration(e1) == duration(e2) & unit(e1) == unit(e2))
+	
+	# first we try to convert the POSIXctp with the bigger unit to
+	# the unit of the other (if needed !)
+
+	if(any( unit(e1) > unit(e2) )) suppressWarnings(
+		unit(e1[unit(e1) > unit(e2)]) <- unit(e2)[unit(e1) > unit(e2)])
+
+	if(any( unit(e2) > unit(e1) )) suppressWarnings(
+		unit(e2[unit(e2) > unit(e1)]) <- unit(e1)[unit(e2) > unit(e1)])
+
+	# then if two elements haven't the same unit, it means one is not
+	# comparable to the other thus the result is NA. Otherwise, durations
+	# are compared.
+
+	# BUT if they are not comparable, they are not equal (or are different !!)
+
+	if( .Generic == '==' ) {
+		return( unit(e1)==unit(e2) & duration(e1)==duration(e2) )
+	} else if( .Generic == '!=' ) {
+		return( unit(e1)!=unit(e2) | duration(e1)!=duration(e2) )
+	} else {
+		return( ifelse(unit(e1) != unit(e2), NA, 
+		       callGeneric(duration(e1), duration(e2))))
 	}
-	if (.Generic == '!=')
-		return (!e1 == e2)
-	if (.Generic == '<') {
-		res <- unit (e1) < unit(e2) | (unit(e1) == unit(e2) & duration(e1) < duration(e2) )
-		return (res)
-	}
-	if (.Generic == '<=') {
-		res <- unit (e1) < unit(e2) | (unit(e1) == unit(e2) & duration(e1) <= duration(e2) )
-		return (res)
-	}
-	if (.Generic == '>')
-		return (e2 < e1)
-	if (.Generic == '>=')
-		return (e2 <= e1)
 }
 
 setMethod('as.numeric', 'POSIXctp', function(x, ...) return( x@duration ))
@@ -167,3 +182,5 @@ unique.POSIXctp <- function(x, incomparables=FALSE, ...)
 	}
 	return( u )
 }
+
+rep.POSIXctp <- function(x, ...) POSIXctp(rep(duration(x), ...), rep(unit(x), ...))

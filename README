@@ -14,6 +14,28 @@ TimeIntervalDataFrame.
 News
 
 -------------------------------------------------------------------------------
+* v1.6.0
+- doc deeply completed and reorganised
+- handling of NA on POSIXctp improved
+- "POSIXct - POSIXctp" redefined
+- "POSIXctp + POSIXctp" rewrited
+- "POSIXctp - POSIXctp" defined
+- tickets n° 1, 3, 4, 7 closed
+- Improve speed calculcation of split,TimeIntervalDF,TimeIntervalDF for specific cases
+- duplicated.POSIXst defined
+- bug fixed in merge.SubtimeDataFrame
+
+-------------------------------------------------------------------------------
+* v1.5.5
+- definition of duplicated.POSIXst
+- ajout des fonctions 'unit' et 'of' pour les subtimedataframe (merge ne marche pas sans ça)
+- rewritting of Ops.POSIXctp
+- doc improvment
+- 'POSIXctp*numeric' wes not implemented but 'numeric*POSIXctp' was ... now both are
+- POSIXctp contructor more flexible
+- adding and subtracting 'week' to POSIXct is enabled
+
+-------------------------------------------------------------------------------
 * v1.5.2
 - few enhancements for splot methods.
 - split('ANY', 'POSIXctp') method defined

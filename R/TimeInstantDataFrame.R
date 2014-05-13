@@ -12,72 +12,13 @@ setClass (Class = 'TimeInstantDataFrame',
 
 # constructeurs
 #--------------
-#' Create a TimeInstantDataFrame from scratch
-#' 
-#' To see all methods related to this class, 
-#' see \code{\link{TimeInstantDataFrame-class}}
-#'
-#' If both \code{when} and \code{data}
-#' are given, \code{data} must have a number of rows identical to the length of
-#' \code{when}.
-#'
-#' To access to the class documentation, type in the R console :
-#'
-#' \code{class?TimeInstantDataFrame}
-#'
-#' @examples
-#' TimeInstantDataFrame (
-#'	c('2010-01-01', '2010-02-01'),
-#' 	'UTC', data.frame(ex=1:2) )
-#'
-#' TimeInstantDataFrame (c('2010-01-01', '2010-02-01', '2010-02-02'), 'UTC')
-#' 
-#' @param when POSIXct or character representing a time with a valid
-#' format (see \code{\link[base:as.POSIXct]{POSIXct}}).
-#' It gives the instant of each row.
-#' @param timezone character representing a valid timezone (see 
-#' \code{\link[base]{timezone}}).
-#' @param data a data.frame with as much rows as the length of \sQuote{when}.
-#' Can be \code{NULL} (hence the data.frame has zero column and as much
-#' rows as needed).
-#' @param \dots arguments to or from other methods
-#'
-#' @return a \code{\link[=TimeInstantDataFrame-class]{TimeInstantDataFrame}} object.
-#' @seealso \code{\link[=TimeIntervalDataFrame-class]{TimeIntervalDataFrame}},
-#' \code{\link{RegularTimeInstantDataFrame}}, \code{\link{timetools}}
 TimeInstantDataFrame <- function (when, timezone='UTC', data=NULL, ...) {
 	if (is.character (when) ) when <- as.POSIXct (when, timezone)
 	if (is.null (data)) data <- data.frame (matrix (NA, ncol=0, nrow=length(when) ) )
 	new ('TimeInstantDataFrame', instant=when, timezone=timezone, data=data)
 }
 
-#' Create a regular TimeInstantDataFrame from scratch
-#' 
-#' To see all methods related to this class, 
-#' see \code{\link{TimeInstantDataFrame-class}}
-#'
-#' To access to the class documentation, type in the R console :
-#'
-#' \code{class?TimeInstantDataFrame}
-#'
-#' @param from POSIXct or character representing a time with a valid
-#' format (see \code{\link[base:as.POSIXct]{POSIXct}}). It represents
-#' the start of the object.
-#' @param to POSIXct or character representing a time with a valid
-#' format (see \code{\link[base:as.POSIXct]{POSIXct}}). It represents
-#' the end of the object.
-#' If missing, its value is deduced from \sQuote{from}, \sQuote{by} 
-#' and \sQuote{data}.
-#' @param by a \code{\link{POSIXctp}} object indicating the
-#' increment to use between instants of the object.
-#' @param data a data.frame with a number of rows the fit with the 
-#' number of intervals created by the function. If \code{NULL}, the 
-#' data slot will be a data.frame with zero column.
-#' @inheritParams TimeInstantDataFrame
-#'
-#' @return a \code{\link[=TimeInstantDataFrame-class]{TimeInstantDataFrame}} object.
-#' @seealso \code{\link[=TimeIntervalDataFrame-class]{TimeIntervalDataFrame}},
-#' \code{\link{TimeInstantDataFrame}}, \code{\link{timetools}}
+# Create a regular TimeInstantDataFrame from scratch
 RegularTimeInstantDataFrame <- function (from, to, by, timezone='UTC', data=NULL) {
 	if (is.character (from) ) from <- as.POSIXct (from, timezone)
 	if (is.character (by) ) by <- POSIXctp(unit=by)
@@ -316,14 +257,6 @@ as.data.frame.TimeInstantDataFrame <- function (x, row.names=NULL, optional=FALS
 		return (x@data)
 }
 
-#' @rdname as.TimeIntervalDataFrame
-#' @usage 
-#' \method{as.TimeIntervalDataFrame}{TimeInstantDataFrame}(from, period, ...)
-#' 
-#' @param period \code{\link{POSIXctp}} object indicating
-#' 	the period to add to \sQuote{when} slot of \code{from}
-#' 	to determine the end of the new period (the \sQuote{when}
-#' 	is used for the start of period)
 as.TimeIntervalDataFrame.TimeInstantDataFrame <- function(from, period, ...) {
 	if (missing(period))
 	{
@@ -340,22 +273,6 @@ as.TimeIntervalDataFrame.TimeInstantDataFrame <- function(from, period, ...) {
 	return (to)
 }
 
-#' @rdname as.SubtimeDataFrame
-#' @usage 
-#' \method{as.SubtimeDataFrame}{TimeInstantDataFrame}(x, unit, of, FUN=NULL, ...)
-#'
-#' @section TimeIntervalDataFrame:
-#' Conversion from a TimeIntervalDataFrame to a SubtimeDataFrame can be 
-#' direct or after agregation.
-#' 
-#' For a direct conversion (where date are only replaced by the desired subtime), 
-#' FUN must be NULL.
-#'
-#' For an agregateed conversion, the function to use must be indicated by the FUN
-#' arg and all arguments to pass to this function can be given (namely).
-#' 
-#' @inheritParams POSIXst
-#' @param FUN function to use for the agregation (if wanted, see \sQuote{details})
 as.SubtimeDataFrame.TimeInstantDataFrame <- function(x, unit, of, FUN=NULL, ...)
 {
 	st <- POSIXst(x, unit, of)

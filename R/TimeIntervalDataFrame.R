@@ -17,70 +17,6 @@ setClass (Class = 'TimeIntervalDataFrame',
 
 # constructeurs
 #--------------
-#' Create a TimeIntervalDataFrame from scratch
-#' 
-#' To see all methods related to this class, 
-#' see \code{\link{TimeIntervalDataFrame-class}}
-#'
-#' If both \code{start} and \code{end} are given, they must have the same
-#' length. They are used to define the intervals of the object. If \code{data}
-#' is also given, it must have a number of rows identical to the length of
-#' \code{start} and \code{end}.
-#'
-#' If only \code{start} is given, a continuous (see \code{\link{continuous}})
-#' TimeIntervalDataFrame is built. The first element of \code{start} is the start
-#' of the first interval, the second element is the end of the first interval 
-#' and the start of the second interval. The last element of \code{start} is
-#' only the end of the last interval. This is why \code{data}, if given,
-#' must be one row shorter than \code{start}.
-#'
-#' If period is given it must be a \code{\link{POSIXctp}} object
-#' (or a valid character) and \sQuote{start}
-#' and \sQuote{end} must have length equal to 1. In that case, a
-#' TimeIntervalDataFrame will be created with start date equal to start
-#' \sQuote{floored} by the unit of \sQuote{period}, end date \sQuote{ceiled}
-#' by the unit of \sQuote{period} and with enough intervals of \sQuote{period}
-#' length to fit. If \sQuote{data} given, it must have a number of rows 
-#' equal to the number of intervals calculated.
-#' 
-#' To access to the class documentation, type in the R console :
-#'
-#' \code{class?TimeIntervalDataFrame}
-#'
-#' @examples
-#' TimeIntervalDataFrame (
-#'	c('2010-01-01', '2010-02-01'), c('2010-02-01', '2010-02-02'),
-#' 	'UTC', data.frame(ex=1:2) )
-#'
-#' TimeIntervalDataFrame (
-#'	c('2010-01-01', '2010-02-01', '2010-02-02'), NULL,
-#' 	'UTC', data.frame(ex=1:2) )
-#'
-#' TimeIntervalDataFrame(
-#' 	as.POSIXct('2013-01-01'), as.POSIXct('2013-03-01'), 
-#'	period=POSIXctp('day')
-#' )
-#' 
-#' @param start POSIXct or character representing a time with a valid
-#' format (see \code{\link[base:as.POSIXct]{POSIXct}}).
-#' It gives the begining of each interval.
-#' @param end  POSIXct or character representing a time with a valid
-#' format (see \code{\link[base:as.POSIXct]{POSIXct}}).
-#' It gives the end of each interval. If NULL, see \sQuote{Details}.
-#' @param timezone character representing a valid timezone (see 
-#' \code{\link[base]{timezone}}).
-#' @param data a data.frame with as much rows as the length of \sQuote{start}
-#' and end, or with one row less than the length of \sQuote{start} if \sQuote{end} is
-#' \code{NULL}. Can be \code{NULL} (hence the data.frame has zero column and as much
-#' rows as needed).
-#' @param period if not NULL, a \code{\link{POSIXctp}} or a character that 
-#' can be converted to a \code{\link{POSIXctp}} (see argument \sQuote{unit} of
-#' POSIXctp function). See Details to know how to use this argument.
-#' @param \dots arguments to or from other methods
-#'
-#' @return a \code{\link[=TimeIntervalDataFrame-class]{TimeIntervalDataFrame}} object.
-#' @seealso \code{\link[=TimeInstantDataFrame-class]{TimeInstantDataFrame}},
-#' \code{\link{RegularTimeIntervalDataFrame}}, \code{\link{timetools}}
 TimeIntervalDataFrame <- function (start, end=NULL, timezone='UTC', data=NULL, period=NULL, ...) {
 	# cas avec period
 
@@ -158,36 +94,7 @@ TimeIntervalDataFrame <- function (start, end=NULL, timezone='UTC', data=NULL, p
 	     timezone=timezone, data=data)
 }
 
-#' Create a regular TimeIntervalDataFrame from scratch
-#' 
-#' To see all methods related to this class, 
-#' see \code{\link{TimeIntervalDataFrame-class}}
-#'
-#' To access to the class documentation, type in the R console :
-#'
-#' \code{class?TimeIntervalDataFrame}
-#'
-#' @param from POSIXct or character representing a time with a valid
-#' format (see \code{\link[base:as.POSIXct]{POSIXct}}). It represents
-#' the start of the object (and of its first interval).
-#' @param to POSIXct or character representing a time with a valid
-#' format (see \code{\link[base:as.POSIXct]{POSIXct}}). It represents
-#' the end of the object : the end of the last interval is as near
-#'  as possible from this date, but before it.
-#' If missing, its value is deduced from \sQuote{from}, \sQuote{by} 
-#' and \sQuote{data}.
-#' @param by a \code{\link{POSIXctp}} object indicating the
-#' increment to use between the start of each interval
-#' @param period a \code{\link{POSIXctp}} object indicating the
-#' period of each interval. If missing, it is given the value of \code{by}.
-#' @param data a data.frame with a number of rows the fit with the 
-#' number of intervals created by the function. If \code{NULL}, the 
-#' data slot will be a data.frame with zero column.
-#' @inheritParams TimeIntervalDataFrame
-#'
-#' @return a \code{\link[=TimeIntervalDataFrame-class]{TimeIntervalDataFrame}} object.
-#' @seealso \code{\link[=TimeInstantDataFrame-class]{TimeInstantDataFrame}},
-#' \code{\link{TimeIntervalDataFrame}}, \code{\link{timetools}}
+# Create a regular TimeIntervalDataFrame from scratch
 RegularTimeIntervalDataFrame <- function (from, to, by, period, timezone='UTC', data=NULL) {
 	if (is.character (from) ) from <- as.POSIXct (from, timezone)
 	if (is.character (by) ) by <- POSIXctp(unit=by)
@@ -523,18 +430,6 @@ as.data.frame.TimeIntervalDataFrame <- function (x, row.names=NULL, optional=FAL
 		return (x@data)
 }
 
-#' @rdname as.TimeInstantDataFrame
-#' @usage
-#'
-#' \method{as.TimeInstantDataFrame}{TimeIntervalDataFrame}(from, cursor = NULL, ...)
-#'
-#' @param cursor For TimeIntervalDataFrame, it indicates
-#'	where the TimeInstant must be taken. If \code{0},
-#' 	start of each intervals is taken as instant ;
-#' 	if \code{1} end of each intervals is taken as instant.
-#' 	Any other value will determine a weigthed instant 
-#' 	between start and end (actually, value higher than 1 or 
-#' 	lower than 0 will give instant outside this range).
 as.TimeInstantDataFrame.TimeIntervalDataFrame <- function(from, cursor=NULL, ...) {
 	if (is.null (cursor) ) cursor <- 0.5
 	if (cursor > 1 || cursor < 0) warning ("For a standard use, cursor should be between 0 and 1.")
@@ -548,16 +443,6 @@ as.TimeInstantDataFrame.TimeIntervalDataFrame <- function(from, cursor=NULL, ...
 	return (to)
 }
 
-#' @rdname as.SubtimeDataFrame
-#' @usage 
-#' \method{as.SubtimeDataFrame}{TimeIntervalDataFrame}(x, unit, of, FUN=NULL, cursor=NULL, ...)
-#'
-#' @section TimeIntervalDataFrame:
-#' If \sQuote{from} is a \code{\link{TimeIntervalDataFrame}},
-#' data is first converted to a TimeInstantDataFrame (see \code{\link{as.TimeInstantDataFrame}}).
-#' Then, this TimeInstantDataFrame is converted to a SubtimeDataFrame (see the appropriated section).
-#' 
-#' @inheritParams as.TimeInstantDataFrame.TimeIntervalDataFrame
 as.SubtimeDataFrame.TimeIntervalDataFrame <-
 	function(x, unit, of, FUN=NULL, cursor=NULL, ...)
 	as.SubtimeDataFrame (as.TimeInstantDataFrame (x, cursor), unit, of, FUN, ...)

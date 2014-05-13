@@ -13,32 +13,6 @@ setClass (Class = 'SubtimeDataFrame',
 
 # constructeurs
 #--------------
-#' Create a SubtimeDataFrame from scratch
-#' 
-#' To see all methods related to this class, 
-#' see \code{\link{SubtimeDataFrame-class}}
-#'
-#' If both \code{when} and \code{data}
-#' are given, \code{data} must have a number of rows identical to the length of
-#' \code{when}.
-#'
-#' To access to the class documentation, type in the R console :
-#'
-#' \code{class?SubtimeDataFrame}
-#'
-#' @examples
-#' st <- POSIXst (1:4, 'day', 'week')
-#' SubtimeDataFrame (st, data.frame (test=sample (0:100, 4)))
-#' 
-#' @param when \code{\link{POSIXst}}.
-#' @param data a data.frame with as much rows as the length of \sQuote{when}.
-#' Can be \code{NULL} (hence the data.frame has zero column and as much
-#' rows as needed).
-#' @param \dots arguments to or from other methods
-#'
-#' @return a \code{\link[=SubtimeDataFrame-class]{SubtimeDataFrame}} object.
-#' @seealso \code{\link[=SubtimeDataFrame-class]{SubtimeDataFrame}},
-#' \code{\link{POSIXst}}, \code{\link{timetools}}
 SubtimeDataFrame <- function (when, data=NULL, ...) {
 	if (is.null (data))
 		data <- data.frame (matrix (NA, ncol=0, nrow=length(when) ) )
@@ -52,6 +26,10 @@ setMethod (f='when', signature='SubtimeDataFrame',
 
 setMethod (f='timezone', signature='SubtimeDataFrame',
 	   definition=function(object) return(timezone(when(object))) )
+
+unit.SubtimeDataFrame <- function(x, ...) unit(when(x))
+
+of.SubtimeDataFrame <- function(x, ...) of(when(x))
 
 # mise en forme pour / et affichage
 #----------------------------------
@@ -184,6 +162,8 @@ setMethod (f='names<-', signature='SubtimeDataFrame',
 merge.SubtimeDataFrame <- function(x, y, by, all=TRUE, ...) {
 		if (!inherits(y, 'SubtimeDataFrame'))
 			stop ("'y' must be a 'SubtimeDataFrame'.")
+		if( any(duplicated(when(x))) | any(duplicated(when(y))) )
+			stop("'when' slots must be unique in each SubtimeDataFrame")
 		if (missing (by) ) by <- NULL
 
 		when.vec <- list (when(x), when(y))
@@ -198,8 +178,10 @@ merge.SubtimeDataFrame <- function(x, y, by, all=TRUE, ...) {
 			stop("x and y must have same timezone") else
 			tz <- timezone(x)
 
-		x.data <- data.frame (when=as.numeric(format(when(x))), x@data)
-		y.data <- data.frame (when=as.numeric(format(when(y))), y@data)
+		x.data <- data.frame(when=as.numeric(format(when(x), '%v')),
+				     x@data)
+		y.data <- data.frame(when=as.numeric(format(when(y), '%v')),
+				     y@data)
 		z <- merge (x.data, y.data,
 			    by=unique (c('when', by) ), all=all, ...)
 		

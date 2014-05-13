@@ -63,7 +63,7 @@ setClass (Class = 'POSIXst',
 #--------------
 # constructors
 # see the POSIXst file in which all constructors are
-#' defined
+# defined
 
 #---------------------
 # properties accessors
@@ -88,7 +88,7 @@ format.POSIXst <- function (x, format=NULL, ...)
 			format <- '%A' else
 		if( x@unit == POSIXt.units('year') )
 			format <- '%s %v' else
-			format <- '%s %v of %m'
+			format <- '%v%p %s of %m'
 	}
 
 	result <- rep(format, length(x))
@@ -125,14 +125,19 @@ format.POSIXst <- function (x, format=NULL, ...)
 				result, tmp, USE.NAMES=FALSE)
 		}
 
-	result <- mapply(function(result, v, s, m, t)
-		 		 gsub('%v', v,
-		     		 gsub('%s', s,
-				 gsub('%m', m,
-				 gsub('%t', t,
-	       			      result)))),
-			 result, x@subtime, as.character(x@unit),
-			 as.character(x@of), x@timezone[1],
+	result <- mapply(function(result, p, v, s, m, t)
+	 		 gsub('%p', p,
+	 		 gsub('%v', v,
+	     		 gsub('%s', s,
+			 gsub('%m', m,
+			 gsub('%t', t, result))))),
+			 result,
+			sapply(sprintf('a%i', x@subtime%%10), switch,
+			       a1='st', a2='nd', a3='rd', 'th'),# p
+			 x@subtime, 				# v
+			 as.character(x@unit),			# s
+			 as.character(x@of),			# m
+			 x@timezone[1],				# t
 			 USE.NAMES=FALSE)
 	result
 }
@@ -245,3 +250,19 @@ setMethod('%in%', signature('POSIXst', 'ANY'),
 
 unique.POSIXst <- function(x, incomparables=FALSE, ...)
 	x[!duplicated(x@subtime)]
+
+duplicated.POSIXst <- function(x, incomparables=FALSE, ...)
+	duplicated(x@subtime)
+
+rep.POSIXst <- function(x, ...)
+	POSIXst(rep(x@subtime, ...), unit(x), of(x), timezone(x)[1])
+
+seq.POSIXst <- function(from, to, ...) {
+	if( unit(from) != unit(to) | of(from) != of(to) )
+		stop("'from' and 'to' must have same units")
+	if( timezone(from) != timezone(to) )
+		warning("'timezone' of 'from' and 'to' are different, the timezone of 'from' is used")
+
+	return(POSIXst(seq(as.numeric(from), as.numeric(to), ...),
+		       unit(from), of(from), timezone(from)))
+}

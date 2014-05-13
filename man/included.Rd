@@ -1,6 +1,6 @@
 \name{\%included\%}
 \alias{\%included\%}
-\alias{\%included\%.POSIXcti}
+%\alias{\%included\%.POSIXcti}
 \title{test inclusion of 2 \sQuote{POSIXcti} objects}
 \usage{
   %included%(i1, i2)

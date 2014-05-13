@@ -3,41 +3,25 @@
 \alias{split,ANY,POSIXst-method}
 \alias{split,ANY,POSIXctp-method}
 \alias{split,ANY,POSIXcti-method}
-\alias{split.POSIXcti}
-\alias{split.POSIXctp}
-\alias{split.POSIXst}
-\alias{split.SubtimeDataFrame}
-\alias{split.TimeInstantDataFrame}
-\alias{split.TimeIntervalDataFrame}
+%\alias{split.SubtimeDataFrame}
+%\alias{split.TimeInstantDataFrame}
+%\alias{split.TimeIntervalDataFrame}
 \alias{split,TimeIntervalDataFrame,POSIXcti-method}
 \alias{split,TimeIntervalDataFrame,POSIXctp-method}
 \alias{split,TimeIntervalDataFrame,TimeIntervalDataFrame-method}
 \title{Divide into Groups and Reassemble (Time*DataFrame objects and POSIXct*)}
 \usage{
-  \method{split}{POSIXctp} (x, f, drop = FALSE, ...)
-  \method{split}{POSIXcti} (x, f, drop = FALSE, ...)
-  \method{split}{POSIXst} (x, f, drop = FALSE, ...)
-
-  \method{split}{TimeInstantDataFrame} (x, f, drop = FALSE, ...)
-  \method{split}{TimeIntervalDataFrame} (x, f, drop = FALSE, ...)
-  \method{split}{SubtimeDataFrame} (x, f, drop = FALSE, ...)
-
   \S4method{split}{ANY,POSIXctp}(x, f, drop = FALSE, ...)
   \S4method{split}{ANY,POSIXcti}(x, f, drop = FALSE, ...)
   \S4method{split}{ANY,POSIXst}(x, f, drop = FALSE, ...)
 
   \S4method{split}{TimeIntervalDataFrame,TimeIntervalDataFrame}(x, f, ..., split.x=FALSE, keep.f=TRUE)
-
   \S4method{split}{TimeIntervalDataFrame,POSIXcti}(x, f, ..., split.x=FALSE)
-
   \S4method{split}{TimeIntervalDataFrame,POSIXctp}(x, f, ...,  split.x=FALSE)
-
 }
 \arguments{
-  \item{x}{vector or data frame containing values to be
-  divided into groups. POSIXctp, POSIXst and POSIXcti are considered as vectors
-  and TimeIntervalDataFrame, TimeInstantDataFrame and SubtimeDataFrame as
-  data.frame.}
+  \item{x}{data frame containing values to be divided into groups.
+	  TimeIntervalDataFrame as data.frame.}
 
   \item{f}{Can be of different kind. Is used to defined the grouping.
   See details below.}
@@ -70,8 +54,6 @@
   forms replace values corresponding to such a division.
   Here are listed \sQuote{split} methods defined for Time
   objects defined in the timetools package
-  (\code{\link{TimeIntervalDataFrame}},
-  \code{\link{TimeInstantDataFrame}},
   \code{\link{POSIXst}}, \code{\link{POSIXcti}}, etc.). See
   sections below for complete list of methods.
 }
@@ -79,33 +61,6 @@
   For each new split method defined in
   \code{\link{timetools}} a short description is given
   there.
-}
-
-\section{Split POSIX*t* objects}{
-  The following (S3) methods are wrappers to the split.default method
-  defined in the package 'base'.
-  Those methods allow to split POSIXctp, POSIXst  POSXcti objects
-  which are similar to vectors. See \code{\link[base]{split}} for details
-  about \code{f} and \code{drop}.
-
-  \itemize{
-    \item{split('\link{POSIXctp}', f, drop = FALSE, ...)}
-    \item{split('\link{POSIXcti}', f, drop = FALSE, ...)}
-    \item{split('\link{POSIXst}', f, drop = FALSE, ...)}
-  }
-}
-\section{Split Time*DataFrame}{
-  The following (S3) methods are wrappers to the split.data.frame
-  method defined in the package 'base'.
-  Those methods allow to split SubtimeDataFrame, TimeInstantDataFrame
-  and TimeIntervalDataFrame in the same way that data.frame are
-  used to be splitted.
-
-  \itemize{
-    \item{split('\link{TimeInstantDataFrame}', f, drop = FALSE, ...)}
-    \item{split('\link{TimeIntervalDataFrame}', f, drop = FALSE, ...)}
-    \item{split('\link{SubtimeDataFrame}', f, drop = FALSE, ...)}
-  }
 }
 
 \section{Split over POSIX*t* objects}{
@@ -122,7 +77,6 @@
     cast as numeric and then the split is done.}
   }
 }
-
 \section{split('TimeIntervalDataFrame', 'TimeIntervalDataFrame', ..., split.x = FALSE, keep.f = TRUE)}{
   Split a TimeIntervalDataFrame into another TimeIntervalDataFrame.
 
@@ -164,12 +118,11 @@
   So a TimeIntervalDataFrame is created according to 'f' and the 
   the above method is called.
 }
+
 \seealso{
   \code{\link[base]{split}},
   \code{\link{TimeIntervalDataFrame-class}},
-  \code{\link{TimeInstantDataFrame-class}},
-  \code{\link{SubtimeDataFrame-class}},
-  \code{\link{POSIXcti-class}},
+  \code{\link{POSIXcti}},
   \code{\link{POSIXst-class}}, \code{\link{POSIXctp-class}}
 }
 

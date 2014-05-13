@@ -1,12 +1,11 @@
 \name{overlapping}
 \alias{overlapping}
 \alias{overlapping-methods}
-\alias{overlapping,TimeIntervalDataFrame-method}
+%\alias{overlapping,TimeIntervalDataFrame-method}
 
 \title{Test if any interval of a time intervals object intersect another}
 \usage{
   overlapping(x, ...)
-
 }
 \arguments{
   \item{x}{object to test for overlapping}
