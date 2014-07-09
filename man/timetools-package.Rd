@@ -29,8 +29,8 @@ Main things defined in this package are :
 \tabular{ll}{
 Package: \tab timetools\cr
 Type: \tab Package\cr
-Version: \tab 1.6.0\cr
-Date: \tab 2014-05-13\cr
+Version: \tab 1.6.1\cr
+Date: \tab 2014-07-09\cr
 Depends: \tab methods\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr

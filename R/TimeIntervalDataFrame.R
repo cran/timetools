@@ -99,7 +99,7 @@ RegularTimeIntervalDataFrame <- function (from, to, by, period, timezone='UTC', 
 	if (is.character (from) ) from <- as.POSIXct (from, timezone)
 	if (is.character (by) ) by <- POSIXctp(unit=by)
 	if (missing (to))
-		to <- from + (nrow(data) - 1) * by
+		to <- from + nrow(data) * by
 	if (is.character (to) ) to <- as.POSIXct (to, timezone)
 	if (!inherits (by, 'POSIXctp') )
 		stop ("'by' should be coercible to a 'POSIXctp'.")
