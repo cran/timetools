@@ -3,34 +3,30 @@
 \alias{timetools}
 \docType{package}
 \title{
-provides objects and tools to manipulate irregular heterogeneous time data and subtime data.
+Seasonal/Sequential (Instants/Durations, Even or not) Time Series
 }
 \description{
-This package is intended to manipulate irregular time series such as subtime
-series, series based on time intervals, heterogeneous time series (hourly time
-series and monthly time series at the same time for instance), etc.
+Objects to manipulate sequential and seasonal time series. Sequential time
+series based on time instants and time durations are handled. Both can be
+ regularly or unevenly spaced (overlapping durations are allowed).
 
-This package uses (and extends) only POSIXt* format for time objects.
+Only POSIX* format are used for dates and times.
 
-Main things defined in this package are :
-\enumerate{
-  \item the classes POSIXcti (as \sQuote{time intervals}), POSIXctp
-  (as \sQuote{time periods}) and subtime (days of week, weeks of year,
-  months of year, etc.), to deal with basic time concepts ;
-  \item TimeIntervalDataFrame, TimeInstantDataFrame and SubtimeDataFrame
-  to deal with time series (regular, homogeneous,irregular, heterogeneous
-  or whatever) ;
-  \item methods to switch from one class to another ;
-  \item and the \sQuote{changeSupport} method for TimeIntervalDataFrame (cf
-  \code{\link{changeSupport}} for more details).
-}
+The following classes are provided : POSIXcti, POSIXctp,
+TimeIntervalDataFrame, TimeInstantDataFrame, SubtimeDataFrame ;
+methods to switch from a class to another and to modify the time support
+of series (hourly time series to daily time series for instance) are also
+defined.
+
+Tools provided can be used for instance to handle environmental monitoring
+data (not always produced on a regular time base).
 }
 \details{
 \tabular{ll}{
 Package: \tab timetools\cr
 Type: \tab Package\cr
-Version: \tab 1.6.1\cr
-Date: \tab 2014-07-09\cr
+Version: \tab 1.6.4\cr
+Date: \tab 2014-11-19\cr
 Depends: \tab methods\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr

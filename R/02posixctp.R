@@ -124,6 +124,14 @@ Ops.POSIXctp <- function (e1, e2) {
 	if (!inherits (e2, 'POSIXctp') ) return (NextMethod (.Generic) )
 	if (!.Generic %in% c('==', '!=', '<=', '<', '>', '>='))
 		return (NextMethod(.Generic) )
+
+	l1 <- length(e1)
+	l2 <- length(e2)
+	if(l1 %% l2 != 0 & l2 %% l1 != 0) warning('longer object length is not',
+						  ' a multipe of shorter',
+						  ' object length')
+	if (l1 > l2) e2 <- rep(e2, length.out=l1) else
+	if (l1 < l2) e1 <- rep(e1, length.out=l2)
 	
 	# first we try to convert the POSIXctp with the bigger unit to
 	# the unit of the other (if needed !)
@@ -153,11 +161,13 @@ Ops.POSIXctp <- function (e1, e2) {
 setMethod('as.numeric', 'POSIXctp', function(x, ...) return( x@duration ))
 
 setMethod('match', signature('POSIXctp', 'POSIXctp'),
-	function(x, table, nomatch = NA_integer_, incomparables=NULL)
-	{
-		m <- match(x@duration, table@duration, nomatch, incomparables)
-		m[unit(table)[m]!=unit(x)] <- nomatch
-		m
+	function(x, table, nomatch = NA_integer_, incomparables=NULL) {
+		d <- match(x@duration, table@duration, NA, incomparables)
+    		u <- match(unit(x), unit(table), NA, incomparables)
+
+		ifelse(is.na(d) | is.na(u), nomatch,
+		ifelse(d == u, d, nomatch))
+
 	} )
 setMethod('match', signature('POSIXctp', 'ANY'),
 	function(x, table, nomatch = NA_integer_, incomparables=NULL)

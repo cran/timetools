@@ -118,37 +118,14 @@ setMethod (f='$', signature='TimeInstantDataFrame',
 		i <- seq_len(nrow(x))
 	}
 	if(missing(i)) i <- seq_len(nrow(x))
-	# les ids servent a voir si la data.frame a evoluer
-	#	en nombre de lignes
-	ids <- sprintf ('ID%i', 1:nrow (x))
-	rn <- row.names(x)
-	tmp <- x@data
-	row.names(tmp) <- ids
-	tmp[i, j] <- value
-	if(!all (available.rows <- row.names (tmp) %in% ids) ){
-		x@instant <- when(x)[available.rows]
-	}
-	row.names(tmp) <- rn
-	x@data <- tmp
+	x@data[i,j] <- value
 	validObject(x)
 	return(x)
 }
 '[[<-.TimeInstantDataFrame' <- function(x, i, j, value) {
-   # les ids servent a voir si la data.frame a evoluer
-   #	en nombre de lignes
-   ids <- sprintf ('ID%i', 1:nrow (x@data))
-   rn <- row.names(x@data)
-   tmp <- x@data
-   row.names(tmp) <- ids
    if (missing (j) )
-	   tmp[[i]] <- value else
-	   tmp[[i,j]] <- value
-		   #            tmp <- '[[<-.data.frame'(tmp, i, j, value)
-   if(!all(available.rows <- row.names (tmp) %in% ids ) ){
-	   x@instant <- when(x)[available.rows]
-   }
-   row.names(tmp) <- rn
-   x@data <- tmp
+	   x@data[[i]] <- value else
+	   x@data[[i,j]] <- value
    validObject(x)
    return(x)
 }

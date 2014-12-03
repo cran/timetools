@@ -14,6 +14,30 @@ TimeIntervalDataFrame.
 News
 
 -------------------------------------------------------------------------------
+* v1.6.5
+- Fit Title and Description to R rules.
+
+-------------------------------------------------------------------------------
+* v1.6.4
+- memory usage improved in replace functions for Time*DataFrame ('[<-', '$<-',
+etc.).
+
+-------------------------------------------------------------------------------
+* v1.6.3
+- previous bug fixing wasn't effective. Now "match('POSIXctp', 'POSIXctp')"
+should be ok.
+- bug fixed in "'POSIXctp' == 'POSIXctp'" (could have unexpected results when
+differents units and differents length)
+
+-------------------------------------------------------------------------------
+* v1.6.2
+- bug fixed in match('POSIXctp', 'POSIXctp')
+
+-------------------------------------------------------------------------------
+* v1.6.1
+-bug fixed in RegularTimeIntervalDataFrame
+
+-------------------------------------------------------------------------------
 * v1.6.0
 - doc deeply completed and reorganised
 - handling of NA on POSIXctp improved
