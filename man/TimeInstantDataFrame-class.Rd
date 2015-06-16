@@ -230,6 +230,21 @@
   '$', '$<-', '[', '[<-', '[[', '[[<-'. See \code{\link[base]{Extract}} for 
   details.
 
+  With \sQuote{[} operator, a selection by dates is also available. If
+  \sQuote{i} and or \sQuote{j} are POSIXt or strings that can be 
+  converted to POSIXct (see below), they are considered as the 
+  minimal and maximal time limits : all datas between those are selected.
+  A string that can be converted to a POSIXct is (in this case only) a
+  string composed of 3 parts separated by white space : 
+  'YYYY-MM-DD HH:MM:SS tz'. The second and third parts are options, thus
+  accepted format are :\itemize{
+    \item 'YYYY-MM-DD'
+    \item 'YYYY-MM-DD tz'
+    \item 'YYYY-MM-DD HH:MM:SS'
+    \item 'YYYY-MM-DD HH:MM:SS tz'
+  }. If timezone is not given, it is assumed to be the same as the one
+  of the object on which the selection is done.
+
   Other methods have been defined to allow some operations over
   TimeInstantDataFrame :
   \itemize{

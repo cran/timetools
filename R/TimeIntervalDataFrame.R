@@ -204,11 +204,48 @@ summary.TimeIntervalDataFrame <- function (object, ...)
 #-------------------------------------
 '[.TimeIntervalDataFrame' <- function(x, i, j, drop=FALSE) {
 	n.args <- nargs() - hasArg(drop)
+	# call : x[i]
 	if (missing (j) & n.args==2) {
 		j <- i
-		i <- seq_len(nrow(x))
+		i <- rep(TRUE, nrow(x))
 	}
-	if(missing(i)) i <- seq_len(nrow(x))
+
+	if(missing(i)) i <- rep(TRUE, nrow(x))
+
+	# for i = 'YYYY-MM-DD HH:MM:SS tz'
+	if (!missing(i) && length(i) == 1 && (is.character(i) || inherits(i, 'POSIXt'))) {
+		if (is.character(i)) {
+			di <- strsplit(i, ' ')[[1]]
+			if (length(di) == 2 && !grepl('..:..:..', di[2])) {
+				di[3] <- di[2]
+				di[2] <- ''
+			}
+			if(is.na(di[3])) di[3] <- timezone(x)
+
+			di <- try(as.POSIXct(paste(di[1], di[2]), di[3]), TRUE)
+		} else di <- i
+
+		if ( !inherits(di, 'try-error') ) i <- start(x) >= di
+	}
+	# for j = 'YYYY-MM-DD HH:MM:SS tz'
+	if (!missing(j) && length(j) == 1 && (is.character(j) || inherits(j, 'POSIXt'))) {
+		if (is.character(j)) {
+			di <- strsplit(j, ' ')[[1]]
+			if (length(di) == 2 && !grepl('..:..:..', di[2])) {
+				di[3] <- di[2]
+				di[2] <- ''
+			}
+			if(is.na(di[3])) di[3] <- timezone(x)
+
+			di <- try(as.POSIXct(paste(di[1], di[2]), di[3]), TRUE)
+		} else di <- j
+
+		if ( !inherits(di, 'try-error') ){
+			i <- i & end(x) <= di
+			j <- names(data)
+		}
+	}
+
 	y <- new ('TimeIntervalDataFrame', 
 	     start = start(x)[i, drop=drop],
 	     end = end(x)[i, drop=drop],

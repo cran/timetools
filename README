@@ -14,6 +14,18 @@ TimeIntervalDataFrame.
 News
 
 -------------------------------------------------------------------------------
+* v1.7.0
+- Data extraction on Time*DataFrame now can be done directly by using date
+(POSIXct or suitable character strings) :
+data['yyyy-mm-dd' , 'yyyy-mm-dd']
+data['yyyy-mm-dd' , ]
+data[ , 'yyyy-mm-dd']
+data['yyyy-mm-dd tz' , ]
+data['yyyy-mm-dd hh:mm:ss' , ]
+data['yyyy-mm-dd hh:mm:ss tz' , ]
+# etc.
+
+-------------------------------------------------------------------------------
 * v1.6.5
 - Fit Title and Description to R rules.
 

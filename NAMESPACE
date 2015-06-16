@@ -41,6 +41,8 @@ S3method(summary, POSIXcti)
 S3method (split, POSIXcti)
 S3method (rep, POSIXcti)
 
+S3method (as.POSIXcti, logical)
+
 # POSIXctp
 export (POSIXctp,
 	'[.POSIXctp', '[<-.POSIXctp',
@@ -95,6 +97,7 @@ S3method(summary, POSIXst)
 S3method (Ops, POSIXst)
 S3method (c, POSIXst)
 S3method (unique, POSIXst)
+S3method (duplicated, POSIXst)
 S3method ('[', POSIXst)
 S3method ('[<-', POSIXst)
 S3method (split, POSIXst)
