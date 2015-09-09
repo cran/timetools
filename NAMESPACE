@@ -1,6 +1,8 @@
 # import
-importFrom ('stats', start, end)
-importFrom (methods, show)
+import (methods)
+importFrom (graphics, par, plot, axis, axis.POSIXct, box, points, segments)
+importFrom (grDevices, colors)
+importFrom ('stats', start, end, weighted.mean)
 importFrom (utils, head, tail)
 importFrom( graphics, barplot)
 

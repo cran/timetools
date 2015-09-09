@@ -1,12 +1,12 @@
-d1f25b890bf288c97fe7c61edd9e5b36 *DESCRIPTION
-781c5fe88d0590991e4145a677a3fa5d *NAMESPACE
+791c3357a20ee8f9c5ad1c8fd8f80cb7 *DESCRIPTION
+ac9153b756d3803b3b32cb717a3c68db *NAMESPACE
 0747070c5decee6655c9bd296f659fd6 *R/00generic.R
 c933dd05a34278c88eb291b5bdc62e55 *R/01utils.R
 c609e99ae57dbc511969f63162fdda65 *R/02posixctp.R
 50bf0d1f69f3b38c89294ffbd519e704 *R/03posixst-class.R
 0c1afd85c17b323dad5fe0c4647c1ef5 *R/SubtimeDataFrame.R
-082bf51d6936558f4b68d4515c0ef329 *R/TimeInstantDataFrame.R
-1d0d66c4187cad48945967670f2771a0 *R/TimeIntervalDataFrame.R
+2ec4795f174d41b01ea15e607cb77e9d *R/TimeInstantDataFrame.R
+8a6dd8124bf520127b8cd70dbb8042d7 *R/TimeIntervalDataFrame.R
 e896c92e3cc04820018d827dd243e172 *R/changeSupport.R
 274fff194c7059a58fbc98ff27934767 *R/compute.lim.R
 33a94a251799c3fc593c15dc1d5d46cd *R/decompose.R
@@ -17,7 +17,7 @@ ab6a66908f03c088f51b99354ca10bf9 *R/split.R
 e3ccb770b0fd7a70e4f3df7fb4aae74c *R/tapply.R
 8fcccfc2231a2b5bb5f7ec8cfd79e419 *R/tt_plot.R
 7b57547fec0eadd524c20e066445cc53 *R/zzz.R
-156514c7811210044e13f0aa4ebbded0 *README
+49676127ef36260ab30b96802187f834 *README
 8f127d6aba2b9820b4d926c43ea28e58 *man/POSIXcti-class.Rd
 769f007d0cef462daddb1e86f144839b *man/POSIXctp-class.Rd
 9a914fe0ba1d6977305aaf41ad7bb6e5 *man/POSIXst-class.Rd
@@ -41,7 +41,7 @@ b8c3552880b435ff940126dde45c7568 *man/period.Rd
 c0408be71d9d7813824d547aa8ea17e9 *man/regular.Rd
 84fd5f88dced1ed32f49f8a5924bfe3d *man/split.Rd
 c867c62efd3602e6ed33b191c116fc1e *man/tapply.Rd
-ff2a7be508a1e7e956092d8514e67053 *man/timetools-package.Rd
+510ea7ad1f02d0b9d4087821af7a76dd *man/timetools-package.Rd
 98dd838f00954199f61121a7a9830344 *man/timezone.Rd
 8cfccabf5a510a75f8cb9492d03100a4 *man/when.Rd
 2a6f9e9e044a78154d3cfda5936d6f48 *src/Makevars

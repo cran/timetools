@@ -110,7 +110,7 @@ summary.TimeInstantDataFrame <- function (object, ...)
 			di <- try(as.POSIXct(paste(di[1], di[2]), di[3]), TRUE)
 		} else di <- i
 
-		if ( !inherits(di, 'try-error') ) i <- start(x) >= di
+		if ( !inherits(di, 'try-error') ) i <- when(x) >= di
 	}
 	# for j = 'YYYY-MM-DD HH:MM:SS tz'
 	if (!missing(j) && length(j) == 1 && (is.character(j) || inherits(j, 'POSIXt'))) {
@@ -126,8 +126,8 @@ summary.TimeInstantDataFrame <- function (object, ...)
 		} else di <- j
 
 		if ( !inherits(di, 'try-error') ){
-			i <- i & end(x) <= di
-			j <- names(data)
+			i <- i & when(x) <= di
+			j <- names(x)
 		}
 	}
 

@@ -242,7 +242,7 @@ summary.TimeIntervalDataFrame <- function (object, ...)
 
 		if ( !inherits(di, 'try-error') ){
 			i <- i & end(x) <= di
-			j <- names(data)
+			j <- names(x)
 		}
 	}
 

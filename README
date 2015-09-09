@@ -14,6 +14,10 @@ TimeIntervalDataFrame.
 News
 
 -------------------------------------------------------------------------------
+* v1.7.1
+- Date selection on TmeInstantDataFrame didn't work. Bug fixed.
+
+-------------------------------------------------------------------------------
 * v1.7.0
 - Data extraction on Time*DataFrame now can be done directly by using date
 (POSIXct or suitable character strings) :
