@@ -121,8 +121,8 @@ RegularTimeIntervalDataFrame <- function (from, to, by, period, timezone='UTC', 
 		u <- switch (as.character(unit(by)), second='secs', minute='mins',
 						     hour='hours', day='days')
 		nb <- as.numeric (difftime(to, from, units=u))
-		nb <- ceiling (nb/duration(by))
 	}
+	nb <- ceiling (nb/duration(by))
 	start <- from + 0:(nb-1) * by
 	end <- start + period
 	tk <- !is.na(start) & !is.na(end) &
