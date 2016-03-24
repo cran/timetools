@@ -445,7 +445,9 @@ as.data.frame.TimeIntervalDataFrame <- function (x, row.names=NULL, optional=FAL
 as.TimeInstantDataFrame.TimeIntervalDataFrame <- function(from, cursor=NULL, ...) {
 	if (is.null (cursor) ) cursor <- 0.5
 	if (cursor > 1 || cursor < 0) warning ("For a standard use, cursor should be between 0 and 1.")
-	instant <- mapply (function(x, y, wx, wy)
+	if(nrow(from) == 0)
+		instant <- character(0) else 
+		instant <- mapply (function(x, y, wx, wy)
 				weighted.mean (c(x, y), c(wx, wy), na.rm=TRUE),
 			   start(from), end(from), 1-cursor, cursor)
 	instant <- as.POSIXct(instant, origin=timetools::origin)

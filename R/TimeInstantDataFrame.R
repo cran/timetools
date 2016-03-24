@@ -271,17 +271,28 @@ as.data.frame.TimeInstantDataFrame <- function (x, row.names=NULL, optional=FALS
 }
 
 as.TimeIntervalDataFrame.TimeInstantDataFrame <- function(from, period, ...) {
-	if (missing(period))
-	{
-		if (regular(from))
-			period <- as.numeric(difftime (when(from)[2] - when(from)[1], units='secs')) else
-			stop ("'period' must be of class 'period' or 'from' should be at least 'regular'.")
-		period <- POSIXctp (period, 'second')
-	}
+	if (nrow(from) == 0) {
+		to <- TimeIntervalDataFrame (
+			   start=character(0), end=character(0), 
+			   timezone=timezone(from), data=from@data)
 
-	to <- new ('TimeIntervalDataFrame',
-		   start=when(from), end=when(from)+period, 
-		   timezone=timezone(from), data=from@data)
+	} else {
+		if (missing(period)) {
+			if (regular(from)) {
+				period <- as.numeric(difftime (when(from)[2], when(from)[1],
+											   units='secs'))
+			} else {
+				stop ("'period' must be of class 'period' or 'from' should be ",
+					  "at least 'regular'.")
+			}
+			period <- POSIXctp (period, 'second')
+		}
+
+		to <- new ('TimeIntervalDataFrame',
+				   start=when(from), end=when(from)+period, 
+				   timezone=timezone(from), data=from@data)
+	} # fin du if sur nrow(from) == 0
+
 	validObject(to)
 	return (to)
 }

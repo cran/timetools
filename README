@@ -14,6 +14,16 @@ TimeIntervalDataFrame.
 News
 
 -------------------------------------------------------------------------------
+* v1.7.4
+Conversion from/to empty TimeIntervalDataFrame to/from TimeInstantDataFrame
+added.
+
+-------------------------------------------------------------------------------
+* v1.7.3
+Bug fixed : in RegularTimeIntervalDataFrame some extra rows could be added where
+not required.
+
+-------------------------------------------------------------------------------
 * v1.7.1
 - Date selection on TmeInstantDataFrame didn't work. Bug fixed.
 

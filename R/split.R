@@ -137,6 +137,7 @@ setMethod('split',
 	# trivial case where time support of 'x' is a subdivision of the time
 	# support of 'f', a specific algorithm is used to improve speed
 	# calculation
+	message ("Simplified splitting algorithm")
 
 	# x and f are ordered and the number of rows of x per rows of f
 	# is calculated
