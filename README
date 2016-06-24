@@ -13,6 +13,16 @@ TimeIntervalDataFrame.
 
 News
 
+
+-------------------------------------------------------------------------------
+* v1.8.0
+Date selection on Time*DataFrame ca be used for value replacement
+Recursive replacement enabled for Time*DataFrame
+
+-------------------------------------------------------------------------------
+* v1.7.5
+Code adapted to deprecation of implicit list embedding of S4 objects.
+
 -------------------------------------------------------------------------------
 * v1.7.4
 Conversion from/to empty TimeIntervalDataFrame to/from TimeInstantDataFrame

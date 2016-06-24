@@ -25,8 +25,8 @@ data (not always produced on a regular time base).
 \tabular{ll}{
 Package: \tab timetools\cr
 Type: \tab Package\cr
-Version: \tab 1.7.4\cr
-Date: \tab 2016-03-23\cr
+Version: \tab 1.8.0\cr
+Date: \tab 2016-06-10\cr
 Depends: \tab methods\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr

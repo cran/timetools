@@ -311,10 +311,10 @@ setMethod('split',
 	# for empty "f"'s intervals, empty TimeIntervalDataFrame are
 	# set in the resultint structure.
 
-	result[setdiff(1:nrow(f), f.notempty)] <- TimeIntervalDataFrame(
+	result[setdiff(1:nrow(f), f.notempty)] <- list(TimeIntervalDataFrame(
 		as.POSIXct(character()),
 		as.POSIXct(character()),
-		data = x@data[0,,drop=FALSE])
+		data = x@data[0,,drop=FALSE]))
 
 	} # end of switching over trivial case or not
 	#=========================================================================
