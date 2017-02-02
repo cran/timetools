@@ -25,9 +25,9 @@ data (not always produced on a regular time base).
 \tabular{ll}{
 Package: \tab timetools\cr
 Type: \tab Package\cr
-Version: \tab 1.8.0\cr
-Date: \tab 2016-06-10\cr
-Depends: \tab methods\cr
+Version: \tab 1.8.1\cr
+Date: \tab 2017-01-31\cr
+Depends: \tab r (< 3.4.0), methods\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 URL: \tab http://sourceforge.net/projects/timetools/\cr

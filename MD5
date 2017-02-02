@@ -1,4 +1,4 @@
-59d12db026449f60db675d68ec06339d *DESCRIPTION
+77ce12d73d5426fa4b3f9b76b77d2d48 *DESCRIPTION
 ac9153b756d3803b3b32cb717a3c68db *NAMESPACE
 0747070c5decee6655c9bd296f659fd6 *R/00generic.R
 c933dd05a34278c88eb291b5bdc62e55 *R/01utils.R
@@ -41,7 +41,7 @@ b8c3552880b435ff940126dde45c7568 *man/period.Rd
 c0408be71d9d7813824d547aa8ea17e9 *man/regular.Rd
 84fd5f88dced1ed32f49f8a5924bfe3d *man/split.Rd
 c867c62efd3602e6ed33b191c116fc1e *man/tapply.Rd
-3134123a0084910e00e1b7a25e70eb3c *man/timetools-package.Rd
+b9531a557a3da10c771d0c4023171ab4 *man/timetools-package.Rd
 98dd838f00954199f61121a7a9830344 *man/timezone.Rd
 8cfccabf5a510a75f8cb9492d03100a4 *man/when.Rd
 2a6f9e9e044a78154d3cfda5936d6f48 *src/Makevars
