@@ -1,5 +1,5 @@
 # definition of the generic (S4) function
-setGeneric (name='tapply')
+setGeneric("tapply", signature = c("X", "INDEX"))
 
 # tapply method to apply FUN over TimeIntervalDataFrame splitted by 
 # another TimeIntervalDataFrame
@@ -12,7 +12,7 @@ setMethod (
 	definition=function (X, INDEX, FUN, ..., min.coverage=1,
 			     weights.arg=NULL, merge.X=TRUE,
 			     split.X=FALSE, keep.INDEX=TRUE,
-			     simplify=TRUE)
+			     default=NA, simplify=TRUE)
 {
 	# get the function and specified args to apply
 
@@ -197,7 +197,7 @@ setMethod (
 	signature(X='TimeIntervalDataFrame', INDEX='POSIXctp'),
 	definition=function (X, INDEX, FUN, ..., min.coverage=1,
 			     weights.arg=NULL, merge.X=TRUE,
-			     split.X=FALSE, simplify=TRUE)
+			     split.X=FALSE, default=NA, simplify=TRUE)
 {
 
 	s <- min(start(X))
@@ -221,7 +221,7 @@ setMethod (
 	signature(X='TimeIntervalDataFrame', INDEX='POSIXcti'),
 	definition=function (X, INDEX, FUN, ..., min.coverage=1,
 			     weights.arg=NULL, merge.X=TRUE,
-			     split.X=FALSE, simplify=TRUE)
+			     split.X=FALSE, default=NA, simplify=TRUE)
 {
 	tzone <- attributes(start(INDEX))$tzone[1]
 	INDEX <- TimeIntervalDataFrame(start(INDEX), end(INDEX), tzone)

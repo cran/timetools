@@ -1,4 +1,4 @@
-77ce12d73d5426fa4b3f9b76b77d2d48 *DESCRIPTION
+e2c6e2dfb248d7b500292f0b2ead258f *DESCRIPTION
 ac9153b756d3803b3b32cb717a3c68db *NAMESPACE
 0747070c5decee6655c9bd296f659fd6 *R/00generic.R
 c933dd05a34278c88eb291b5bdc62e55 *R/01utils.R
@@ -14,10 +14,10 @@ e896c92e3cc04820018d827dd243e172 *R/changeSupport.R
 b0b9fb6fbf2e3693a4684669e47711f9 *R/posixst.R
 c84459a78ae18022e1c7b9b570fc7344 *R/posixt.R
 c7d19aaa100c72f02dcd6a21677de4d7 *R/split.R
-e3ccb770b0fd7a70e4f3df7fb4aae74c *R/tapply.R
+1554cc29793a6371509239f0cfb8e679 *R/tapply.R
 8fcccfc2231a2b5bb5f7ec8cfd79e419 *R/tt_plot.R
 7b57547fec0eadd524c20e066445cc53 *R/zzz.R
-99b98bed79f3e4f6ca630b3e4ab9f18d *README
+0d7210bba19d15b20355e1798174ae6f *README
 8f127d6aba2b9820b4d926c43ea28e58 *man/POSIXcti-class.Rd
 769f007d0cef462daddb1e86f144839b *man/POSIXctp-class.Rd
 9a914fe0ba1d6977305aaf41ad7bb6e5 *man/POSIXst-class.Rd
@@ -40,14 +40,14 @@ bfc25ac28a397baad8bcaa42e75fb935 *man/included.Rd
 b8c3552880b435ff940126dde45c7568 *man/period.Rd
 c0408be71d9d7813824d547aa8ea17e9 *man/regular.Rd
 84fd5f88dced1ed32f49f8a5924bfe3d *man/split.Rd
-c867c62efd3602e6ed33b191c116fc1e *man/tapply.Rd
-b9531a557a3da10c771d0c4023171ab4 *man/timetools-package.Rd
+f988bac0f1da16476de26f80d811ea48 *man/tapply.Rd
+77bfde1417e2d672a0bb818cdf4b1519 *man/timetools-package.Rd
 98dd838f00954199f61121a7a9830344 *man/timezone.Rd
 8cfccabf5a510a75f8cb9492d03100a4 *man/when.Rd
 2a6f9e9e044a78154d3cfda5936d6f48 *src/Makevars
 0961a6779233408bacb59cde992ad382 *src/overlapping.c
 ad87b1bdf25d05b61ade62de3e2d616b *src/project_intersection.c
 0c03010d92f929025193397ab55c7dfc *tests/TimeIn_DataFrame.R
-eeddca695d6fe3c37277a41d25422712 *tests/TimeIn_DataFrame.Rout.save
+f90a2bf346567bc692ac649a7b6df16d *tests/TimeIn_DataFrame.Rout.save
 258e739374cc9434f7630023066208a1 *tests/posixst.R
-f95edb34e8f5204e11491e82b4d7d412 *tests/posixst.Rout.save
+1b8f7cc09b681c6560fba1d7ede34232 *tests/posixst.Rout.save

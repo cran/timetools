@@ -7,15 +7,15 @@
 \usage{
   \S4method{tapply}{TimeIntervalDataFrame,TimeIntervalDataFrame}(X, INDEX, FUN, ...,
        min.coverage=1, weights.arg=NULL, merge.X=TRUE, split.X=FALSE,
-       keep.INDEX=TRUE, simplify=TRUE)
+       keep.INDEX=TRUE,default=NA, simplify=TRUE)
 
   \S4method{tapply}{TimeIntervalDataFrame,POSIXctp}(X, INDEX, FUN, ...,
        min.coverage=1, weights.arg=NULL, merge.X=TRUE, split.X=FALSE,
-       simplify=TRUE)
+      default=NA, simplify=TRUE)
 
   \S4method{tapply}{TimeIntervalDataFrame,POSIXcti}(X, INDEX, FUN, ...,
        min.coverage=1, weights.arg=NULL, merge.X=TRUE, split.X=FALSE,
-       simplify=TRUE)
+      default=NA, simplify=TRUE)
 }
 \arguments{
   \item{X}{a \code{\link{TimeIntervalDataFrame}} or a
@@ -34,6 +34,9 @@
   \sQuote{Time*DataFrame} is returned ; if TRUE
   \sQuote{tapply} try to reduce the list to a single
   \sQuote{Time*DataFrame}.}
+
+  \item{default}{argument inherited from the \pkg{base} function,
+  currently unused; see \code{\link[base]{tapply}}.}
 
   \item{min.coverage}{a numeric between 0 and 1 indicating
   the percentage of valid values over each interval to
