@@ -182,7 +182,7 @@ setMethod('split',
 	# intersections between time intervals of 'x' and time intervals
 	# of 'f'. This number is necessary for the enxt step.
 
-	nb <- .C ('project_nb_intersections',
+	nb <- .C (C_project_nb_intersections,
 			as.integer(s.x), as.integer(e.x),
 			as.integer(length(s.x)),
 			as.integer(s.f), as.integer(e.f),
@@ -202,7 +202,7 @@ setMethod('split',
 
 	if (nb > 0) {
 
-		whiches <- .C ('project_pos_weight',
+		whiches <- .C (C_project_pos_weight,
 			as.integer(s.x), as.integer(e.x),
 			as.integer(length(s.x)),
 			as.integer(s.f), as.integer(e.f),

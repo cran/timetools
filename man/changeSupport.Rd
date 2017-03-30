@@ -184,9 +184,9 @@ ti1$value <- 1:nrow(ti1)
 # first lets build the corresponding TimeIntervalDataFrame
 ti2 <- RegularTimeIntervalDataFrame('2011-01-01', '2011-02-01', 'hour', 'day')
 # if we try to 'project' ti1 over ti2 it won't work :
-summary (changeSupport (ti1, ti2, 0))
+summary (changeSupport (ti1[1:200,], ti2[1:200,], 0))
 # all data are NA because 'spliting' is not enabled. Let's enable it :
-summary (changeSupport (ti1, ti2, 0, split.from=TRUE))
+summary (changeSupport (ti1[1:200,], ti2[1:200,], 0, split.from=TRUE))
 }
 \references{
   Qair-package :

@@ -11,6 +11,9 @@
 \alias{[[,TimeInstantDataFrame-method}
 \alias{[[<-.TimeInstantDataFrame}
 
+\alias{Ops,TimeInstantDataFrame,numeric-method}
+\alias{Ops,numeric,TimeInstantDataFrame-method}
+
 \alias{rbind.TimeInstantDataFrame}
 \alias{merge.TimeInstantDataFrame}
 \alias{split.TimeInstantDataFrame}
@@ -222,6 +225,17 @@
     TimeInstantDataFrame.
   }
 }
+\section{Math}{
+  Every functions defined in the Ops group (see \code{\link{Ops}})
+  can be used width a TimeInstantDataFrame and numeric :
+  \itemize{
+  \item{\code{tidf * 2}}
+  \item{\code{2 * tidf}}
+  \item{\code{2:10 == tidf}}
+  \item{\code{2^tidf}}
+  \item{\code{tidf^2}}
+  }
+}
 \section{Accessing to and manipulating data}{
   The TimeInstantDataFrame class is defined to works like the data.frame class
   with the difference that a time instant (\code{\link[base]{POSIXct}}) is
@@ -255,12 +269,12 @@
     a data.frame can (see \code{\link[base]{split}} in the base
   package),
     \item a function can be applied over each column of a TimeInstantDataFrame
-    via the lapply function provided that the function return one value (in
-    this case the resulting value is a \code{\link{TimeIntervalDataFrame}}
-    beginning at the first instant of the object and ending at the latest one),
-    or as much values as the number of rows of the object (in this case the
-    TimeInstantDataFrame given in argument in returned with the new values
-    calculated).
+    via the lapply function. If the function returns one value,
+     the resulting value is a \code{\link{TimeIntervalDataFrame}}
+    beginning at the first instant of the object and ending at the latest one ;
+	else if the function returns as much values as the number of rows of
+	the object, the TimeInstantDataFrame given in argument is returned with
+	the new calculated values ; on others cases, a data.frame is returned.
   }
 
   Because a TimeInstantDataFrame works more or less like a data.frame, 

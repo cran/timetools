@@ -1,3 +1,6 @@
+# DynLib
+useDynLib(timetools, .registration = TRUE, .fixes = "C_")
+
 # import
 import (methods)
 importFrom (graphics, par, plot, axis, axis.POSIXct, box, points, segments)

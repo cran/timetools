@@ -16,6 +16,16 @@ data (not always produced on a regular time base).
 
 News
 
+-------------------------------------------------------------------------------
+* v1.11.0
+New features added :
+'Ops' of TimeIn*DataFrame against numeric (tidf*2, 3^tidf, tidf^3, etc.)
+'lapply' over TimeIn*DataFrame now return a data.frame if the result
+can't be coerced to a TimeIn*DataFrame
+
+-------------------------------------------------------------------------------
+* v1.10
+Declaration of C native routine as newly specified (R_registerRoutines as so)
 
 -------------------------------------------------------------------------------
 * v1.9.0

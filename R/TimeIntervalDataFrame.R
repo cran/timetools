@@ -346,6 +346,20 @@ setMethod (f='names<-', signature='TimeIntervalDataFrame',
 	   } )
 
 # Math
+#-----
+setMethod ('Ops', c('TimeIntervalDataFrame', 'numeric'),
+	function (e1, e2) {
+		e1@data <- as.data.frame(
+			do.call(.Generic, list(e1=e1@data, e2=e2)))
+		return (e1)
+	})
+setMethod ('Ops', c('numeric', 'TimeIntervalDataFrame'),
+	function (e1, e2) {
+		e2@data <- as.data.frame(
+			do.call(.Generic, list(e1=e1, e2=e2@data)))
+		return (e2)
+	})
+
 
 # manipulation
 #-------------
@@ -408,7 +422,8 @@ setMethod ('lapply', signature('TimeIntervalDataFrame', 'ANY'),
 				     timezone=timezone(X),
 				     data=data.frame (res))
 		   } else {
-			   stop ("try to apply inadequate function over TimeIntervalDataFrame.")
+			   X <- data.frame(res)
+			   warning ("Result can not be converted to a TimeInstantDataFrame, a data.frame is returned.")
 		   }
 		   return (X)
 	   } )
@@ -459,7 +474,7 @@ definition=function(x, value) {
 # certains intervalles se superposent-ils ?
 setMethod (f='overlapping', signature='TimeIntervalDataFrame',
 definition=function(x, ...) {
-	ol <- .C ('overlapping_timeintervaldf',
+	ol <- .C (C_overlapping_timeintervaldf,
 		  as.integer(start(x)),
 		  as.integer(end(x)),
 		  as.integer(nrow(x)),

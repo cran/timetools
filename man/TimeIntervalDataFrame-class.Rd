@@ -11,6 +11,9 @@
 \alias{[[,TimeIntervalDataFrame-method}
 \alias{[[<-.TimeIntervalDataFrame}
 
+\alias{Ops,TimeIntervallDataFrame,numeric-method}
+\alias{Ops,numeric,TimeIntervalDataFrame-method}
+
 \alias{rbind.TimeIntervalDataFrame}
 \alias{merge.TimeIntervalDataFrame}
 \alias{split.TimeIntervalDataFrame}
@@ -338,6 +341,18 @@
   }
 }
 
+\section{Math}{
+  Every functions defined in the Ops group (see \code{\link{Ops}})
+  can be used width a TimeIntervalDataFrame and numeric :
+  \itemize{
+  \item{\code{tidf * 2}}
+  \item{\code{2 * tidf}}
+  \item{\code{2:10 == tidf}}
+  \item{\code{2^tidf}}
+  \item{\code{tidf^2}}
+  }
+}
+
 \section{Accessing to and manipulating data}{
   The TimeIntervalDataFrame class is defined to works like the data.frame class
   with the difference that a time interval (\code{\link{POSIXcti}}) is
@@ -372,11 +387,12 @@
     package) and some more possibilities have been defined (see \code{\link{split}}
     in the timetools package),
     \item a function can be applied over each column of a TimeIntervalDataFrame
-    via the lapply function provided that the function return one value (in
-    this case the resulting value has only one row),
-    or as much values as the number of rows of the object (in this case the
-    TimeIntervalDataFrame given in argument in returned with the new values
-    calculated),
+    via the lapply function. If the function returns one value,
+     the resulting value is a \code{\link{TimeIntervalDataFrame}}
+    beginning at the first instant of the object and ending at the latest one ;
+	else if the function returns as much values as the number of rows of
+	the object, the TimeIntervalDataFrame given in argument is returned with
+	the new calculated values ; on others cases, a data.frame is returned.
     \item 'tapply' can split a TimeIntervalDataFrame and then apply a function
     over each group (see \code{\link{tapply}}),
     \item 'changeSupport' act like the 'tapply' function but with
