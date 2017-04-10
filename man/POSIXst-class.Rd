@@ -116,12 +116,7 @@ second(x, of, ...)
   \S4method{match}{POSIXst,ANY}(x, table, nomatch = NA_integer_, incomparables=NULL)
   \S4method{\%in\%}{POSIXst,ANY}(x, table)
 
-  \method{<}{POSIXst}(e1, e2)
-  \method{<=}{POSIXst}(e1, e2)
-  \method{!=}{POSIXst}(e1, e2)
-  \method{==}{POSIXst}(e1, e2)
-  \method{>=}{POSIXst}(e1, e2)
-  \method{>}{POSIXst}(e1, e2)
+  \method{Ops}{POSIXst}(e1, e2)
 
   \S4method{+}{POSIXst,POSIXctp}(e1, e2)
   \S4method{+}{POSIXctp,POSIXst}(e1, e2)

@@ -274,7 +274,8 @@
     beginning at the first instant of the object and ending at the latest one ;
 	else if the function returns as much values as the number of rows of
 	the object, the TimeInstantDataFrame given in argument is returned with
-	the new calculated values ; on others cases, a data.frame is returned.
+	the new calculated values ; on others cases, a non-TimeInstantDataFrame
+    object is returned.
   }
 
   Because a TimeInstantDataFrame works more or less like a data.frame, 

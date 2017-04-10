@@ -392,7 +392,8 @@
     beginning at the first instant of the object and ending at the latest one ;
 	else if the function returns as much values as the number of rows of
 	the object, the TimeIntervalDataFrame given in argument is returned with
-	the new calculated values ; on others cases, a data.frame is returned.
+	the new calculated values ; on others cases, a non-TimeInterevalDataFrame
+   	object is returned.
     \item 'tapply' can split a TimeIntervalDataFrame and then apply a function
     over each group (see \code{\link{tapply}}),
     \item 'changeSupport' act like the 'tapply' function but with

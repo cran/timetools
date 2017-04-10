@@ -84,12 +84,7 @@ as.POSIXctp(from, \dots)
   \S4method{match}{POSIXctp,ANY}(x, table, nomatch = NA_integer_, incomparables=NULL)
   \S4method{\%in\%}{POSIXctp,ANY}(x, table)
 
-  \method{<}{POSIXctp}(e1, e2)
-  \method{<=}{POSIXctp}(e1, e2)
-  \method{!=}{POSIXctp}(e1, e2)
-  \method{==}{POSIXctp}(e1, e2)
-  \method{>=}{POSIXctp}(e1, e2)
-  \method{>}{POSIXctp}(e1, e2)
+  \method{Ops}{POSIXctp}(e1, e2)
 
   \S4method{*}{numeric,POSIXctp}(e1, e2)
   \S4method{*}{POSIXctp,numeric}(e1, e2)

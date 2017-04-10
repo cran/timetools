@@ -71,12 +71,7 @@ as.POSIXcti(from, \dots)
   \S4method{match}{POSIXcti,POSIXcti}(x, table, nomatch = NA_integer_, incomparables=NULL)
   \S4method{\%in\%}{POSIXcti,POSIXcti}(x, table)
 
-  \method{<}{POSIXcti}(e1, e2)
-  \method{<=}{POSIXcti}(e1, e2)
-  \method{!=}{POSIXcti}(e1, e2)
-  \method{==}{POSIXcti}(e1, e2)
-  \method{>=}{POSIXcti}(e1, e2)
-  \method{>}{POSIXcti}(e1, e2)
+  \method{Ops}{POSIXcti}(e1, e2)
 
   \method{\%included\%}{POSIXcti}(i1, i2)
 

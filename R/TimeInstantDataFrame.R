@@ -295,8 +295,7 @@ setMethod ('lapply', signature('TimeInstantDataFrame', 'ANY'),
 				     timezone=timezone(X),
 				     data=data.frame (res))
 		   } else {
-			   X <- data.frame(res)
-			   warning ("Result can not be converted to a TimeInstantDataFrame, a data.frame is returned.")
+			   X <- res
 		   }
 		   return (X)
 	   } )
