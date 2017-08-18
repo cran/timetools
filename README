@@ -17,6 +17,11 @@ data (not always produced on a regular time base).
 News
 
 -------------------------------------------------------------------------------
+* v1.12.0
+Bug fixed : in split(TimeIntervalDataFrame, TimeIntervalDataFrame),
+the simplified algorithm could sometimes be selected whereas it shouldn't.
+
+-------------------------------------------------------------------------------
 * v1.11.0
 New features added :
 'Ops' of TimeIn*DataFrame against numeric (tidf*2, 3^tidf, tidf^3, etc.)

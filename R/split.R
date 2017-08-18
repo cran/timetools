@@ -133,7 +133,7 @@ setMethod('split',
 	if (homogeneous (x) && continuous(x) &&
 	    homogeneous (f) && continuous(f) &&
 	    (as.numeric(period(f)) / as.numeric(period(x)))%%1 == 0 &&
-	    start(x)[1] == start(f)[1] ) {
+	    start(x)[1] == start(f)[1] && end(x)[nrow(x)] == end(f)[nrow(f)] ) {
 	# trivial case where time support of 'x' is a subdivision of the time
 	# support of 'f', a specific algorithm is used to improve speed
 	# calculation
