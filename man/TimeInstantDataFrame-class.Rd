@@ -71,7 +71,7 @@
   \method{[[}{TimeInstantDataFrame}(x, i, j) <- value
 
   \method{rbind}{TimeInstantDataFrame}(\dots)
-  \method{merge}{TimeInstantDataFrame}(x, y, by, all=TRUE, tz='UTC', \dots)
+  \method{merge}{TimeInstantDataFrame}(x, y, by, all=TRUE, tz='UTC', sort=TRUE, \dots)
   \method{split}{TimeInstantDataFrame}(x, f, drop=FALSE, \dots)
   \S4method{lapply}{TimeInstantDataFrame}(X, FUN, \dots)
 
@@ -155,6 +155,8 @@
   \item{all}{logical; see \code{\link[base]{merge}}}
   \item{tz}{character representing a valid timezone (see
 	  \code{\link[base]{timezone}}).}
+  \item{sort}{logical; if TRUE the resulting merged TimeInstantDataFrame is 
+  	  ordered according to 'when' values.}
 
   \item{f}{a 'factor' in the sense that ‘as.factor(f)’ defines the
             grouping, or a list of such factors in which case their

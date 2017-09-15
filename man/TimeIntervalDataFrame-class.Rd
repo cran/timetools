@@ -86,7 +86,7 @@
   \method{[[}{TimeIntervalDataFrame}(x, i, j) <- value
 
   \method{rbind}{TimeIntervalDataFrame}(\dots)
-  \method{merge}{TimeIntervalDataFrame}(x, y, by, all=TRUE, tz='UTC', \dots)
+  \method{merge}{TimeIntervalDataFrame}(x, y, by, all=TRUE, tz='UTC', sort=TRUE, \dots)
   \method{split}{TimeIntervalDataFrame}(x, f, drop=FALSE, \dots)
   \S4method{lapply}{TimeIntervalDataFrame}(X, FUN, \dots)
 
@@ -205,6 +205,8 @@
   \item{all}{logical; see \code{\link[base]{merge}}}
   \item{tz}{character representing a valid timezone (see
 	  \code{\link[base]{timezone}}).}
+  \item{sort}{logical; if TRUE the resulting merged TimeIntervalDataFrame is 
+  	  ordered according to 'when' values.}
 
   \item{f}{a 'factor' in the sense that ‘as.factor(f)’ defines the
             grouping, or a list of such factors in which case their

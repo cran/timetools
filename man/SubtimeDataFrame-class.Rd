@@ -65,7 +65,7 @@ as.SubtimeDataFrame(x, unit, of, ...)
   \S4method{[[}{SubtimeDataFrame}(x ,i, j, \dots)
   \method{[[}{SubtimeDataFrame}(x, i, j) <- value
 
-  \method{merge}{SubtimeDataFrame}(x, y, by, all=TRUE, \dots)
+  \method{merge}{SubtimeDataFrame}(x, y, by, all=TRUE, sort=FALSE, \dots)
   \method{split}{SubtimeDataFrame}(x, f, drop=FALSE, \dots)
   \S4method{lapply}{SubtimeDataFrame}(X, FUN, \dots)
 
@@ -139,6 +139,8 @@ as.SubtimeDataFrame(x, unit, of, ...)
   \item{y}{SubtimeDataFrame to merge with x}
   \item{all}{logical; see \code{\link[base]{merge}}}
   \item{by}{specifications of the columns used for merging.}
+  \item{sort}{logical; if TRUE the resulting merged SubtimeDataFrame is 
+  	  ordered according to 'when' values.}
 
   \item{f}{a 'factor' in the sense that ‘as.factor(f)’ defines the
             grouping, or a list of such factors in which case their

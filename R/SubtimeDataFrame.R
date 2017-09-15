@@ -134,7 +134,7 @@ setMethod (f='names<-', signature='SubtimeDataFrame',
 # 	new('SubtimeDataFrame', when=when, data=df)
 # }
 # cbind # a faire eventuellement entre un Time*DataFrame et une data.frame
-merge.SubtimeDataFrame <- function(x, y, by, all=TRUE, ...) {
+merge.SubtimeDataFrame <- function(x, y, by, all=TRUE, sort=FALSE, ...) {
 		if (!inherits(y, 'SubtimeDataFrame'))
 			stop ("'y' must be a 'SubtimeDataFrame'.")
 		if( any(duplicated(when(x))) | any(duplicated(when(y))) )
@@ -165,6 +165,7 @@ merge.SubtimeDataFrame <- function(x, y, by, all=TRUE, ...) {
 		z <- new ('SubtimeDataFrame',
 			  when=when,
 			  data=z[setdiff(names(z), c('when'))])
+		if (sort) z <- z[order(as.numeric(when(z))),]
 		return (z)
 	   }
 

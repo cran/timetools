@@ -380,7 +380,7 @@ rbind.TimeIntervalDataFrame <- function (...)
 	     timezone=tz, data=df)
 }
 # cbind # a faire eventuellement entre un Time*DataFrame et une data.frame
-merge.TimeIntervalDataFrame <- function(x, y, by, all=TRUE, tz='UTC', ...) {
+merge.TimeIntervalDataFrame <- function(x, y, by, all=TRUE, tz='UTC', sort=TRUE, ...) {
 	if (!inherits(y, 'TimeIntervalDataFrame'))
 		stop ("'y' must be a 'TimeIntervalDataFrame'.")
 	if (missing (by) ) by <- intersect (names (x), names(y))
@@ -406,6 +406,10 @@ merge.TimeIntervalDataFrame <- function(x, y, by, all=TRUE, tz='UTC', ...) {
 	     end=as.POSIXct(z$end, tz='UTC'),
 	     timezone='UTC',
 	     data=z[setdiff(names(z), c('start', 'end'))])
+	if (sort) {
+		w <- when(z)
+		z <- z[order(start(w), end(w)),]
+	}
 	timezone(z) <- tz
 	return (z)
 }

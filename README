@@ -17,6 +17,15 @@ data (not always produced on a regular time base).
 News
 
 -------------------------------------------------------------------------------
+* v1.12.2
+argument 'sort' added to merge.{TimeIntervalDataFrame, TimeInstantDataFrame,
+SubtimeDataFrame}
+
+-------------------------------------------------------------------------------
+* v1.12.1
+argument 'by' of merge.TimeInstantDataFrame had no default value. Now it has.
+
+-------------------------------------------------------------------------------
 * v1.12.0
 Bug fixed : in split(TimeIntervalDataFrame, TimeIntervalDataFrame),
 the simplified algorithm could sometimes be selected whereas it shouldn't.

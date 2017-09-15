@@ -263,8 +263,9 @@ rbind.TimeInstantDataFrame <- function (...)
 	    timezone=timezone (dots[[1]]), data=df)
 }
 # cbind # a faire eventuellement entre un Time*DataFrame et une data.frame
-merge.TimeInstantDataFrame <- function(x, y, by, all=TRUE, tz='UTC', ...)
+merge.TimeInstantDataFrame <- function(x, y, by, all=TRUE, tz='UTC', sort=TRUE, ...)
 {
+	if (missing (by) ) by <- intersect (names (x), names(y))
 	instant.vec <- list (when(x), when(y))
 	x.data <- data.frame (instant=format (when(x),
 					      format='%Y-%m-%d %H:%M:%S',
@@ -279,6 +280,7 @@ merge.TimeInstantDataFrame <- function(x, y, by, all=TRUE, tz='UTC', ...)
      		  instant=as.POSIXct(z$instant, tz='UTC'),
      		  data=z[setdiff(names(z), c('instant'))],
      		  timezone=tz)
+	if (sort) z <- z[order(when(z)),]
 	timezone(z) <- tz
 	return (z)
 }
