@@ -17,7 +17,7 @@ setClass (Class = 'TimeIntervalDataFrame',
 
 # constructeurs
 #--------------
-TimeIntervalDataFrame <- function (start, end=NULL, timezone='UTC', data=NULL, period=NULL, ...) {
+TimeIntervalDataFrame <- function (start, end=NULL, timezone='UTC', data=NULL, period=NULL, sort=FALSE, ...) {
 	# cas avec period
 
 	if(!is.null(period)) {
@@ -90,8 +90,15 @@ TimeIntervalDataFrame <- function (start, end=NULL, timezone='UTC', data=NULL, p
 	if (is.character (start) ) start <- as.POSIXct (start, timezone)
 	if (is.character (end) ) end <- as.POSIXct (end, timezone)
 	if (is.null (data)) data <- data.frame (matrix (NA, ncol=0, nrow=length(start) ) )
-	new ('TimeIntervalDataFrame', start=start, end=end,
+	tidf <- new ('TimeIntervalDataFrame', start=start, end=end,
 	     timezone=timezone, data=data)
+
+	if (sort) {
+		w <- when(tidf)
+		tidf <- tidf[order(start(w), end(w)),]
+	}
+
+	return (tidf)
 }
 
 # Create a regular TimeIntervalDataFrame from scratch

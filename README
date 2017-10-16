@@ -17,6 +17,10 @@ data (not always produced on a regular time base).
 News
 
 -------------------------------------------------------------------------------
+* v1.12.3
+argument 'sort' added to constructor TimeIntervalDataFrame, TimeInstantDataFrame.
+
+-------------------------------------------------------------------------------
 * v1.12.2
 argument 'sort' added to merge.{TimeIntervalDataFrame, TimeInstantDataFrame,
 SubtimeDataFrame}

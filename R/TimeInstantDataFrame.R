@@ -12,10 +12,13 @@ setClass (Class = 'TimeInstantDataFrame',
 
 # constructeurs
 #--------------
-TimeInstantDataFrame <- function (when, timezone='UTC', data=NULL, ...) {
+TimeInstantDataFrame <- function (when, timezone='UTC', data=NULL, sort=FALSE, ...) {
 	if (is.character (when) ) when <- as.POSIXct (when, timezone)
 	if (is.null (data)) data <- data.frame (matrix (NA, ncol=0, nrow=length(when) ) )
-	new ('TimeInstantDataFrame', instant=when, timezone=timezone, data=data)
+	tidf <- new ('TimeInstantDataFrame', instant=when, timezone=timezone, data=data)
+
+	if (sort) tidf <- tidf[order(when(tidf)),]
+	return (tidf)
 }
 
 # Create a regular TimeInstantDataFrame from scratch

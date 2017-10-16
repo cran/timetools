@@ -71,7 +71,7 @@
 }
 \usage{
   TimeIntervalDataFrame(start, end = NULL,
-    timezone = "UTC", data = NULL, period = NULL, \dots)
+    timezone = "UTC", data = NULL, period = NULL, sort=FALSE, \dots)
 
   as.TimeIntervalDataFrame(from, \dots)
   \method{as.TimeIntervalDataFrame}{TimeInstantDataFrame}(from, period, \dots)
@@ -205,7 +205,7 @@
   \item{all}{logical; see \code{\link[base]{merge}}}
   \item{tz}{character representing a valid timezone (see
 	  \code{\link[base]{timezone}}).}
-  \item{sort}{logical; if TRUE the resulting merged TimeIntervalDataFrame is 
+  \item{sort}{logical; if TRUE the resulting built/merged TimeIntervalDataFrame is 
   	  ordered according to 'when' values.}
 
   \item{f}{a 'factor' in the sense that ‘as.factor(f)’ defines the

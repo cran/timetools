@@ -56,7 +56,7 @@
   Class to hold time data that ARE 'instantaneous'.
 }
 \usage{
-  TimeInstantDataFrame(when, timezone = "UTC", data = NULL, \dots)
+  TimeInstantDataFrame(when, timezone = "UTC", data = NULL, sort=FALSE, \dots)
 
   as.TimeInstantDataFrame(from, \dots)
   \method{as.TimeInstantDataFrame}{TimeIntervalDataFrame}(from, cursor = NULL, \dots)
@@ -155,7 +155,7 @@
   \item{all}{logical; see \code{\link[base]{merge}}}
   \item{tz}{character representing a valid timezone (see
 	  \code{\link[base]{timezone}}).}
-  \item{sort}{logical; if TRUE the resulting merged TimeInstantDataFrame is 
+  \item{sort}{logical; if TRUE the resulting built/merged TimeInstantDataFrame is 
   	  ordered according to 'when' values.}
 
   \item{f}{a 'factor' in the sense that ‘as.factor(f)’ defines the
