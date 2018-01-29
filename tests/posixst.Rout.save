@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-01-30 r72059) -- "Unsuffered Consequences"
+R version 3.4.1 (2017-06-30) -- "Single Candle"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -19,13 +19,6 @@ Type 'q()' to quit R.
 > # The following code test if the POSIXst constructors are ok
 > # first serie of tests check the ranges of definition
 > library( timetools )
-
-Attaching package: 'timetools'
-
-The following object is masked from 'package:base':
-
-    tapply
-
 > 
 > # all theses must raise an error
 > try( POSIXst(62, 'second', 'minute') )
@@ -7874,4 +7867,4 @@ In c(0L, 4L) >= c(0L, 4L, 0L) :
 > 
 > proc.time()
    user  system elapsed 
-  1.576   0.167   1.802 
+  2.101   0.079   2.181 

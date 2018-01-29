@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-01-30 r72059) -- "Unsuffered Consequences"
+R version 3.4.1 (2017-06-30) -- "Single Candle"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -21,13 +21,6 @@ Type 'q()' to quit R.
 > #=====================
 > # TimeInstantDataFrame
 > library( timetools )
-
-Attaching package: 'timetools'
-
-The following object is masked from 'package:base':
-
-    tapply
-
 > 
 > tidf <- TimeInstantDataFrame(as.POSIXct(sprintf('2012-01-%02i', 4:8), 'UTC'),
 + 	'CET', data.frame(un=1:5, two=6:10))
@@ -166,4 +159,4 @@ $C
 > 
 > proc.time()
    user  system elapsed 
-  0.318   0.060   0.429 
+  0.514   0.039   0.572 

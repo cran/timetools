@@ -1,6 +1,3 @@
-# definition of the generic (S4) function
-setGeneric("tapply", signature = c("X", "INDEX"))
-
 # tapply method to apply FUN over TimeIntervalDataFrame splitted by 
 # another TimeIntervalDataFrame
 # this method is the main one : other tapply methods (over Time*DataFrame)

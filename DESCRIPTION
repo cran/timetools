@@ -2,8 +2,8 @@ Package: timetools
 Type: Package
 Title: Seasonal/Sequential (Instants/Durations, Even or not) Time
         Series
-Version: 1.12.3
-Date: 2017-10-06
+Version: 1.14
+Date: 2018-01-29
 Imports: methods
 Author: Vladislav Navel
 Maintainer: Vladislav Navel <vnavel@yahoo.fr>
@@ -13,6 +13,6 @@ LazyLoad: yes
 URL: http://sourceforge.net/projects/timetools/
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2017-10-06 14:42:37 UTC; vladislav
+Packaged: 2018-01-29 15:00:55 UTC; vladislav
 Repository: CRAN
-Date/Publication: 2017-10-16 13:25:05 UTC
+Date/Publication: 2018-01-29 15:27:05 UTC

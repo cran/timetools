@@ -11,6 +11,7 @@ setMethod ('+', c('POSIXct', 'POSIXctp'),
 			week = 'week',
 			hour = 'hour', minute = 'min', second = 'sec',
 			stop ('e2 is a corrupted POSIXctd') )
+		e3 <- unclass(e3)
 		for (u in unique (effective.unit) ) {
 			index <- effective.unit == u
 			if( u == 'week' ) {
@@ -21,6 +22,7 @@ setMethod ('+', c('POSIXct', 'POSIXctp'),
 					e3[[u]][index] + duration (e2)[index]
 			}
 		}
+		class(e3) <- 'POSIXlt'
 		return (as.POSIXct (e3) )
 	})
 
