@@ -30,7 +30,7 @@ Date: \tab 2018-01-29\cr
 Imports: \tab methods\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
-URL: \tab http://sourceforge.net/projects/timetools/\cr
+URL: \tab https://sourceforge.net/projects/timetools/\cr
 Encoding: \tab UTF-8\cr
 }
 }

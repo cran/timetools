@@ -35,7 +35,11 @@
   (FUN) has a na.rm argument, the na.rm=TRUE behaviour is
   met if na.rm is set to TRUE and min.coverage to 0 (zero)
   ; the na.rm=FALSE behaviour is met if na.rm is set to
-  FALSE whatever is the value of min.coverage.}
+  FALSE whatever is the value of min.coverage.
+  If min.coverage si as.numeric(NA), the function FUN is 
+  apply on all data within the interval, without checking
+  if there is any overlapping. In this case, the result
+  of the transformation must be analysed carefully.}
 
   \item{FUN}{function use to agregate data of from. By
   default \code{\link[base]{mean}} if \sQuote{from} is
@@ -190,7 +194,7 @@ summary (changeSupport (ti1[1:200,], ti2[1:200,], 0, split.from=TRUE))
 }
 \references{
   Qair-package :
-  \url{http://sourceforge.net/projects/packagerqair/}
+  \url{https://sourceforge.net/projects/packagerqair/}
 }
 \seealso{
   \code{\link{TimeIntervalDataFrame}},

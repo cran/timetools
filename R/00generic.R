@@ -36,9 +36,9 @@ setGeneric (name='continuous<-',
 setGeneric (name='homogeneous',
 	    def=function(x, ...) standardGeneric('homogeneous'))
 
-'overlapping' <- function(x, ...) UseMethod('overlapping')
+'overlapping' <- function(x, idx, ...) UseMethod('overlapping')
 setGeneric (name='overlapping',
-	    def=function(x, ...) standardGeneric('overlapping'))
+	    def=function(x, idx, ...) standardGeneric('overlapping'))
 
 'period' <- function(x, ...) UseMethod('period')
 setGeneric (name='period', def=function(x, ...) standardGeneric('period'))

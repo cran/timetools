@@ -482,16 +482,31 @@ definition=function(x, value) {
 } )
 
 # certains intervalles se superposent-ils ?
-setMethod (f='overlapping', signature='TimeIntervalDataFrame',
-definition=function(x, ...) {
-	ol <- .C (C_overlapping_timeintervaldf,
+setMethod (f='overlapping', signature=c('TimeIntervalDataFrame'),
+definition=function(x, ...) overlapping(x, FALSE) )
+
+setMethod (f='overlapping', signature=c('TimeIntervalDataFrame', 'logical'),
+definition=function(x, idx=FALSE, ...) {
+	if(idx) {
+		if(nrow(x) <= 1) return(NULL)
+		ol <- .Call(C_overlapping_timeintervaldf_logical,
 		  as.integer(start(x)),
 		  as.integer(end(x)),
 		  as.integer(nrow(x)),
-		  ol=integer(1),
-		  NAOK=FALSE, PACKAGE='timetools')$ol
-	return (ol == 1)
+		  PACKAGE='timetools')
+	
+		return (data.frame(i=(ol %/% nrow(x))+1, j=(ol %% nrow(x))+1))
+	} else {
+		ol <- .C (C_overlapping_timeintervaldf,
+			  as.integer(start(x)),
+			  as.integer(end(x)),
+			  as.integer(nrow(x)),
+			  ol=integer(1),
+			  NAOK=FALSE, PACKAGE='timetools')$ol
+		return (ol == 1)
+	}
 } )
+
 
 # transformateur de classe
 #-------------------------

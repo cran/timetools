@@ -26,9 +26,14 @@ static const R_CMethodDef cMethods[] = {
 	{NULL, NULL, 0, NULL}
 };
 
+static const R_CallMethodDef callMethods[] = {
+	{"overlapping_timeintervaldf_logical", (DL_FUNC) &overlapping_timeintervaldf_logical, 3},
+	{NULL, NULL, 0}
+};
+
 void R_init_timetools(DllInfo *dll)
 {
-	R_registerRoutines(dll, cMethods, NULL, NULL, NULL);
+	R_registerRoutines(dll, cMethods, callMethods, NULL, NULL);
 	R_useDynamicSymbols(dll, FALSE);
 	R_forceSymbols(dll, TRUE);
 }
