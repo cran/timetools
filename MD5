@@ -1,4 +1,4 @@
-f11031cc37befafd2287f730cbe9d397 *DESCRIPTION
+a79f6b019134fdc895896659a3a92ac2 *DESCRIPTION
 fe27c75bc91affd7e590f1b32cf30b5e *NAMESPACE
 bf755a40bd1a5a7548b1dbd386578fef *R/00generic.R
 c933dd05a34278c88eb291b5bdc62e55 *R/01utils.R
@@ -16,7 +16,7 @@ b0b9fb6fbf2e3693a4684669e47711f9 *R/posixst.R
 ff9edbeb6130d941b5c60be739bfb580 *R/split.R
 4558257f31a2e5418c89b07dc3797a82 *R/tapply.R
 8fcccfc2231a2b5bb5f7ec8cfd79e419 *R/tt_plot.R
-1ef4af5bbe629dda71e77be3d9f24927 *README
+a38f67ff5a05f16bdc81e26fa534968e *README
 76a4a7cc693a610311758a5727a3502b *man/POSIXcti-class.Rd
 57aa4cc0244cae459c0cd2b868078379 *man/POSIXctp-class.Rd
 6d12ecc2b9bdc4134b33e3f8d2dc6926 *man/POSIXst-class.Rd
@@ -40,7 +40,7 @@ b8c3552880b435ff940126dde45c7568 *man/period.Rd
 c0408be71d9d7813824d547aa8ea17e9 *man/regular.Rd
 84fd5f88dced1ed32f49f8a5924bfe3d *man/split.Rd
 f988bac0f1da16476de26f80d811ea48 *man/tapply.Rd
-ee27bd22274ccc6461667e832ec5cb48 *man/timetools-package.Rd
+d2a30b6deb93c903d189d6f6e01cf570 *man/timetools-package.Rd
 98dd838f00954199f61121a7a9830344 *man/timezone.Rd
 8cfccabf5a510a75f8cb9492d03100a4 *man/when.Rd
 2a6f9e9e044a78154d3cfda5936d6f48 *src/Makevars

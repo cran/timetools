@@ -21,19 +21,6 @@ defined.
 Tools provided can be used for instance to handle environmental monitoring
 data (not always produced on a regular time base).
 }
-\details{
-\tabular{ll}{
-Package: \tab timetools\cr
-Type: \tab Package\cr
-Version: \tab 1.14\cr
-Date: \tab 2018-01-29\cr
-Imports: \tab methods\cr
-License: \tab GPL\cr
-LazyLoad: \tab yes\cr
-URL: \tab https://sourceforge.net/projects/timetools/\cr
-Encoding: \tab UTF-8\cr
-}
-}
 
 \author{
 Vladislav Navel <vnavel@yahoo.fr>
