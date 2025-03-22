@@ -14,7 +14,7 @@
   numeric of length 2
 }
 \description{
-  This function retunrn a 2 elements vectors (numeric)
+  This function return a 2 elements vectors (numeric)
   which can be use as graph limits (xlim, ylim, rlim, etc.)
 }
 

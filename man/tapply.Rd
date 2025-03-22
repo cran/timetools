@@ -78,7 +78,7 @@
   \code{\link{changeSupport}} methods. Instead of having
   the core splitting algorithm in it, it uses the
   \code{\link{split}} methods. Be aware that default
-  parametres values between the two families
+  parameters values between the two families
   (\sQuote{changeSupport} and \sQuote{tapply}) are not
   necessarily the same.
 

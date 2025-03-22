@@ -21,7 +21,7 @@
 
 }
 \arguments{
-  \item{from}{\code{\link{TimeIntervalDataFrame}} for wich
+  \item{from}{\code{\link{TimeIntervalDataFrame}} for which
   the time support is to change}
 
   \item{to}{an object indicating the new support, see
@@ -36,12 +36,12 @@
   met if na.rm is set to TRUE and min.coverage to 0 (zero)
   ; the na.rm=FALSE behaviour is met if na.rm is set to
   FALSE whatever is the value of min.coverage.
-  If min.coverage si as.numeric(NA), the function FUN is 
+  If min.coverage is as.numeric(NA), the function FUN is 
   apply on all data within the interval, without checking
   if there is any overlapping. In this case, the result
   of the transformation must be analysed carefully.}
 
-  \item{FUN}{function use to agregate data of from. By
+  \item{FUN}{function use to aggregate data of from. By
   default \code{\link[base]{mean}} if \sQuote{from} is
   \code{\link{homogeneous}}.
   \code{\link[stats]{weighted.mean}} otherwise.}
@@ -66,16 +66,16 @@
   \code{\link{TimeIntervalDataFrame}}
 }
 \description{
-  Methods that allows to agregate AND disagregate
+  Methods that allows to aggregate AND disaggregate
   homogeneous AND heterogeneous time data.
 }
 \details{
-  Agregating homogeneous data is for example to calculate
+  Agreggating homogeneous data is for example to calculate
   daily means of time series from hourly time series.
 
-  Agregating heterogeneous data is for example to calculate
+  Agreggating heterogeneous data is for example to calculate
   annual means of time series from monthly time series
-  (because each month doesn(t have identical weight).
+  (because each month doesn't have identical weight).
 
   In above cases, the \code{min.coverage} allows to control
   if means should be calculated or not : for the monthly
@@ -85,15 +85,15 @@
   than \code{min.coverage}, the annual mean will be
   \sQuote{estimated} by the mean of available data.
 
-  Disagregating data is more \sQuote{articficial} and is
+  Disaggregating data is more \sQuote{artificial} and is
   disabled by default (with the \code{split.from}
   argument). This argument is also used to precise if one
-  value can be use for agregation in more than one interval
+  value can be use for aggregation in more than one interval
   in the resulting TimeIntervalDataFrame (for sliding
   intervals for instance). Here are some examples of time
-  disagregration : \itemize{ \item A weekly mean can be
+  disaggregration : \itemize{ \item A weekly mean can be
   dispatched over the days of the week.  By default, the
-  value attribuated to each day is the value of the week,
+  value attributed to each day is the value of the week,
   but this can be changed by using a special function
   (\code{FUN} argument). \item The value of a variable is
   known from monday at 15 hours to tuesday at 15 hours and
@@ -103,14 +103,14 @@
   values. Weights are determined by the intersection
   between each interval and tuesday. Here weights will be
   \code{0.625} (15/24) and \code{0.375} (9/24) (In this
-  case, disagration is combined with a
-  \sQuote{reagregation}). }
+  case, disaggregation is combined with a
+  \sQuote{reaggregation}). }
 
   These are \sQuote{trivial} examples but many other usage
   can be found for these methods. Other functions than
   \code{weighted.mean} or \code{mean} can be used. The Qair
   package (in its legislative part) gives several examples
-  of usage (this package is not availables on CRAN but see
+  of usage (this package is not available on CRAN but see
   \sQuote{references} to know where you can find it).
 }
 \section{from=TimeIntervalDataFrame, to=TimeIntervalDataFrame}{
@@ -139,11 +139,11 @@
   'minute' or 'second'. It defines the period
   (\code{\link{POSIXctp}}) to use to build the new
   TimeIntervalDataFrame on which \code{from} will be
-  agregated (or disagregated).
+  aggregated (or disaggregated).
 
   So first, an \sQuote{empty} (no data)
   TimeIntervalDataFrame is created, and then, the
-  agregation is done accordingly to the
+  aggregation is done accordingly to the
   \sQuote{from=TimeIntervalDataFrame,
   to=TimeIntervalDataFrame} section.
 }
@@ -151,11 +151,11 @@
 \section{from=TimeIntervalDataFrame, to=POSIXctp}{
   \code{to} is period (see \code{\link{POSIXctp}}). It
   defines the base of the new TimeIntervalDataFrame on
-  which \code{from} will be agregated (or disagregated).
+  which \code{from} will be aggregated (or disaggregated).
 
   So first, an \sQuote{empty} (no data)
   TimeIntervalDataFrame is created, and then, the
-  agregation is done accordingly to the
+  aggregation is done accordingly to the
   \sQuote{from=TimeIntervalDataFrame,
   to=TimeIntervalDataFrame} section.
 }

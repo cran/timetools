@@ -137,7 +137,7 @@
 }
 \arguments{
   \item{start}{POSIXct or character representing a time with a valid format
-    (see \code{\link[base:as.POSIXct]{POSIXct}}). It gives the begining
+    (see \code{\link[base:as.POSIXct]{POSIXct}}). It gives the beginning
     of each interval.}
   \item{end}{POSIXct or character representing a time with a valid format
     (see \code{\link[base:as.POSIXct]{POSIXct}}). It gives the end
@@ -279,7 +279,7 @@
   instances of that class : see \sQuote{graphic representation} and
   \sQuote{text representation}.
 
-  Finally, some specific methods allow to easily deal with agregation of
+  Finally, some specific methods allow to easily deal with aggregation of
   data over time properties (day, hour, week, special or specific time
   intervals).
 
@@ -303,7 +303,7 @@
   Objects can be created by calls of the form
   \itemize{
     \item \code{new("TimeIntervalDataFrame", ...)} \dots argument must be
-    replaced by named arguments coresponding to slots of a
+    replaced by named arguments corresponding to slots of a
     TimeIntervalDataFrame (see below). See also \code{\link[methods]{new}}.
 
     \item{\code{TimeIntervalDataFrame (start, end=NULL, timezone='UTC', data=NULL, ...)}
@@ -366,7 +366,7 @@
   With \sQuote{[} operator, a selection by dates is also available. If
   \sQuote{i} and or \sQuote{j} are POSIXt or strings that can be 
   converted to POSIXct (see below), they are considered as the 
-  minimal and maximal time limits : all datas between those are selected.
+  minimal and maximal time limits : all data between those are selected.
   A string that can be converted to a POSIXct is (in this case only) a
   string composed of 3 parts separated by white space : 
   'YYYY-MM-DD HH:MM:SS tz'. The second and third parts are options, thus

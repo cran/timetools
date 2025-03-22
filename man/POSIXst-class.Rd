@@ -133,10 +133,10 @@ second(x, of, ...)
 	  method has to be applied.}
   \item{unit}{indicates the subtime part to extract ('year', 'month', 'day',
 	  'hour', 'minute', 'second')}
-  \item{of}{used to specify the main period from wich the is to extract
+  \item{of}{used to specify the main period from which the is to extract
 	  ('year', 'month', day', 'hour', 'minute'). Not used for
 	  \sQuote{unit in c('year', 'month')}.}
-  \item{tz}{if needed, specifies th timezone of POSIXst}
+  \item{tz}{if needed, specifies the timezone of POSIXst}
 
   \item{cursor}{for TimeIntervalDataFrame, if not NULL, the object is first
 	  coerced to a TimeInstantDataFrame using the
@@ -188,10 +188,10 @@ second(x, of, ...)
   }
 
   A POSIXst is a kind of time object composed of 2 units and
-  a positionnal integer. 
+  a positional integer. 
   The main unit can be accessed via the \sQuote{of} function ;
   the sub unit can be accessed via the \sQuote{unit} function.
-  The positionnal integer correspond to the value of the subtime object.
+  The positional integer correspond to the value of the subtime object.
   Consequently, a subtime \code{st} is the \code{value}th \code{unit(st)}
   of \code{of(st)}.
 
@@ -234,17 +234,17 @@ second(x, of, ...)
 
   A \code{POSIXst} can be created from an integer or a numeric. If so,
   \sQuote{unit}
-  and \sQuote{of} msute be supplied (see arguments section above). The \sQuote{tz}
+  and \sQuote{of} must be supplied (see arguments section above). The \sQuote{tz}
   argument can be supplied (numeric will be converted to an integer). In both 
   cases,  values of the integer/numeric must be in the right range 
   (see \code{\link[base]{DateTimeClasses}}.
 
 
   A \code{POSIXst} can be created from a \code{\link{POSIXct}} or
-  \code{\link{POSIXlt}} object. In this case, the subtime (POSIxst) is extracted
+  \code{\link{POSIXlt}} object. In this case, the subtime (POSIXst) is extracted
   in the units indicated by \sQuote{unit} and \sQuote{of} arguments. The 
   \sQuote{tz} argument indicates the timezone of the resulting object (it doesn't
-  do any conversion on the POSIX{l,c}t objects).
+  do any conversion on the POSIX(l,c)t objects).
 
   Finally, \code{POSIXst} can be extracted from \code{\link{TimeInstantDataFrame}}
   and  \code{\link{TimeIntervalDataFrame}}. For the first type of object, the 
@@ -313,19 +313,19 @@ second(x, of, ...)
   }
 }
 \section{Testing two POSIXst}{
-  To test two POSIXst the differents operators of comparison are used. 
+  To test two POSIXst the different operators of comparison are used. 
   If the \code{POSIXst} compared
   have a different length, the shorter is recycled over the longer so the 
   resulting vector (a logical vector) has length equal to the longer object.
 
   Comparisons are made element by element. Two \code{POSIXst} with a different
-  \sQuote{unit} or a different \sQuote{of} are differents (TRUE if test is
+  \sQuote{unit} or a different \sQuote{of} are different (TRUE if test is
   \sQuote{!=}, FALSE if \sQuote{==} NA otherwise). If they have identical
   \sQuote{unit} and \sQuote{of} the comparison is made over subtime slots.
 }
 \section{Mathematical operations on POSIXst}{
-  \code{POSIXst} can be added and substracted to \code{\link{POSIXctp}}.
-  \code{POSIXst} can also be substracted (and only substracted) to \code{POSIXst}.
+  \code{POSIXst} can be added and subtracted to \code{\link{POSIXctp}}.
+  \code{POSIXst} can also be subtracted (and only subtracted) to \code{POSIXst}.
 
   For all operations, if the two arguments
   have a different length, the shorter is recycled over the longer so the 
@@ -334,7 +334,7 @@ second(x, of, ...)
   Mathematical operations with \code{POSIXctp} are actually time lagging. Units
   of the \code{POSIXctp} must be identical to the \code{POSIXst}'s : the object
   is then lagged by the time periods (if the result is higher than the maximum
-  the result is recycled at the begining. For instance :
+  the result is recycled at the beginning. For instance :
   \code{saturday + 2 days = monday}).
 
   \itemize{
@@ -343,7 +343,7 @@ second(x, of, ...)
     \item POSIXst - POSIXctp
   }
 
-  Substracting a \code{POSIXst} to another result in a \code{\link{POSIXctp}}.
+  Subtracting a \code{POSIXst} to another result in a \code{\link{POSIXctp}}.
   For instance \code{wednesday - monday = 2 days}.
 }
 \section{Changing class}{

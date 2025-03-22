@@ -25,7 +25,7 @@
 \description{
   For objects based on time intervals. Test if any interval
   overlap another one. Because the test can be ressource
-  consuming, it stops at the first case encoutered that
+  consuming, it stops at the first case encountered that
   does not satisfy this condition. The two indices
   corresponding are printed.
 }

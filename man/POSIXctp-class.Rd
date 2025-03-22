@@ -100,7 +100,7 @@ as.POSIXctp(from, \dots)
 
 \arguments{
   \item{duration}{A vector \code{integer} indicating the duration of period (2 for 
-	  2 monthes, 1 for 1 year, etc). If a vector of \code{numeric} is given, it 
+	  2 months, 1 for 1 year, etc). If a vector of \code{numeric} is given, it 
   	  will coerced to an \code{integer}. Can be missing, see details below.}
   \item{unit}{A vector of factors defined by \code{\link{POSIXt.units}}() or
 	  a vector of \code{character} corresponding to the previous factors.
@@ -154,7 +154,7 @@ as.POSIXctp(from, \dots)
 }
 \section{Accessing to POSIXctp properties}{
   A POSIXctp has several properties. Because a POSIXctp is a vector of 
-  periodes of time, the class has a \code{\link[base]{length}} function. Other
+  periods of time, the class has a \code{\link[base]{length}} function. Other
   properties are time properties : \code{\link{unit}}
   and \code{\link{duration}} allow to access to the corresponding properties.
   The \code{duration} of a period of time is an integer corresponding of the
@@ -191,7 +191,7 @@ as.POSIXctp(from, \dots)
   with their unit (and with an \sQuote{s} if relevant).
 }
 \section{Testing two POSIXctp}{
-  To test two POSIXctp the differents operators of comparison are used. 
+  To test two POSIXctp the different operators of comparison are used. 
   If the \code{POSIXctp} compared
   have a different length, the shorter is recycled over the longer so the 
   resulting vector (a logical vector) has length equal to the longer object.
@@ -199,11 +199,11 @@ as.POSIXctp(from, \dots)
   Comparisons are made element by element. For a single comparison, first 
   elements are converted into the same unit. If this is not possible,
   FALSE is returned if the test is \sQuote{==}, TRUE if the test is \sQuote{!=},
-  NA otherwise (elements can not be compared) ; else durations of elements are
+  NA otherwise (elements can not be compared) ; else duration of elements are
   compared and the result of this comparison is returned.
 }
 \section{Mathematical operations on POSIXctp}{
-  \code{POSIXctp} can be added (or substracted) to differents type of objects :
+  \code{POSIXctp} can be added (or subtracted) to different type of objects :
   to other \code{POSIXctp}, to \code{POSIXct}, to \code{POSIXcti}  and to
   \code{POSIXst}.  \code{POSIXctp} can also be multiplied by \code{numeric}.
 
@@ -217,7 +217,7 @@ as.POSIXctp(from, \dots)
     \item integer * POSIXctp
     \item POSIXctp * integer
     \item POSIXctp + POSIXctp
-    \item POSIXctp - POSIxctp
+    \item POSIXctp - POSIXctp
   }
   When \code{POSIXctp}s do not have the same unit, an attempt is made to convert
   one to the unit of  the other, if it successes the operation is done otherwise
@@ -229,20 +229,20 @@ as.POSIXctp(from, \dots)
   and end are lagged by the time periods. 
   For \code{POSIXst}, units of the \code{POSIXst} must be identical : the object
   is then lagged by the time periods (if the result is higher than the maximum
-  the result is recycled at the begining. For instance :
+  the result is recycled at the beginning. For instance :
   \code{saturday + 2 days = monday}).
 
   \itemize{
     \item POSIXct + POSIXctp 
-    \item POSIXctp + POISXct
+    \item POSIXctp + POSIXct
     \item POSIXct - POSIXctp
     \item .
     \item POSIXcti + POSIXctp 
-    \item POSIXctp + POISXcti
+    \item POSIXctp + POSIXcti
     \item POSIXcti - POSIXctp
     \item .
     \item POSIXst + POSIXctp 
-    \item POSIXctp + POISXst
+    \item POSIXctp + POSIXst
     \item POSIXst - POSIXctp
   }
 }

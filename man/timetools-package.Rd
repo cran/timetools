@@ -3,12 +3,12 @@
 \alias{timetools}
 \docType{package}
 \title{
-Seasonal/Sequential (Instants/Durations, Even or not) Time Series
+Seasonal/Sequential (Instants/Duration, Even or not) Time Series
 }
 \description{
 Objects to manipulate sequential and seasonal time series. Sequential time
-series based on time instants and time durations are handled. Both can be
- regularly or unevenly spaced (overlapping durations are allowed).
+series based on time instants and time duration are handled. Both can be
+ regularly or unevenly spaced (overlapping duration are allowed).
 
 Only POSIX* format are used for dates and times.
 

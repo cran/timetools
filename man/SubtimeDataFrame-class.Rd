@@ -111,11 +111,11 @@ as.SubtimeDataFrame(x, unit, of, ...)
   \item{unit}{indicates the subtime part to extract
   ('year', 'month', 'day', 'hour', 'minute', 'second').}
 
-  \item{of}{used to specify the main period from wich the
+  \item{of}{used to specify the main period from which the
   is to extract ('year', 'month', 'day', 'hour', 'minute').
   Not used for \sQuote{unit in c('year', 'month')}.}
 
-  \item{FUN}{function to use for the agregation (if wanted,
+  \item{FUN}{function to use for the aggregation (if wanted,
   see \sQuote{details})}
 
   \item{cursor}{For TimeIntervalDataFrame, it indicates
@@ -194,26 +194,26 @@ as.SubtimeDataFrame(x, unit, of, ...)
   Methods are also available to facilitate the representations of instances of that class :
   see \sQuote{graphic representation} and \sQuote{text representation}.
 
-  Finally, some specific methods allow to easily deal with agregation of data over time
+  Finally, some specific methods allow to easily deal with aggregation of data over time
   properties (day, hour, week, special or specific time).
 }
 \section{SubtimeDataFrame constructors}{
   Objects can be created by calls of the form
   \itemize{
     \item \code{new("SubtimeDataFrame", ...)} \dots argument must be replaced
-    by named arguments coresponding to slots of a SubtimeDataFrame (see below).
+    by named arguments corresponding to slots of a SubtimeDataFrame (see below).
     See also \code{\link[methods]{new}}.
     \item \code{SubtimeDataFrame (when, data=NULL, ...)}
     Arguments of the function correspond to object slots.
     \item{\code{as.SubtimeDataFrame (from, representation, cursor=NULL, FUN=mean, ...)}
     Converting object to SubtimeDataFrame.
     Conversion from a TimeIntervalDataFrame to a
-    SubtimeDataFrame can be direct or after agregation.
+    SubtimeDataFrame can be direct or after aggregation.
     
     For a direct conversion (where date are only replaced by
     the desired subtime), FUN must be NULL.
 
-    For an agregateed conversion, the function to use must be
+    For an aggregated conversion, the function to use must be
     indicated by the FUN arg and all arguments to pass to
     this function can be given (namely).}
   }

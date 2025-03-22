@@ -163,7 +163,7 @@
             interaction is used for the grouping. See \code{\link{split}}.}
 
   \item{X}{a TimeInstantDataFrame on which the FUN must be applied.}
-  \item{FUN}{function to apply over eahc columns of X.}
+  \item{FUN}{function to apply over each columns of X.}
 
   \item{object}{TimeInstantDataFrame object (to modify, to extract or to test)}
 
@@ -216,7 +216,7 @@
   Objects can be created by calls of the form
   \itemize{
     \item \code{new("TimeInstantDataFrame", ...)} \dots argument must be replaced
-    by named arguments coresponding to slots of a TimeInstantDataFrame (see below).
+    by named arguments corresponding to slots of a TimeInstantDataFrame (see below).
     See also \code{\link[methods]{new}}.
     \item \code{TimeInstantDataFrame (when, timezone='UTC', data=NULL, ...)}
     Arguments of the function correspond to object slots.
@@ -249,7 +249,7 @@
   With \sQuote{[} operator, a selection by dates is also available. If
   \sQuote{i} and or \sQuote{j} are POSIXt or strings that can be 
   converted to POSIXct (see below), they are considered as the 
-  minimal and maximal time limits : all datas between those are selected.
+  minimal and maximal time limits : all data between those are selected.
   A string that can be converted to a POSIXct is (in this case only) a
   string composed of 3 parts separated by white space : 
   'YYYY-MM-DD HH:MM:SS tz'. The second and third parts are options, thus

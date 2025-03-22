@@ -97,7 +97,7 @@ as.POSIXcti(from, \dots)
 	  documentation.}
 
   \item{format}{\code{character} indicating the format to use to represent
-	  the time interval. See sectopn \sQuote{Text representation} below
+	  the time interval. See section \sQuote{Text representation} below
 	  for further details.}
 
   \item{object}{\code{POSIXcti} object on which the method has to be applied.}
@@ -172,7 +172,7 @@ as.POSIXcti(from, \dots)
   argument according to the basic \link[base]{format.POSIXct} function.
 }
 \section{Testing two POSIXcti}{
-  To test two POSIXcti the differents operators of comparison are used. One 
+  To test two POSIXcti the different operators of comparison are used. One 
   more is defined : \code{\link{\%included\%}}. If the \code{POSIXcti} compared
   have a different length, the shorter is recycled over the longer so the 
   resulting vector (a logical vector) has length equal to the longer object.
@@ -196,7 +196,7 @@ as.POSIXcti(from, \dots)
   of intervals. The available operations are :
   \itemize{
     \item POSIXcti + POSIXctp
-    \item POSIXctp + POISXcti
+    \item POSIXctp + POSIXcti
     \item POSIXcti - POSIXctp
   }
 }

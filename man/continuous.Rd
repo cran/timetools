@@ -23,7 +23,7 @@
 
   or
 
-  The object set continous.
+  The object set continuous.
 }
 
 \description{
