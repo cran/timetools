@@ -1,4 +1,4 @@
-06612f18a53c2f41ed51572192d2a5eb *DESCRIPTION
+39d7d77583decdea79d327c1a6851abd *DESCRIPTION
 fe27c75bc91affd7e590f1b32cf30b5e *NAMESPACE
 bf755a40bd1a5a7548b1dbd386578fef *R/00generic.R
 c933dd05a34278c88eb291b5bdc62e55 *R/01utils.R
@@ -6,7 +6,7 @@ c609e99ae57dbc511969f63162fdda65 *R/02posixctp.R
 50bf0d1f69f3b38c89294ffbd519e704 *R/03posixst-class.R
 d9806c2d374e29e1aba0c6d6ab7cb2f8 *R/SubtimeDataFrame.R
 b0912a9d1c15e5348664929a131c3e59 *R/TimeInstantDataFrame.R
-d4c2a51718e8d38e91c0fb12385bda7d *R/TimeIntervalDataFrame.R
+084ba19bbb96ad67bbf848c03edf7097 *R/TimeIntervalDataFrame.R
 e896c92e3cc04820018d827dd243e172 *R/changeSupport.R
 274fff194c7059a58fbc98ff27934767 *R/compute.lim.R
 33a94a251799c3fc593c15dc1d5d46cd *R/decompose.R

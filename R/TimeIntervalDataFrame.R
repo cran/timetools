@@ -175,7 +175,7 @@ definition=function(x, ...) {
 	if (!continuous(x))
 		stop ("x should be continuous to have a 'period'")
 	
-	res <- difftime(end(x), start(x), units='secs')
+	res <- as.numeric(difftime(end(x), start(x), units='secs'))
 	res <- POSIXctp (unique(res), unit=rep ('second', length(unique(res))))
 	return (res)
 } )
